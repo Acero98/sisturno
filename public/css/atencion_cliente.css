@@ -1,0 +1,13 @@
+body {
+        background-color: #f4f6f9;
+    }
+    .card-custom {
+        border-radius: 12px;
+    }
+    .card-header-custom {
+        background-color: #fff;
+        font-weight: 600;
+    }
+    .empty-state img {
+        max-width: 250px;
+    }
