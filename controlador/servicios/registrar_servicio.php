@@ -20,8 +20,8 @@ if (!empty($_POST["btnregistrarServicio"])) {
 
         } else {
 
-            $sql = $conexion->query("INSERT INTO servicios (nombre_serv, codigo_serv, estado_serv) 
-                                     VALUES ('$nombre', '$codigo', '$estado')");
+            $sql = $conexion->query("INSERT INTO servicios (nombre_serv, codigo_serv, estado_serv, creado_serv) 
+                                    VALUES ('$nombre', '$codigo', '$estado', CURRENT_TIMESTAMP)");
 
             if ($sql) {
 

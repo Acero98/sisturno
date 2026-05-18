@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     document.querySelectorAll(".btnEliminar").forEach(btn => {
 
-        btn.addEventListener("click", function(e){
+        btn.addEventListener("click", function (e) {
             e.preventDefault();
 
             let id = this.dataset.id;
@@ -32,16 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // DESACTIVAR
-    document.addEventListener("click", function(e){
+    document.addEventListener("click", function (e) {
 
-        if(e.target.closest(".btnDesactivar")){
+        if (e.target.closest(".btnDesactivar")) {
 
             const boton = e.target.closest(".btnDesactivar");
             const id = boton.dataset.id;
 
             Swal.fire({
                 title: '¿Desactivar servicio?',
-                text: "El usuario no podrá iniciar sesión",
+                text: 'El servicio dejará de mostrarse en la pantalla de selección.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc3545',
@@ -61,15 +61,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ACTIVAR
-    document.addEventListener("click", function(e){
+    document.addEventListener("click", function (e) {
 
-        if(e.target.closest(".btnActivar")){
+        if (e.target.closest(".btnActivar")) {
 
             const boton = e.target.closest(".btnActivar");
             const id = boton.dataset.id;
 
             Swal.fire({
                 title: '¿Activar servicio?',
+                text: 'El servicio volverá a mostrarse en la pantalla de selección.',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#198754',
@@ -90,9 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // =========================
     // EDITAR SERVICIOS
-    document.addEventListener("submit", function(e){
+    document.addEventListener("submit", function (e) {
 
-        if(!e.target.classList.contains("formEditarServicio")) return;
+        if (!e.target.classList.contains("formEditarServicio")) return;
 
         e.preventDefault();
 
@@ -109,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
 
-            if(result.isConfirmed){
+            if (result.isConfirmed) {
                 form.submit();
             }
 
@@ -120,14 +121,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     // REGISTRAR SERVICIOS
     // =========================
-    document.addEventListener("click", function(e){
+    document.addEventListener("click", function (e) {
 
-        if(e.target.closest(".btnConfirmarRegistro")){
+        if (e.target.closest(".btnConfirmarRegistro")) {
 
             const boton = e.target.closest(".btnConfirmarRegistro");
             const form = boton.closest("form");
 
-            if(!form){
+            if (!form) {
                 console.log("No se encontró el formulario");
                 return;
             }
@@ -150,13 +151,28 @@ document.addEventListener("DOMContentLoaded", function () {
             }).then((result) => {
 
                 if (result.isConfirmed) {
-                form.requestSubmit(); // AQUÍ ESTÁ LA CLAVE
+                    form.requestSubmit(); // AQUÍ ESTÁ LA CLAVE
                 }
 
             });
 
         }
 
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".btnEditar").forEach(btn => {
+            btn.addEventListener("click", function () {
+                document.getElementById("edit_id").value =
+                    this.dataset.id;
+
+                document.getElementById("edit_nombre").value =
+                    this.dataset.nombre;
+
+                document.getElementById("edit_codigo").value =
+                    this.dataset.codigo;
+            });
+        });
     });
 
 
@@ -179,18 +195,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (mensaje === "desactivado") {
-    mostrarMensaje('Desactivado', 'El usuario fue desactivado.', 'success', '#dc3545');
+        mostrarMensaje('Desactivado', 'El servicio fue desactivado.', 'success', '#dc3545');
     }
 
     if (mensaje === "activado") {
-        mostrarMensaje('Activado', 'El usuario fue activado.', 'success', '#198754');
+        mostrarMensaje('Activado', 'El servicio fue activado.', 'success', '#198754');
     }
 
     if (mensaje === "existe") {
-    mostrarMensaje('Duplicado', 'El código ya existe.', 'warning', '#ffc107');
+        mostrarMensaje('Duplicado', 'El código ya existe.', 'warning', '#ffc107');
     }
 
-    function mostrarMensaje(titulo, texto, icono, color){
+    function mostrarMensaje(titulo, texto, icono, color) {
         Swal.fire({
             title: titulo,
             text: texto,

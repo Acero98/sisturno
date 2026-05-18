@@ -26,7 +26,7 @@ if (!empty($_POST["btnregistrarUsuario"])) {
         } else {
 
             $sql = $conexion->query("INSERT INTO usuarios (usuario_user, password_user, nombre_user, id_rol_user) 
-                                     VALUES ('$usuario', '$passwordHash', '$nombre', '$rol')");
+                                    VALUES ('$usuario', '$passwordHash', '$nombre', '$rol')");
 
             if ($sql) {
 

@@ -1,36 +1,30 @@
-<?php 
+<?php
+include "../modelo/conexion.php";
+//include "../config.php";
 include "header.php";
-
 ?>
 
-<div class="container mt-5">
-    <div class="row">
-
-        <?php 
-            include "../modelo/conexion.php";
-            $sql=$conexion->query("SELECT * FROM servicios WHERE estado_serv=1");
-            while($datos=$sql->fetch_object()) { ?>
-
-            <div class="col-6 mb-3">
-                <form method="POST" action="../controlador/generar_ticket.php">
-                    <input type="hidden" name="id_servicios" value="<?= $datos->id_servicios ?>">
-                    
-                    <button type="submit" name="generar_turno" class="btn btn-primary w-100 py-4">
-                        <?php echo $datos->nombre_serv ?>
-                    </button>
-                </form>
-            </div>
-
-        <?php } ?>
-
-    </div>
+<!-- CONTENEDOR QUE SE ACTUALIZARÁ AUTOMÁTICAMENTE -->
+<div id="contenedorSeleccion">
+    <?php include "contenido_seleccion.php"; ?>
 </div>
 
-<?php if(isset($_GET['ticket'])) { ?>
-    <div class="alert alert-success text-center">
-        Ticket generado: <strong><?= $_GET['ticket'] ?></strong>
-    </div>
-<?php } ?>
+<!-- Librería Socket.IO 
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>-->
+
+<!-- Socket.IO -->
+<script src="<?= BASE_URL ?>assets/js/socket.io.min.js"></script>
+
+<!-- URL del controlador utilizada por JavaScript -->
+<script>
+    const URL_GENERAR_TICKET = "<?= BASE_URL ?>controlador/generar_ticket.php";
+    const SOCKET_URL = "http://192.168.100.120:3000";
+    // Ruta absoluta del archivo que contiene los servicios
+    //const URL_CONTENIDO_SELECCION = "<= BASE_URL ?>vista/contenido_seleccion.php";
+</script>
+
+<!-- JavaScript para generar ticket y mostrar modal -->
+<script src="<?= BASE_URL ?>public/js/generar_ticket.js"></script>
 
 <?php
 include "footer.php";

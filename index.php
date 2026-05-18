@@ -1,106 +1,101 @@
 <?php
-
 session_start();
 
-if(!isset($_SESSION['usuario'])){
+if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
 
-include "vista/header.php";
 include "modelo/conexion.php";
-
 include "control/auth.php";
 include "control/permisos.php";
 
 permitirSolo(["Super Admin", "Admin"]);
 
-// MÉTRICAS
-$total = $conexion->query("SELECT COUNT(*) as total FROM tickets")->fetch_object()->total;
+include "controlador/dashboard.php";
 
-$pendientes = $conexion->query("SELECT COUNT(*) as total FROM tickets WHERE estado_tk='PENDIENTE'")->fetch_object()->total;
-
-$atendidos = $conexion->query("SELECT COUNT(*) as total FROM tickets WHERE estado_tk='ATENDIDO'")->fetch_object()->total;
-
-$cancelados = $conexion->query("SELECT COUNT(*) as total FROM tickets WHERE estado_tk='CANCELADO'")->fetch_object()->total;
-
+include "vista/header.php";
 ?>
 
-<div class="container py-4">
+<div class="container-fluid py-4">
 
     <!-- Bienvenida -->
-    <div class="card card-dashboard shadow-sm mb-4 p-4">
-        <h4>Bienvenido Administrador,</h4>
-        <span class="text-primary fw-bold">ADMIN</span>
-        <div class="mt-2 text-muted">
-            <i class="fa-solid fa-circle text-success"></i> 20/02/2026
+    <div class="welcome-card mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h2 class="fw-bold mb-2">
+                    <i class="fa-solid fa-gauge-high me-2"></i>
+                    Dashboard del Sistema de Turnos
+                </h2>
+                <p class="mb-1 fs-5">
+                    Bienvenido, <strong><?= strtoupper($_SESSION['usuario']) ?></strong>
+                </p>
+                <small>
+                    <i class="fa-solid fa-calendar-days me-1"></i> <?= $fechaActual ?>
+                    &nbsp;&nbsp;
+                    <i class="fa-solid fa-clock me-1"></i> <?= $horaActual ?>
+                </small>
+            </div>
+            <div class="col-md-4 text-end d-none d-md-block">
+                <i class="fa-solid fa-chart-line" style="font-size: 5rem; opacity: 0.15;"></i>
+            </div>
         </div>
     </div>
 
-    <!-- Cards estadísticas -->
+    <!-- Métricas -->
     <div class="row g-4 mb-4">
 
-        <div class="col-md-3">
-            <div class="card card-dashboard shadow-sm p-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-box bg-azul me-3">
-                        <i class="fa-solid fa-sliders"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted">ATENCIONES TOTALES</small>
-                        <h3>103</h3>
-                    </div>
-                </div>
-                <hr>
-                <small class="text-muted">Actualizado a 03:25 p.m.</small>
+        <!-- TOTAL DE TICKETS -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="metric-card gradient-blue dashboard-card">
+                <small>TOTAL DE TICKETS</small>
+                <h2><?= number_format($total) ?></h2>
+                <i class="fa-solid fa-ticket"></i>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card card-dashboard shadow-sm p-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-box bg-gris me-3">
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted">EN ESPERA</small>
-                        <h3>95</h3>
-                    </div>
-                </div>
-                <hr>
-                <small class="text-muted">Actualizado a 03:25 p.m.</small>
+        <!-- PENDIENTES -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="metric-card gradient-orange dashboard-card">
+                <small>PENDIENTES</small>
+                <h2><?= number_format($pendientes) ?></h2>
+                <i class="fa-solid fa-hourglass-half"></i>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card card-dashboard shadow-sm p-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-box bg-verde me-3">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted">COMPLETADAS</small>
-                        <h3>08</h3>
-                    </div>
-                </div>
-                <hr>
-                <small class="text-muted">Actualizado a 03:25 p.m.</small>
+        <!-- LLAMADOS -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="metric-card gradient-info dashboard-card">
+                <small>LLAMADOS</small>
+                <h2><?= number_format($llamados) ?></h2>
+                <i class="fa-solid fa-bullhorn"></i>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card card-dashboard shadow-sm p-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-box bg-rojo me-3">
-                        <i class="fa-solid fa-xmark"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted">CANCELADAS</small>
-                        <h3>00</h3>
-                    </div>
-                </div>
-                <hr>
-                <small class="text-muted">Actualizado a 03:25 p.m.</small>
+        <!-- EN ATENCIÓN -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="metric-card gradient-purple dashboard-card">
+                <small>EN ATENCIÓN</small>
+                <h2><?= number_format($en_atencion) ?></h2>
+                <i class="fa-solid fa-user-clock"></i>
+            </div>
+        </div>
+
+        <!-- FINALIZADOS -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="metric-card gradient-green dashboard-card">
+                <small>FINALIZADOS</small>
+                <h2><?= number_format($atendidos) ?></h2>
+                <i class="fa-solid fa-check-circle"></i>
+            </div>
+        </div>
+
+        <!-- CANCELADOS -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="metric-card gradient-red dashboard-card">
+                <small>CANCELADOS</small>
+                <h2><?= number_format($cancelados) ?></h2>
+                <i class="fa-solid fa-times-circle"></i>
             </div>
         </div>
 
@@ -109,59 +104,97 @@ $cancelados = $conexion->query("SELECT COUNT(*) as total FROM tickets WHERE esta
     <!-- Tablas -->
     <div class="row g-4">
 
-        <!-- Top procesos -->
-        <div class="col-md-6">
-            <div class="card card-dashboard shadow-sm p-4">
-                <h5>TOP PROCESOS <small class="text-muted">(MAS USADOS)</small></h5>
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>NOMBRES</th>
-                            <th>CÓDIGO</th>
-                            <th>ATENCIONES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>RECLAMO COM.</td>
-                            <td>RECO</td>
-                            <td>91</td>
-                        </tr>
-                        <tr>
-                            <td>CONEXIONES NUEVAS</td>
-                            <td>CONN</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <td>OTROS</td>
-                            <td>OTRO</td>
-                            <td>2</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Top Procesos -->
+        <div class="col-lg-6">
+            <div class="card dashboard-card shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">
+                        <i class="fa-solid fa-layer-group text-primary me-2"></i>
+                        Top Procesos <span style="opacity: 0.5;">(Más usados)</span>
+                    </h5>
+
+                    <div class="table-responsive">
+                        <table class="table table-modern align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Proceso</th>
+                                    <th>Código</th>
+                                    <th class="text-center">Atenciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($topServicios && $topServicios->num_rows > 0): ?>
+                                    <?php while ($row = $topServicios->fetch_assoc()): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($row['nombre_serv']) ?></td>
+                                            <td>
+                                                <span class="badge badge-custom">
+                                                    <?= htmlspecialchars($row['codigo_serv']) ?>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong><?= number_format($row['total_atenciones']) ?></strong>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted py-4">
+                                            No existen registros para hoy.
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Top empleados -->
-        <div class="col-md-6">
-            <div class="card card-dashboard shadow-sm p-4">
-                <h5>TOP EMPLEADOS <small class="text-muted">(CON MÁS ATENCIONES)</small></h5>
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>NOMBRES</th>
-                            <th>CÓDIGO</th>
-                            <th>ATENCIONES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>MARIA ANELA VICTORIA BAYARRI FERNANDEZ</td>
-                            <td>B001</td>
-                            <td>8</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Top Empleados -->
+        <div class="col-lg-6">
+            <div class="card dashboard-card shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">
+                        <i class="fa-solid fa-users text-success me-2"></i>
+                        Top Empleados <span style="opacity: 0.5;">(Con más atenciones)</span>
+                    </h5>
+
+                    <div class="table-responsive">
+                        <table class="table table-modern align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Empleado</th>
+                                    <th>DNI</th>
+                                    <th class="text-center">Atenciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($topEmpleados && $topEmpleados->num_rows > 0): ?>
+                                    <?php while ($row = $topEmpleados->fetch_assoc()): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($row['nombre_empleado']) ?></td>
+                                            <td>
+                                                <span class="badge badge-custom">
+                                                    <?= htmlspecialchars($row['dni_user'] ?? 'S/C') ?>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong><?= number_format($row['total_atenciones']) ?></strong>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted py-4">
+                                            No existen atenciones finalizadas el día de hoy.
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -169,6 +202,4 @@ $cancelados = $conexion->query("SELECT COUNT(*) as total FROM tickets WHERE esta
 
 </div>
 
-<?php
-include "vista/footer.php";
-?>
+<?php include "vista/footer.php"; ?>

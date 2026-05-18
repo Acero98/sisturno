@@ -16,8 +16,8 @@
 
 
 -- Volcando estructura de base de datos para crudphpmysql
-CREATE DATABASE IF NOT EXISTS `crudphpmysql` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `crudphpmysql`;
+CREATE DATABASE IF NOT EXISTS `siscolas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `siscolas`;
 
 -- Volcando estructura para tabla crudphpmysql.atenciones
 CREATE TABLE IF NOT EXISTS `atenciones` (

@@ -8,9 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"])) {
 
     // VERIFICAR SI EL CÓDIGO YA EXISTE (EXCLUYENDO EL MISMO ID)
     $verificar = $conexion->query("SELECT id_servicios 
-                                   FROM servicios 
-                                   WHERE codigo_serv = '$codigo' 
-                                   AND id_servicios != $id");
+                                    FROM servicios 
+                                    WHERE codigo_serv = '$codigo' 
+                                    AND id_servicios != $id");
 
     if ($verificar->num_rows > 0) {
         header("Location: index.php?mensaje=existe");
@@ -20,16 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"])) {
     // ACTUALIZAR
     if (!empty($codigo)) {
         $sql = $conexion->query("UPDATE servicios 
-                                 SET nombre_serv='$nombre',
-                                     codigo_serv='$codigo'
-                                 WHERE id_servicios=$id");
+                                    SET nombre_serv='$nombre',
+                                        codigo_serv='$codigo'
+                                    WHERE id_servicios=$id");
     }
 
     if (!$sql) {
-            die("Error SQL: " . $conexion->error);
-        }
+        die("Error SQL: " . $conexion->error);
+    }
 
     header("Location: index.php?mensaje=actualizado");
     exit();
 }
-?>

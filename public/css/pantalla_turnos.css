@@ -1,0 +1,123 @@
+    body {
+        background: #f4f6f9;
+    }
+
+    /* Tarjetas principales */
+    .card-custom {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    /* Encabezados */
+    .card-header-custom {
+        background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 700;
+        padding: 1rem 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Tabla */
+    .table-turnos {
+        margin-bottom: 0;
+    }
+
+    .table-turnos thead th {
+        font-size: 1rem;
+        font-weight: 700;
+        text-align: center;
+        vertical-align: middle;
+        padding: 1rem;
+    }
+
+    .table-turnos tbody td,
+    .table-turnos tbody th {
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-align: center;
+        vertical-align: middle;
+        padding: 1rem 0.75rem;
+    }
+
+    /* Ticket destacado */
+    .ticket-code {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #0d6efd;
+        letter-spacing: 1px;
+    }
+
+    /* Video */
+    .video-container {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        background: #000;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 620px;
+    }
+
+    #videoPlayer {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        display: block;
+    }
+
+    /* Badge grande */
+    .badge-estado {
+        font-size: 0.95rem;
+        padding: 0.55rem 0.85rem;
+        border-radius: 50rem;
+        font-weight: 700;
+    }
+
+    /* Altura mínima */
+    .card-body-scroll {
+        min-height: 620px;
+    }
+
+    /* Reloj opcional */
+    .fecha-hora {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #6c757d;
+    }
+
+
+    @keyframes parpadeoTurno {
+
+        0%,
+        100% {
+            background-color: #0d6efd;
+            color: #000;
+        }
+
+        50% {
+            background-color: #ffffff;
+            color: #0d6efd;
+        }
+    }
+
+    /* 👇 aplicar a las celdas, no al <tr> */
+
+    .fila-llamado td,
+    .fila-llamado th {
+        animation: parpadeoTurno 2.0s infinite;
+        transition: all 0.2s;
+    }
+
+    .fila-llamado .badge {
+        animation: parpadeoTurno 1s infinite;
+        background-color: transparent !important;
+        color: inherit !important;
+        border: 2px solid currentColor;
+    }

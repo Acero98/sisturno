@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             Swal.fire({
                 title: '¿Desactivar usuario?',
-                text: "El usuario no podrá iniciar sesión",
+                text: 'El usuario no podrá iniciar sesión',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc3545',
@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             Swal.fire({
                 title: '¿Activar usuario?',
+                text: 'El usuario podrá iniciar sesión nuevamente.',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#198754',
@@ -187,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (mensaje === "existe") {
-    mostrarMensaje('Duplicado', 'El código ya existe.', 'warning', '#ffc107');
+    mostrarMensaje('Duplicado', 'El usurio ya existe.', 'warning', '#ffc107');
     }
 
     function mostrarMensaje(titulo, texto, icono, color){

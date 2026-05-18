@@ -1,61 +1,58 @@
 <?php
-
+session_start();
 require "../../modelo/conexion.php";
+//include 'notificar_socket.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo "ERROR";
-    exit();
+if (!isset($_SESSION['id_usuario'])) {
+    exit("ERROR");
 }
 
-$id_usuario = $_SESSION['id_usuario'];
+$id_usuario = intval($_SESSION['id_usuario']);
 
-$conexion->begin_transaction();
+/*
+|--------------------------------------------------------------------------
+| BUSCAR EL PRIMER TICKET PENDIENTE DE LOS SERVICIOS ASIGNADOS AL USUARIO
+|--------------------------------------------------------------------------
+*/
+$sql = "
+    SELECT t.id_tickets
+    FROM tickets t
+    INNER JOIN operador_servicios os
+        ON t.id_servicios = os.id_servicio
+    WHERE os.id_usuario = $id_usuario
+      AND t.estado_tk = 'PENDIENTE'
+      AND t.fecha_tk = CURRENT_DATE
+    ORDER BY t.creado_tk ASC
+    LIMIT 1
+";
 
-try {
+$resultado = $conexion->query($sql);
 
-    // 1️⃣ Buscar siguiente ticket pendiente del operador
-    $stmt = $conexion->prepare("
-        SELECT t.id_tickets
-        FROM tickets t
-        INNER JOIN operador_servicios os 
-            ON t.id_servicios = os.id_servicio
-        WHERE os.id_usuario = ?
-        AND t.estado_tk = 'PENDIENTE'
-        AND t.fecha_tk = CURDATE()
-        ORDER BY t.numero_tk ASC
-        LIMIT 1
-        FOR UPDATE
-    ");
+if (!$resultado || $resultado->num_rows == 0) {
+    exit("SIN_TICKETS");
+}
 
-    $stmt->bind_param("i", $id_usuario);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $ticket = $result->fetch_assoc();
+$ticket = $resultado->fetch_assoc();
+$id_ticket = intval($ticket['id_tickets']);
 
-    if (!$ticket) {
-        throw new Exception("No hay tickets pendientes");
-    }
+/*
+|--------------------------------------------------------------------------
+| ACTUALIZAR EL ESTADO DEL TICKET
+|--------------------------------------------------------------------------
+*/
+$update = "
+    UPDATE tickets
+    SET estado_tk = 'LLAMADO',
+        id_usuario = $id_usuario,
+        hora_cita = CURRENT_TIMESTAMP
+    WHERE id_tickets = $id_ticket
+    AND estado_tk = 'PENDIENTE'
+";
 
-    $id_ticket = $ticket['id_tickets'];
-
-    // 2️⃣ Actualizar estado a LLAMADO
-    $update = $conexion->prepare("
-        UPDATE tickets
-        SET estado_tk = 'LLAMADO',
-            id_usuario_atendio = ?,
-            hora_llamado = NOW()
-        WHERE id_tickets = ?
-    ");
-
-    $update->bind_param("ii", $id_usuario, $id_ticket);
-    $update->execute();
-
-    $conexion->commit();
-
+if ($conexion->query($update)) {
+    include 'notificar_socket.php';
     echo "OK";
-
-} catch (Exception $e) {
-
-    $conexion->rollback();
+} else {
     echo "ERROR";
 }
+?>

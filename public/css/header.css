@@ -1,0 +1,126 @@
+/* ==========================================================
+   NAVBAR MODERNO - ESTILO DASHBOARD
+========================================================== */
+.navbar-sistema {
+    background: linear-gradient(135deg, #0d6efd 0%, #2563eb 50%, #1d4ed8 100%);
+    padding: 0.9rem 0;
+    box-shadow: 0 10px 30px rgba(13, 110, 253, 0.18);
+}
+
+/* Logo */
+.brand-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #fff;
+    backdrop-filter: blur(8px);
+}
+
+.brand-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.brand-subtitle {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1;
+}
+
+/* Links */
+.nav-link-custom {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-weight: 600;
+    padding: 0.65rem 1rem !important;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.nav-link-custom:hover,
+.nav-link-custom.active {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+/* Dropdowns */
+.dropdown-menu-custom {
+    border-radius: 16px;
+    padding: 0.6rem;
+    min-width: 240px;
+    margin-top: 0.6rem;
+    box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.12),
+        0 8px 16px rgba(15, 23, 42, 0.06) !important;
+}
+
+.dropdown-menu-custom .dropdown-item {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.dropdown-menu-custom .dropdown-item:hover {
+    background: #eff6ff;
+    color: #0d6efd;
+    transform: translateX(4px);
+}
+
+/* Usuario */
+.nav-user {
+    color: #ffffff !important;
+    padding: 0.35rem 0.75rem !important;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+}
+
+.nav-user:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1rem;
+    backdrop-filter: blur(8px);
+}
+
+.user-name {
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.user-role {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .nav-link-custom {
+        margin-bottom: 0.25rem;
+    }
+
+    .nav-user {
+        margin-top: 0.75rem;
+        justify-content: flex-start;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+}
