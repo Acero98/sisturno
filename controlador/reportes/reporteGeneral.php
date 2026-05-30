@@ -252,18 +252,21 @@ SELECT
             ELSE 0
         END
     ) as cancelados,
-    ROUND(
-        AVG(
-            CASE
-                WHEN t.hora_atencion IS NOT NULL
-                AND t.hora_finalizado IS NOT NULL
-                THEN TIMESTAMPDIFF(
-                    MINUTE,
-                    t.hora_atencion,
-                    t.hora_finalizado
-                )
-            END
-        )
+    IFNULL(
+        ROUND(
+            AVG(
+                CASE
+                    WHEN t.hora_atencion IS NOT NULL
+                    AND t.hora_finalizado IS NOT NULL
+                    THEN TIMESTAMPDIFF(
+                        MINUTE,
+                        t.hora_atencion,
+                        t.hora_finalizado
+                    )
+                END
+            )
+        ),
+        0
     ) AS promedio_atencion
 FROM tickets t
 INNER JOIN usuarios u 
