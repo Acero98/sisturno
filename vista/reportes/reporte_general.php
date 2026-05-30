@@ -542,7 +542,7 @@ include "../header.php";
 
                                             <td class="text-center">
                                                 <span class="badge bg-danger">
-                                                    <?= number_format($row['cancelados']) ?>
+                                                    <?= number_format($row['cancelados'] ?? 0) ?>
                                                 </span>
                                             </td>
 
