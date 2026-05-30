@@ -474,6 +474,6 @@ socket.on("connect", function () {
 });
 
 socket.on("actualizar_pantalla", function (data) {
-    console.log("Evento recibido:", data);
+    //console.log("Evento recibido:", data);
     actualizarAtencion();
 });

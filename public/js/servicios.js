@@ -1,3 +1,6 @@
+//console.log("JS CARGADO");
+//console.log(document.querySelectorAll(".btnEditar"));
+
 document.addEventListener("DOMContentLoaded", function () {
 
     // =========================
@@ -160,6 +163,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    document.querySelectorAll(".btnEditar").forEach(boton => {
+
+        boton.addEventListener("click", function () {
+
+            //console.log(this.dataset);
+
+            document.getElementById("edit_id").value =
+                this.dataset.id;
+
+            document.getElementById("edit_nombre").value =
+                this.dataset.nombre;
+
+            document.getElementById("edit_codigo").value =
+                this.dataset.codigo;
+
+            document.getElementById("edit_prioridad").value =
+                this.dataset.prioridad;
+
+        });
+
+    });
+
+    /*
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".btnEditar").forEach(btn => {
             btn.addEventListener("click", function () {
@@ -171,9 +197,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 document.getElementById("edit_codigo").value =
                     this.dataset.codigo;
+
+                document.getElementById("edit_prioridad").value =
+                    this.dataset.prioridad;
             });
         });
-    });
+    });*/
 
 
     // =========================
@@ -204,6 +233,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (mensaje === "existe") {
         mostrarMensaje('Duplicado', 'El código ya existe.', 'warning', '#ffc107');
+    }
+
+    if (mensaje === "erroru") {
+        mostrarMensaje('Error', 'Error al registrar usuario.', 'warning', '#ff0707');
+    }
+
+    if (mensaje === "erroro") {
+        mostrarMensaje('Vacio', 'Todos los campos son obligatorios.', 'warning', '#07a4ff');
     }
 
     function mostrarMensaje(titulo, texto, icono, color) {

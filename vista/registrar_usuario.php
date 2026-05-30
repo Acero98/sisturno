@@ -1,35 +1,38 @@
 <?php
-include "../modelo/conexion.php";
-include "../control/auth.php";
-include "../control/permisos.php";
+require_once __DIR__ . "/../modelo/conexion.php";
+require_once __DIR__ . "/../control/auth.php";
+require_once __DIR__ . "/../control/permisos.php";
 
 permitirSolo(["Super Admin"]);
 
-include "../controlador/eliminar_usuario.php";
-include "../controlador/registrar_usuario.php";
-include "../controlador/modificar_usuario.php";
+include_once __DIR__ . "/../controlador/eliminar_usuario.php";
+include_once __DIR__ . "/../controlador/registrar_usuario.php";
+include_once __DIR__ . "/../controlador/modificar_usuario.php";
 include "header.php";
 ?>
 
 <div class="container-fluid py-4">
 
     <!-- Encabezado -->
-    <div class="page-header-card mb-4">
+    <div class="page-header-card mb-3 py-2">
         <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h2>
+
+            <div class="col-lg-9">
+                <h4 class="mb-1">
                     <i class="fa-solid fa-users-cog me-2"></i>
                     Gestión de Usuarios
-                </h2>
-                <p>
+                </h4>
+
+                <p class="mb-0">
                     Administra los usuarios del sistema, asigna roles y controla el acceso.
                 </p>
             </div>
 
-            <div class="col-lg-4 text-end d-none d-lg-block">
+            <div class="col-lg-3 text-end d-none d-lg-block">
                 <i class="fa-solid fa-user-shield"
-                    style="font-size: 4.5rem; opacity: 0.15;"></i>
+                    style="font-size: 3.5rem; opacity: 0.12;"></i>
             </div>
+
         </div>
     </div>
 

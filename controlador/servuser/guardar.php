@@ -1,8 +1,8 @@
 <?php
 // admin/operador_servicios/guardar.php
 
-include "../../modelo/conexion.php";
-include "../../config.php";
+require_once __DIR__ . "/../../modelo/conexion.php";
+require_once __DIR__ . "/../../config.php";
 //include "../../control/auth.php";
 //include "../../control/permisos.php";
 
@@ -54,7 +54,7 @@ foreach ($servicios as $id_servicio) {
     ");
 }
 
-include "../atencion/notificar_socket.php";
+include_once __DIR__ . "/../atencion/notificar_socket.php";
 
 /*
 |--------------------------------------------------------------------------

@@ -1,5 +1,11 @@
 <?php
-include "../modelo/conexion.php";
+require_once __DIR__ . "/../modelo/conexion.php";
+
+require_once __DIR__ . "/../control/auth.php";
+require_once __DIR__ . "/../control/permisos.php";
+
+permitirSolo(["Super Admin", "Admin", "Operador", "Monitor"]);
+
 ?>
 
 <table class="table table-hover table-turnos align-middle">
@@ -13,16 +19,11 @@ include "../modelo/conexion.php";
     </thead>
     <tbody>
         <?php
-        $sql = $conexion->query("SELECT
-                                    t.numero_tk,
-                                    t.estado_tk,
-                                    s.codigo_serv,
-                                    s.nombre_serv,
-                                    u.num_ventanilla
+        $sql = $conexion->query("SELECT t.numero_tk, t.estado_tk, s.codigo_serv, s.nombre_serv, s.prioridad_serv, u.num_ventanilla
                                 FROM tickets t
-                                INNER JOIN servicios s
+                                INNER JOIN servicios s 
                                     ON t.id_servicios = s.id_servicios
-                                LEFT JOIN usuarios u
+                                LEFT JOIN usuarios u 
                                     ON t.id_usuario = u.id_usuario
                                 WHERE t.estado_tk IN ('PENDIENTE', 'LLAMADO', 'EN_ATENCION')
                                 AND t.fecha_tk = CURRENT_DATE
@@ -33,8 +34,16 @@ include "../modelo/conexion.php";
                                         WHEN t.estado_tk = 'PENDIENTE' THEN 3
                                         ELSE 4
                                     END,
+
+                                    CASE
+                                    WHEN s.prioridad_serv = 'EMERGENCIA' THEN 1
+                                    WHEN s.prioridad_serv = 'ALTA' THEN 2
+                                    WHEN s.prioridad_serv = 'NORMAL' THEN 3
+                                    ELSE 4
+                                    END,
+
                                     t.creado_tk ASC
-                                LIMIT 8
+                                LIMIT 7
                             ");
 
         $contador = 1;
@@ -88,13 +97,13 @@ include "../modelo/conexion.php";
 
                 <!-- NÚMERO -->
                 <th class="text-center align-middle fw-bold"
-                    style="font-size: 2.2rem; width: 90px;">
+                    style="font-size: 2.5rem; width: 90px;">
                     <?= $contador ?>
                 </th>
 
                 <!-- TICKET + MENSAJE -->
                 <td class="text-center align-middle fw-bold"
-                    style="font-size: 2.3rem; letter-spacing: 1px;">
+                    style="font-size: 2.8rem; letter-spacing: 1px;">
                     <?= $textoTicket ?>
                 </td>
 
@@ -102,7 +111,7 @@ include "../modelo/conexion.php";
                 <td class="text-center align-middle"
                     style="width: 220px;">
                     <span class="badge <?= $badge ?> rounded-pill px-4 py-3"
-                        style="font-size: 1.4rem;">
+                        style="font-size: 2rem;">
                         <?= str_replace('_', ' ', $datos->estado_tk) ?>
                     </span>
                 </td>

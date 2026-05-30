@@ -1,4 +1,10 @@
 <?php
+
+require_once __DIR__ . "/../control/auth.php";
+require_once __DIR__ . "/../control/permisos.php";
+
+permitirSolo(["Super Admin", "Admin", "Operador", "Monitor"]);
+
 include "header.php";
 //include "../modelo/conexion.php";
 ?>
@@ -36,7 +42,12 @@ include "header.php";
         <!-- COLUMNA DERECHA: VIDEO -->
         <div class="col-lg-6">
             <div class="video-container h-100">
-                <video id="videoPlayer" autoplay muted></video>
+                <video
+                    id="videoPlayer"
+                    autoplay
+                    muted
+                    controls
+                    playsinline></video>
             </div>
         </div>
 
@@ -46,7 +57,8 @@ include "header.php";
 <!-- 
 <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script> -->
 
-<!-- Socket.IO -->
+<!-- Socket.IO --> 
+<script src="<?= BASE_URL ?>public/js/socket_config.js"></script>
 <script src="<?= BASE_URL ?>assets/js/socket.io.min.js"></script>
 
 <!-- PARA MOSTRAR LOS VIDEOS -->
@@ -167,7 +179,7 @@ include "header.php";
     /* ==========================================================
     WEBSOCKET - ESCUCHAR CAMBIOS EN TIEMPO REAL
     ========================================================== */
-    const socket = io("http://192.168.100.120:3000");
+    const socket = io(SOCKET_URL);
 
     socket.on("connect", function() {
         console.log("Conectado al WebSocket:", socket.id);

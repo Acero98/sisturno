@@ -1,5 +1,5 @@
 <?php 
-include "../modelo/conexion.php";
+require_once __DIR__ . "/../modelo/conexion.php";
 
 $id = $_GET["id"];
 $sql = $conexion->query(" SELECT * FROM usuarios WHERE id_usuario=$id");
@@ -13,7 +13,7 @@ include "header.php";
     <input type="hidden" name="id" value="<?= $_GET["id"] ?>">
 
     <?php 
-    include "../controlador/modificar_usuario.php";
+    include_once __DIR__ . "/../controlador/modificar_usuario.php";
 
     while($datos = $sql->fetch_object()){ ?>
     

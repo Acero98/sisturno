@@ -1,4 +1,4 @@
-body {
+body{
     background: #f5f7fb;
 }
 
@@ -59,6 +59,10 @@ body {
 
 .gradient-red {
     background: linear-gradient(135deg, #e74a3b, #be2617);
+}
+
+.gradient-celeste {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
 }
 
 .welcome-card {

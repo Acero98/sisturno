@@ -1,6 +1,6 @@
 <?php 
 
-include "modelo/conexion.php";
+require_once __DIR__ . "/modelo/conexion.php";
 $id=$_GET["id"];
 $sql=$conexion->query("select * from persona where id_persona=$id ");
 
@@ -20,7 +20,7 @@ $sql=$conexion->query("select * from persona where id_persona=$id ");
         <h3 class="text-center text-secondary">Modificar personas</h3>
         <input type="hidden" name="id" value="<?= $_GET["id"] ?>">
         <?php 
-        include "controlador/modificar_persona.php";
+        include_once __DIR__ . "/controlador/modificar_persona.php";
         while($datos=$sql->fetch_object()){ ?>
 
         <div class="mb-3">

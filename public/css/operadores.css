@@ -62,7 +62,37 @@
     font-weight: 600;
     padding: 6px 10px;
     border-radius: 10px;
+    font-size: 0.85rem;
 }
+
+
+/* BASE */
+.badge-prioridad{
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+}
+
+/* NORMAL */
+.badge-prioridad.normal{
+    background: #eef4ff;
+    color: #0752a7;
+}
+
+/* ALTA */
+.badge-prioridad.alta{
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* EMERGENCIA */
+.badge-prioridad.emergencia{
+    background: #f8d7da;
+    color: #842029;
+}
+
+
 
 /* Botones de acción */
 .action-buttons .btn {

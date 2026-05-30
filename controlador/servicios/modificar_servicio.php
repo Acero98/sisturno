@@ -5,6 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"])) {
     $id = $_POST["id"];
     $nombre = $_POST["nombre"];
     $codigo = $_POST["codigo"];
+    $prioridad  = $_POST["prioridad"];
 
     // VERIFICAR SI EL CÓDIGO YA EXISTE (EXCLUYENDO EL MISMO ID)
     $verificar = $conexion->query("SELECT id_servicios 
@@ -21,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"])) {
     if (!empty($codigo)) {
         $sql = $conexion->query("UPDATE servicios 
                                     SET nombre_serv='$nombre',
-                                        codigo_serv='$codigo'
+                                        codigo_serv='$codigo',
+                                        prioridad_serv='$prioridad'
                                     WHERE id_servicios=$id");
     }
 

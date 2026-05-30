@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "modelo/conexion.php";
+require_once __DIR__ . "/modelo/conexion.php";
 
 if (isset($_POST['login'])) {
 

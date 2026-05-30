@@ -1,15 +1,21 @@
 <?php
 
 session_start();
-include "../../config.php";
-require "../../modelo/conexion.php";
+require_once __DIR__ . "/../../config.php";
+require_once __DIR__ . "/../../modelo/conexion.php";
 
+/*
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: " . BASE_URL . "login.php");
     exit();
-}
+}*/
 
-include "../../controlador/atencion/obtener_ticket.php";
+require_once __DIR__ . "/../../control/auth.php";
+require_once __DIR__ . "/../../control/permisos.php";
+
+permitirSolo(["Super Admin", "Admin", "Operador"]);
+
+include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
 include "../header.php";
 
 ?>
@@ -40,11 +46,8 @@ include "../header.php";
 </script> -->
 
 <!-- Socket.IO -->
+<script src="<?= BASE_URL ?>public/js/socket_config.js"></script>
 <script src="<?= BASE_URL ?>assets/js/socket.io.min.js"></script>
-
-<script>
-    const SOCKET_URL = "http://192.168.100.120:3000";
-</script>
 
 <script src="<?= BASE_URL ?>public/js/atencionCliente.js"></script>
 

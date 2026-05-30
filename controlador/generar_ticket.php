@@ -1,5 +1,6 @@
 <?php
-include "../modelo/conexion.php";
+require_once __DIR__ . "/../modelo/conexion.php";
+require_once __DIR__ . "/../config.php";
 
 if (isset($_POST['generar_turno'])) {
 
@@ -8,12 +9,7 @@ if (isset($_POST['generar_turno'])) {
     // ==========================================================
     // 1. OBTENER EL CÓDIGO DEL SERVICIO (Ejemplo: CONU, DUPL)
     // ==========================================================
-    $sqlServicio = $conexion->query("
-        SELECT codigo_serv
-        FROM servicios
-        WHERE id_servicios = $id_servicios
-        LIMIT 1
-    ");
+    $sqlServicio = $conexion->query("SELECT codigo_serv, prioridad_serv FROM servicios WHERE id_servicios = $id_servicios LIMIT 1");
 
     $servicio = $sqlServicio->fetch_object();
 
@@ -22,21 +18,14 @@ if (isset($_POST['generar_turno'])) {
     }
 
     $codigo_serv = $servicio->codigo_serv;
-
+    $prioridad = $servicio->prioridad_serv;
 
     // ==========================================================
     // 2. OBTENER EL ÚLTIMO TICKET DEL DÍA PARA ESE SERVICIO
     //    numero_tk ahora guarda valores como:
     //    CONU-001, CONU-010, DUPL-014
     // ==========================================================
-    $consulta = $conexion->query("
-        SELECT numero_tk
-        FROM tickets
-        WHERE fecha_tk = CURRENT_DATE
-          AND id_servicios = $id_servicios
-        ORDER BY id_tickets DESC
-        LIMIT 1
-    ");
+    $consulta = $conexion->query("SELECT numero_tk FROM tickets WHERE fecha_tk = CURRENT_DATE AND id_servicios = $id_servicios ORDER BY id_tickets DESC LIMIT 1");
 
     $nuevo_numero = 1; // Valor inicial
 
@@ -72,21 +61,8 @@ if (isset($_POST['generar_turno'])) {
     // ==========================================================
     // 5. INSERTAR EN LA BASE DE DATOS
     // ==========================================================
-    $conexion->query("
-        INSERT INTO tickets (
-            numero_tk,
-            id_servicios,
-            fecha_tk,
-            estado_tk,
-            creado_tk
-        ) VALUES (
-            '$ticket_formateado',
-            $id_servicios,
-            CURRENT_DATE,
-            'PENDIENTE',
-            CURRENT_TIMESTAMP
-        )
-    ");
+    $conexion->query("INSERT INTO tickets (numero_tk, id_servicios, fecha_tk, estado_tk, prioridad_tk, creado_tk) 
+                    VALUES ('$ticket_formateado', $id_servicios, CURRENT_DATE, 'PENDIENTE','$prioridad', CURRENT_TIMESTAMP)");
 
     // ==========================================================
     // 5.1 NOTIFICAR AL WEBSOCKET
@@ -112,7 +88,8 @@ if (isset($_POST['generar_turno'])) {
     $context = stream_context_create($options);
 
     @file_get_contents(
-        "http://192.168.100.120:3000/notificar",
+        SOCKETURL."/notificar",
+        //"http://192.168.0.6:3000/notificar",
         false,
         $context
     );

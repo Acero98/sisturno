@@ -1,0 +1,30 @@
+#tablaTickets thead th{
+    background: #0d6efd;
+    color: white;
+    border: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+#tablaTickets tbody td{
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.dataTables_wrapper .dataTables_filter input{
+    border-radius: 10px;
+    padding: 6px 12px;
+    border: 1px solid #ced4da;
+}
+
+.dataTables_wrapper .dataTables_length select{
+    border-radius: 10px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    padding: 0 !important;
+}
+
+.dashboard-card{
+    border-radius: 18px;
+}

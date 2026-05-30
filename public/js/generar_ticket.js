@@ -91,7 +91,7 @@ document.addEventListener("submit", function (e) {
                     showConfirmButton: false,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
-                    timer: 3000,
+                    timer: 1500,
                     timerProgressBar: true
                 });
 

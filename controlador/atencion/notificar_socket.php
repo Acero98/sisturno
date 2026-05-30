@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../../config.php";
 
 $datos = [
     'fecha' => date('Y-m-d H:i:s'),
@@ -8,7 +9,8 @@ $datos = [
 $payload = json_encode($datos);
 
 //$ch = curl_init('http://localhost:3000/notificar');
-$ch = curl_init('http://192.168.100.120:3000/notificar');
+//$ch = curl_init('http://192.168.0.6:3000/notificar');
+$ch = curl_init( SOCKETURL.'/notificar');
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [

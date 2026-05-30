@@ -3,15 +3,19 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require "../../modelo/conexion.php";
+require_once __DIR__ . "/../../modelo/conexion.php";
+
+require_once __DIR__ . "/../../control/auth.php";
+require_once __DIR__ . "/../../control/permisos.php";
+
+permitirSolo(["Super Admin", "Admin", "Operador"]);
 
 $id_usuario = $_SESSION['id_usuario'];
-$sql = "
-    SELECT num_ventanilla
-    FROM usuarios u
-    WHERE u.id_usuario = $id_usuario
-    LIMIT 1
-";
+$sql = "SELECT num_ventanilla
+        FROM usuarios u
+        WHERE u.id_usuario = $id_usuario
+        LIMIT 1
+        ";
 
 $result = $conexion->query($sql);
 
@@ -21,7 +25,7 @@ if (!$result) {
 
 $ventanilla = $result->fetch_assoc();
 
-include "../../controlador/atencion/obtener_ticket.php";
+include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
 ?>
 
 <div class="container-fluid py-4">
@@ -158,7 +162,7 @@ include "../../controlador/atencion/obtener_ticket.php";
                 <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
                     <span>
                         <i class="fas fa-list-ol me-2"></i>
-                        Próximos 10 Tickets
+                        Próximos 5 Tickets
                     </span>
 
                     <?php if (!empty($tickets)): ?>
@@ -189,7 +193,7 @@ include "../../controlador/atencion/obtener_ticket.php";
 
                         <?php
                         // Obtener solamente los primeros 10 tickets
-                        $primeros10 = array_slice($tickets, 0, 10);
+                        $primeros10 = array_slice($tickets, 0, 5);
                         ?>
 
                         <!-- TABLA -->
@@ -257,7 +261,7 @@ include "../../controlador/atencion/obtener_ticket.php";
                             <div class="text-center py-3 border-top bg-light">
                                 <small class="text-muted">
                                     Mostrando los primeros
-                                    <strong>10</strong>
+                                    <strong>05</strong>
                                     de
                                     <strong><?= count($tickets) ?></strong>
                                     tickets pendientes.

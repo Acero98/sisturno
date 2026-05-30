@@ -187,8 +187,12 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarMensaje('Activado', 'El operador fue activado.', 'success', '#198754');
     }
 
-    if (mensaje === "existe") {
-    mostrarMensaje('Duplicado', 'El usurio ó dni ya existe.', 'warning', '#ffc107');
+    if (mensaje === "usuario_existe") {
+    mostrarMensaje('Duplicado', 'El usurio ya existe.', 'warning', '#ffc107');
+    }
+
+    if (mensaje === "dni_existe") {
+    mostrarMensaje('Duplicado', 'El dni ya existe.', 'warning', '#ffc107');
     }
 
     function mostrarMensaje(titulo, texto, icono, color){

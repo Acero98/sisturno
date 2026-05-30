@@ -1,0 +1,65 @@
+html, body{
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.container-fluid{
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+/* TITULO */
+.titulo-principal{
+    font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* SUBTITULO */
+.subtitulo-principal{
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+}
+
+/* BOTONES */
+.boton-servicio{
+    min-height: 170px;
+}
+
+/* ICONO */
+.icono-servicio{
+    font-size: 3rem;
+}
+
+/* NOMBRE */
+.nombre-servicio{
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+
+/* TEXTO */
+.texto-secundario{
+    font-size: .9rem;
+}
+
+/* PARA PANTALLAS PEQUEÑAS */
+@media (max-height: 900px){
+
+    .boton-servicio{
+        min-height: 140px;
+    }
+
+    .icono-servicio{
+        font-size: 2.2rem;
+    }
+
+    .nombre-servicio{
+        font-size: 1rem;
+    }
+
+    .texto-secundario{
+        font-size: .8rem;
+    }
+
+    .mb-5{
+        margin-bottom: 1rem !important;
+    }
+
+}

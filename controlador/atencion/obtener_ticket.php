@@ -22,21 +22,15 @@ $id_usuario = intval($_SESSION['id_usuario']);
 | ese será el ticket que se mostrará en la parte superior.
 |--------------------------------------------------------------------------
 */
-$sql_actual = "
-    SELECT
-        t.id_tickets,
-        t.numero_tk,
-        t.estado_tk,
-        s.nombre_serv
-    FROM tickets t
-    INNER JOIN servicios s
-        ON t.id_servicios = s.id_servicios
-    WHERE t.id_usuario = $id_usuario
-      AND t.estado_tk IN ('LLAMADO', 'EN_ATENCION')
-      AND t.fecha_tk = CURRENT_DATE
-    ORDER BY t.creado_tk ASC
-    LIMIT 1
-";
+$sql_actual = "SELECT t.id_tickets, t.numero_tk, t.estado_tk, s.nombre_serv
+                FROM tickets t
+                INNER JOIN servicios s ON t.id_servicios = s.id_servicios
+                WHERE t.id_usuario = $id_usuario
+                AND t.estado_tk IN ('LLAMADO', 'EN_ATENCION')
+                AND t.fecha_tk = CURRENT_DATE
+                ORDER BY t.creado_tk ASC
+                LIMIT 1
+            ";
 
 $resultado_actual = $conexion->query($sql_actual);
 
@@ -64,22 +58,24 @@ if ($resultado_actual->num_rows > 0) {
 | Los tickets LLAMADO o EN_ATENCION ya no aparecerán aquí.
 |--------------------------------------------------------------------------
 */
-$sql_lista = "
-    SELECT
-        t.id_tickets,
-        t.numero_tk,
-        t.estado_tk,
-        s.nombre_serv
-    FROM tickets t
-    INNER JOIN operador_servicios os
-        ON t.id_servicios = os.id_servicio
-    INNER JOIN servicios s
-        ON t.id_servicios = s.id_servicios
-    WHERE os.id_usuario = $id_usuario
-      AND t.estado_tk = 'PENDIENTE'
-      AND t.fecha_tk = CURRENT_DATE
-    ORDER BY t.creado_tk ASC
-";
+$sql_lista = "SELECT t.id_tickets, t.numero_tk, t.estado_tk, s.nombre_serv, s.prioridad_serv
+                FROM tickets t 
+                INNER JOIN operador_servicios os 
+                    ON t.id_servicios = os.id_servicio
+                INNER JOIN servicios s 
+                    ON t.id_servicios = s.id_servicios
+                WHERE os.id_usuario = $id_usuario
+                AND t.estado_tk = 'PENDIENTE'
+                AND t.fecha_tk = CURRENT_DATE
+                ORDER BY
+                    CASE
+                        WHEN s.prioridad_serv = 'EMERGENCIA' THEN 1
+                        WHEN s.prioridad_serv = 'ALTA' THEN 2
+                        WHEN s.prioridad_serv = 'NORMAL' THEN 3
+                        ELSE 4
+                    END,
+                    t.creado_tk ASC
+                ";
 
 $resultado_lista = $conexion->query($sql_lista);
 

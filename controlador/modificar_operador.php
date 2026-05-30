@@ -14,6 +14,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"])) {
     $rol = $_POST["rol"];
     $ventanilla  = $_POST["ventanilla"];
 
+    // VALIDAR USUARIO
+    $validarUsuario = $conexion->query("
+    SELECT id_usuario
+    FROM usuarios
+    WHERE usuario_user = '$usuario'
+    AND id_usuario != $id
+    ");
+
+    if ($validarUsuario->num_rows > 0) {
+
+        header("Location: lista_operadores.php?mensaje=usuario_existe");
+        exit();
+    }
+
+    // VALIDAR DNI
+    $validarDni = $conexion->query("
+    SELECT id_usuario
+    FROM usuarios
+    WHERE dni_user = '$dni'
+    AND id_usuario != $id
+    ");
+
+    if ($validarDni->num_rows > 0) {
+
+        header("Location: lista_operadores.php?mensaje=dni_existe");
+        exit();
+    }
+
     if (!empty($password)) {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $sql = $conexion->query("UPDATE usuarios 

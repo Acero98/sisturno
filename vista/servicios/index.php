@@ -1,37 +1,40 @@
 <?php
-include "../../modelo/conexion.php";
-include "../../control/auth.php";
-include "../../control/permisos.php";
+require_once __DIR__ . "/../../modelo/conexion.php";
+require_once __DIR__ . "/../../control/auth.php";
+require_once __DIR__ . "/../../control/permisos.php";
 
 permitirSolo(["Super Admin", "Admin"]);
 
-include "../../controlador/servicios/eliminar_servicio.php";
-include "../../controlador/servicios/registrar_servicio.php";
-include "../../controlador/servicios/modificar_servicio.php";
+include_once __DIR__ . "/../../controlador/servicios/eliminar_servicio.php";
+include_once __DIR__ . "/../../controlador/servicios/registrar_servicio.php";
+include_once __DIR__ . "/../../controlador/servicios/modificar_servicio.php";
 //VERIFICAR YA QUE DEMORA
-include "../../controlador/atencion/notificar_socket.php";
+include_once __DIR__ . "/../../controlador/atencion/notificar_socket.php";
 include "../header.php";
 ?>
 
 <div class="container-fluid py-4">
 
     <!-- Encabezado -->
-    <div class="page-header-card mb-4">
+    <div class="page-header-card mb-3 py-2">
         <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h2>
+
+            <div class="col-lg-9">
+                <h4 class="mb-1">
                     <i class="fa-solid fa-concierge-bell me-2"></i>
                     Gestión de Servicios
-                </h2>
-                <p>
+                </h4>
+
+                <p class="mb-0">
                     Administra los servicios disponibles para la generación y atención de tickets.
                 </p>
             </div>
 
-            <div class="col-lg-4 text-end d-none d-lg-block">
+            <div class="col-lg-3 text-end d-none d-lg-block">
                 <i class="fa-solid fa-layer-group"
-                    style="font-size: 4.5rem; opacity: 0.15;"></i>
+                    style="font-size: 3.5rem; opacity: 0.12;"></i>
             </div>
+
         </div>
     </div>
 
@@ -86,6 +89,7 @@ include "../header.php";
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Código</th>
+                            <th>Prioridad</th>
                             <th>Estado</th>
                             <th class="text-center">Acciones</th>
                         </tr>
@@ -136,10 +140,15 @@ include "../header.php";
                         while ($datos = $sql->fetch_object()) { ?>
 
                             <tr>
-                                <td><?= $datos->id_servicios ?></td>
+                                <td><?= $contador++ ?></td>
                                 <td><?= $datos->nombre_serv ?></td>
                                 <td><span class="badge badge-custom">
                                         <?= htmlspecialchars($datos->codigo_serv) ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-prioridad <?= strtolower($datos->prioridad_serv) ?>">
+                                        <?= htmlspecialchars($datos->prioridad_serv) ?>
                                     </span>
                                 </td>
                                 <td>
@@ -157,6 +166,7 @@ include "../header.php";
                                             data-id="<?= $datos->id_servicios ?>"
                                             data-nombre="<?= htmlspecialchars($datos->nombre_serv) ?>"
                                             data-codigo="<?= htmlspecialchars($datos->codigo_serv) ?>"
+                                            data-prioridad="<?= $datos->prioridad_serv ?>"
                                             title="Editar Servicio">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
@@ -222,6 +232,21 @@ include "../header.php";
                                             name="codigo"
                                             id="edit_codigo"
                                             required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Prioridad</label>
+
+                                        <select class="form-select"
+                                            name="prioridad"
+                                            id="edit_prioridad"
+                                            required>
+
+                                            <option value="NORMAL">Normal</option>
+                                            <option value="ALTA">Alta</option>
+                                            <option value="EMERGENCIA">Emergencia</option>
+
+                                        </select>
                                     </div>
 
                                     <div class="d-grid">
@@ -308,8 +333,18 @@ include "../header.php";
                     </div>
 
                     <div class="mb-3">
+                        <label class="form-label">Prioridad</label>
+                        <select class="form-select" name="prioridad">
+                            <option value="">Seleccione estado</option>
+                            <option value="NORMAL">Normal</option>
+                            <option value="ALTA">Alta</option>
+                            <option value="EMERGENCIA">Emergencia</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
                         <label class="form-label">Estado</label>
-                        <select class="form-select" name="estado" required>
+                        <select class="form-select" name="estado">
                             <option value="">Seleccione estado</option>
                             <option value="1">Activo</option>
                             <option value="0">Inactivo</option>

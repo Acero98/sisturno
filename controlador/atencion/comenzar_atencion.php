@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "../../modelo/conexion.php";
+require_once __DIR__ . "/../../modelo/conexion.php";
 
 // Verificar sesión
 if (!isset($_SESSION['id_usuario'])) {

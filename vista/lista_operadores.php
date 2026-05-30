@@ -1,33 +1,38 @@
 <?php
-include "../modelo/conexion.php";
-include "../control/auth.php";
-include "../control/permisos.php";
+require_once __DIR__ . "/../modelo/conexion.php";
+require_once __DIR__ . "/../control/auth.php";
+require_once __DIR__ . "/../control/permisos.php";
 
 permitirSolo(["Super Admin", "Admin"]);
 
-include "../controlador/eliminar_operador.php";
-include "../controlador/registrar_operador.php";
-include "../controlador/modificar_operador.php";
+include_once __DIR__ . "/../controlador/eliminar_operador.php";
+include_once __DIR__ . "/../controlador/registrar_operador.php";
+include_once __DIR__ . "/../controlador/modificar_operador.php";
 include "header.php";
 ?>
 
 <div class="container-fluid py-4">
 
     <!-- Encabezado -->
-    <div class="page-header-card mb-4">
+    <div class="page-header-card mb-3 py-2">
         <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h2>
+
+            <div class="col-lg-9">
+                <h4 class="mb-1">
                     <i class="fa-solid fa-users-gear me-2"></i>
                     Gestión de Operadores
-                </h2>
-                <p>
+                </h4>
+
+                <p class="mb-0">
                     Administra operadores, asigna servicios y controla el acceso al sistema.
                 </p>
             </div>
-            <div class="col-lg-4 text-end d-none d-lg-block">
-                <i class="fa-solid fa-headset" style="font-size: 4.5rem; opacity: 0.15;"></i>
+
+            <div class="col-lg-3 text-end d-none d-lg-block">
+                <i class="fa-solid fa-headset"
+                    style="font-size: 3.5rem; opacity: 0.12;"></i>
             </div>
+
         </div>
     </div>
 
@@ -120,7 +125,7 @@ include "header.php";
                         $sql = $conexion->query("SELECT u.*, r.nombre_rol 
                                                 FROM usuarios u 
                                                 INNER JOIN roles r ON u.id_rol_user = r.id_rol 
-                                                WHERE u.id_rol_user = 3 $filtro
+                                                WHERE u.id_rol_user = 3 OR u.id_rol_user = 2 $filtro
                                                 ORDER BY u.nombre_user ASC
                                                 LIMIT $inicio, $registrosPorPagina");
 
@@ -240,7 +245,13 @@ include "header.php";
                                                     <div class="col-md-6 mb-3">
                                                         <label class="form-label">Usuario</label>
                                                         <input type="text" class="form-control" name="usuario"
-                                                            value="<?= $datos->usuario_user ?>" required>
+                                                            value="<?= $datos->usuario_user ?>"
+                                                            readonly
+                                                            style="background-color: #e9ecef; cursor: not-allowed;">
+
+                                                        <small class="text-muted">
+                                                            El usuario no puede ser modificado.
+                                                        </small>
                                                     </div>
 
                                                     <div class="col-md-6 mb-3">
@@ -255,7 +266,12 @@ include "header.php";
                                                         <input type="text"
                                                             class="form-control"
                                                             value="<?= $datos->nombre_rol ?>"
-                                                            readonly>
+                                                            readonly
+                                                            style="background-color: #e9ecef; cursor: not-allowed;">
+
+                                                        <small class="text-muted">
+                                                            El rol no puede ser modificado.
+                                                        </small>
 
                                                         <input type="hidden" name="rol" value="3">
                                                     </div>
@@ -354,8 +370,8 @@ include "header.php";
                             <label class="form-label">Genero</label>
                             <select name="genero" class="form-select" required>
                                 <option value="">Seleccionar rol</option>
-                                <option value="M">MASCULINO</option>
-                                <option value="F">FEMENINO</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
                             </select>
                         </div>
                     </div>
