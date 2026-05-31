@@ -83,14 +83,18 @@ permitirSolo(["Super Admin", "Admin", "Operador", "Monitor"]);
 
                 // Mostrar nombre del servicio
                 $textoTicket .= ' | ' . strtoupper($datos->nombre_serv);
-            } elseif (
-                in_array($datos->estado_tk, ['LLAMADO', 'EN_ATENCION']) &&
-                !empty($datos->num_ventanilla)
-            ) {
+            } elseif (in_array($datos->estado_tk, ['LLAMADO', 'EN_ATENCION'])) {
 
-                // Mostrar ventanilla asignada
-                $textoTicket .= ' - IR A VENTANILLA ' .
-                    str_pad($datos->num_ventanilla, 2, '0', STR_PAD_LEFT);
+                if ($datos->num_ventanilla !== null && $datos->num_ventanilla !== '') {
+
+                    // Mostrar ventanilla asignada
+                    $textoTicket .= ' - IR A VENTANILLA ' .
+                        str_pad($datos->num_ventanilla, 2, '0', STR_PAD_LEFT);
+                } else {
+
+                    // Mostrar cuando no hay ventanilla asignada
+                    $textoTicket .= ' - VENTANILLA SIN ASIGNAR';
+                }
             }
         ?>
             <tr class="<?= $claseFila ?>">

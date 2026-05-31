@@ -79,10 +79,10 @@ permitirSolo(["Super Admin", "Admin", "Monitor"]);
 
                             <!-- Texto secundario
                             <div class="mt-3 text-white-50 fw-semibold"
-                                style="font-size: 1rem;">  -->
+                                style="font-size: 1rem;">  
                             <div class="mt-2 text-white-50 fw-semibold texto-secundario">
                                 Toque aquí para obtener su turno
-                            </div>
+                            </div>-->
 
                         </button>
                     </form>
