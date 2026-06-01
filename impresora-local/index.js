@@ -72,6 +72,18 @@ socket.on("imprimir_ticket", async (data) => {
                 align: "center"
             });
 
+        // Nombre del servicio
+        if (data.servicio) {
+            doc.moveDown(0.2);
+
+            doc
+                .font("Helvetica-Bold")
+                .fontSize(22)
+                .text(data.servicio.toUpperCase(), {
+                    align: "center"
+                });
+        }
+
         doc.moveDown(0.5);
 
         doc
@@ -96,7 +108,7 @@ socket.on("imprimir_ticket", async (data) => {
             .text("--------------------------------", {
                 align: "center"
             });
-        
+
         doc.page.height = doc.y + 10;
 
         doc.end();
