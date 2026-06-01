@@ -12,6 +12,7 @@
 date_default_timezone_set("America/Lima");
 
 // Crear conexión
+//$conexion = new mysqli("localhost", "root", "QvcPeru23$", "siscolas");
 $conexion = new mysqli("localhost", "root", "Supot#0326", "siscolas");
 
 // Verificar si hubo error de conexión

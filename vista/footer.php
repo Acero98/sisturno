@@ -1,4 +1,4 @@
-<p class="text-center p-1">BIENVENIDOS AL SISTEMA DE TURNOS - DESARROLLADO POR ROMAN ACERO | Version 1.0</p>
+<p class="text-center p-1">© <?= date('Y') ?> Sistema de Turnos | Derechos reservados por Roman Acero</p>
 <!-- JS only-->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script> -->
 

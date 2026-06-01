@@ -23,6 +23,8 @@ $usuarioData = $consultaUser->fetch_object();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA DE TURNOS</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_FAVICON ?>">
     <!-- CSS only
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">-->
 
@@ -51,11 +53,11 @@ $usuarioData = $consultaUser->fetch_object();
 
             <!-- Logo -->
             <a class="navbar-brand fw-bold d-flex align-items-center" href="<?= BASE_URL ?>">
-                <div class="brand-icon me-2">
-                    <i class="fa-solid fa-layer-group"></i>
+                <div class="brand-logo me-2">
+                    <img src="<?= BASE_LOGO_BLANCO ?>" alt="Logo" class="navbar-logo">
                 </div>
                 <div>
-                    <span class="brand-title">SISTURNOS</span>
+                    <span class="brand-title">SIS-TURNOS</span>
                     <small class="d-block brand-subtitle">Sistema de Gestión de Turnos</small>
                 </div>
             </a>

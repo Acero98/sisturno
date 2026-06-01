@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . "/config.php";
 require_once __DIR__ . "/modelo/conexion.php";
 
 if (isset($_POST['login'])) {
@@ -45,6 +46,8 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión | Sistema de Turnos</title>
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_FAVICON ?>">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -82,17 +85,15 @@ if (isset($_POST['login'])) {
         }
 
         .login-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0d6efd, #2563eb);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-size: 2.5rem;
-            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.35);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .login-logo {
+            max-width: 180px;
+            max-height: 180px;
+            width: auto;
+            height: auto;
         }
 
         .login-title {
@@ -198,10 +199,9 @@ if (isset($_POST['login'])) {
                 font-size: 1.6rem;
             }
 
-            .login-icon {
-                width: 75px;
-                height: 75px;
-                font-size: 2rem;
+            .login-logo {
+                max-width: 140px;
+                max-height: 140px;
             }
         }
     </style>
@@ -214,7 +214,7 @@ if (isset($_POST['login'])) {
         <!-- Encabezado -->
         <div class="login-header">
             <div class="login-icon">
-                <i class="fa-solid fa-user-shield"></i>
+                <img src="<?= BASE_LOGO_LOGIN ?>" alt="Logo" class="login-logo">
             </div>
 
             <h1 class="login-title">Bienvenido</h1>
