@@ -17,6 +17,9 @@ function permitirSolo($rolesPermitidos = []){
         }elseif($_SESSION['rol'] === "Operador"){
             header("Location: " . BASE_URL . "vista/atencion/atencion_cliente.php");
             exit();
+        }elseif($_SESSION['rol'] === "Turnos"){
+            header("Location: " . BASE_URL . "vista/pantalla_turnos.php");
+            exit();
         }
 
         header("Location: " . BASE_URL . "index.php");

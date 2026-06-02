@@ -5,7 +5,7 @@ require_once __DIR__ . "/../modelo/conexion.php";
 require_once __DIR__ . "/../control/auth.php";
 require_once __DIR__ . "/../control/permisos.php";
 
-permitirSolo(["Super Admin", "Admin", "Monitor"]);
+permitirSolo(["Super Admin", "Admin", "Monitor", "Turnos"]);
 
 include "header.php";
 ?>

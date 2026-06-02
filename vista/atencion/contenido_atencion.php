@@ -56,10 +56,55 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
 
             <!-- ==========================================================
              TICKET AÚN NO HA SIDO LLAMADO
-        =========================================================== 
-            <div class="alert alert-info text-center fw-bold fs-4">
-                LLAMAR A <= $ticket['numero_tk'] ?>
-            </div>-->
+        =========================================================== -->
+            <div class="card border-0 shadow-sm ticket-card mb-4">
+                <div class="card-body text-center py-4">
+
+                    <div class="text-uppercase text-muted fw-bold mb-2"
+                        style="letter-spacing: 3px;">
+                        LLARMAR A
+                    </div>
+
+                    <div class="ticket-llamado">
+                        <?= htmlspecialchars($ticket['numero_tk']) ?>
+                    </div>
+
+                    <div class="text-secondary">
+                        En espera de atención
+                    </div>
+
+                </div>
+            </div>
+
+            <style>
+                .ticket-card {
+                    border-radius: 18px;
+                    overflow: hidden;
+                }
+
+                .ticket-llamado {
+                    font-size: 6rem;
+                    font-weight: 800;
+                    color: #e27902;
+                    line-height: 1;
+                    letter-spacing: 4px;
+                    animation: ticketPulse 1.5s infinite;
+                }
+
+                @keyframes ticketPulse {
+
+                    0%,
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+
+                    50% {
+                        transform: scale(1.08);
+                        opacity: .85;
+                    }
+                }
+            </style>
 
             <div class="text-center mb-4">
                 <button class="btn btn-primary btn-lg w-100 py-3 fw-bold"
@@ -74,9 +119,54 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
             <!-- ==========================================================
              TICKET YA FUE LLAMADO
         =========================================================== -->
-            <div class="alert alert-light text-center fw-bold fs-3 text-secondary">
-                HAS LLAMADO A <?= $ticket['numero_tk'] ?>
+            <div class="card border-0 shadow-sm ticket-card mb-4">
+                <div class="card-body text-center py-4">
+
+                    <div class="text-uppercase text-muted fw-bold mb-2"
+                        style="letter-spacing: 3px;">
+                        Ticket llamado
+                    </div>
+
+                    <div class="ticket-llamado">
+                        <?= htmlspecialchars($ticket['numero_tk']) ?>
+                    </div>
+
+                    <div class="text-secondary">
+                        En espera de atención
+                    </div>
+
+                </div>
             </div>
+
+            <style>
+                .ticket-card {
+                    border-radius: 18px;
+                    overflow: hidden;
+                }
+
+                .ticket-llamado {
+                    font-size: 6rem;
+                    font-weight: 800;
+                    color: #0d6efd;
+                    line-height: 1;
+                    letter-spacing: 4px;
+                    animation: ticketPulse 1.5s infinite;
+                }
+
+                @keyframes ticketPulse {
+
+                    0%,
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+
+                    50% {
+                        transform: scale(1.08);
+                        opacity: .85;
+                    }
+                }
+            </style>
 
             <div class="row g-3 mb-4">
                 <!-- BOTÓN COMENZAR ATENCIÓN -->
@@ -107,7 +197,7 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
             <!-- ==========================================================
          TICKET EN PROCESO DE ATENCIÓN
     =========================================================== -->
-            <div class="alert alert-light text-center fw-bold fs-3 text-secondary">
+            <div class="alert alert-light text-center fw-bold fs-1 text-success">
                 ATENDIENDO <?= $ticket['numero_tk'] ?>
             </div>
 
