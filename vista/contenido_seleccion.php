@@ -72,7 +72,7 @@ permitirSolo(["Super Admin", "Admin", "Monitor"]);
 
                             <!-- Nombre del servicio -->
                             <div class="fw-bold text-uppercase"
-                                style="font-size: 1.8rem; line-height: 1.3;">
+                                style="font-size: 1.7rem; line-height: 1.3;">
                             <!-- <div class="fw-bold text-uppercase nombre-servicio">-->
                                 <?= strtoupper($datos->nombre_serv) ?>
                             </div>

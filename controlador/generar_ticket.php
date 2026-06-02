@@ -9,7 +9,14 @@ if (isset($_POST['generar_turno'])) {
     // ==========================================================
     // 1. OBTENER EL CÓDIGO DEL SERVICIO (Ejemplo: CONU, DUPL)
     // ==========================================================
-    $sqlServicio = $conexion->query("SELECT codigo_serv, prioridad_serv FROM servicios WHERE id_servicios = $id_servicios LIMIT 1");
+    $sqlServicio = $conexion->query("
+    SELECT codigo_serv,
+           prioridad_serv,
+           nombre_serv
+    FROM servicios
+    WHERE id_servicios = $id_servicios
+    LIMIT 1
+");
 
     $servicio = $sqlServicio->fetch_object();
 
@@ -18,7 +25,8 @@ if (isset($_POST['generar_turno'])) {
     }
 
     $codigo_serv = $servicio->codigo_serv;
-    $prioridad = $servicio->prioridad_serv;
+$prioridad   = $servicio->prioridad_serv;
+$nombre_serv = $servicio->nombre_serv;
 
     // ==========================================================
     // 2. OBTENER EL ÚLTIMO TICKET DEL DÍA PARA ESE SERVICIO
@@ -74,6 +82,7 @@ if (isset($_POST['generar_turno'])) {
     // ==========================================================
     $datos = [
         "ticket" => $ticket_formateado,
+        "servicio" => $nombre_serv,
         "tipo"   => "nuevo_ticket"
     ];
 

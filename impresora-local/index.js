@@ -4,8 +4,7 @@ const path = require("path");
 const PDFDocument = require("pdfkit");
 const { print } = require("pdf-to-printer");
 
-//const SOCKET_URL = "http://192.168.0.6:3000";
-const SOCKET_URL = "http://192.168.100.120:3000";
+const SOCKET_URL = "http://192.168.0.6:3000";
 const PRINTER_NAME = "POS-80-Series";
 
 const socket = io(SOCKET_URL);
@@ -35,10 +34,10 @@ socket.on("imprimir_ticket", async (data) => {
         const doc = new PDFDocument({
             size: [226.77, 1000], // altura grande temporal
             margins: {
-                top: 10,
-                bottom: 10,
-                left: 10,
-                right: 10
+                top: 8,
+                bottom: 8,
+                left: 8,
+                right: 8
             }
         });
 
@@ -48,7 +47,7 @@ socket.on("imprimir_ticket", async (data) => {
         // Encabezado
         doc
             .font("Helvetica-Bold")
-            .fontSize(18)
+            .fontSize(14)
             .text("EPS ILO S.A.", {
                 align: "center"
             });
@@ -78,17 +77,18 @@ socket.on("imprimir_ticket", async (data) => {
 
             doc
                 .font("Helvetica-Bold")
-                .fontSize(22)
+                .fontSize(18)
                 .text(data.servicio.toUpperCase(), {
                     align: "center"
                 });
         }
 
+
         doc.moveDown(0.5);
 
         doc
             .font("Helvetica")
-            .fontSize(14)
+            .fontSize(11)
             .text("Espere su turno, por favor", {
                 align: "center"
             });
@@ -96,7 +96,7 @@ socket.on("imprimir_ticket", async (data) => {
         doc.moveDown(0.3);
 
         doc
-            .fontSize(12)
+            .fontSize(9)
             .text(fecha, {
                 align: "center"
             });
