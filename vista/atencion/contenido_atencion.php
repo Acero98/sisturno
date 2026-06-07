@@ -85,7 +85,7 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
                 .ticket-llamado {
                     font-size: 6rem;
                     font-weight: 800;
-                    color: #e27902;
+                    color: #e2c002;
                     line-height: 1;
                     letter-spacing: 4px;
                     animation: ticketPulse 1.5s infinite;

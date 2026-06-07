@@ -111,7 +111,7 @@
 
     .fila-llamado td,
     .fila-llamado th {
-        animation: parpadeoTurno 2.0s infinite;
+        animation: parpadeoTurno 2s infinite;
         transition: all 0.2s;
     }
 
@@ -120,4 +120,51 @@
         background-color: transparent !important;
         color: inherit !important;
         border: 2px solid currentColor;
+
+        font-size: 3rem !important;
+
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 0.5rem 1rem !important;
+
+        line-height: 1;
+    }
+
+    /* LLAMADO */
+    .fila-llamado .ticket-turno,
+    .fila-llamado .ventanilla-turno {
+        font-size: 5rem !important;
+    }
+
+    /* EN ATENCION */
+    .table-success .ticket-turno,
+    .table-success .ventanilla-turno {
+        font-size: 3.5rem !important;
+    }
+
+    /* PENDIENTE */
+    .table-warning .ticket-turno,
+    .table-warning .ventanilla-turno {
+        font-size: 3rem !important;
+    }
+
+    .numero-turno {
+        font-size: 2.5rem !important;
+    }
+
+    .ticket-turno,
+    .ventanilla-turno {
+        font-size: 2.8rem !important;
+        font-weight: 700;
+    }
+
+    .fila-llamado .numero-turno {
+        font-size: 4rem !important;
+    }
+
+    .fila-llamado .ticket-turno,
+    .fila-llamado .ventanilla-turno {
+        font-size: 5rem !important;
     }

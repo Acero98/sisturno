@@ -13,19 +13,10 @@ include "header.php";
 
 <div class="container-fluid py-4">
 
-    <!-- ENCABEZADO -->
-    <div class="text-center mb-4">
-        <h1 class="fw-bold text-primary mb-2">
-            <i class="fas fa-ticket-alt me-2"></i>
-            SISTEMA DE TURNOS
-        </h1>
-        <div class="fecha-hora" id="fechaHora"></div>
-    </div>
-
     <div class="row g-4">
 
         <!-- COLUMNA IZQUIERDA: TABLA DE TURNOS -->
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <div class="card card-custom h-100">
                 <div class="card-header card-header-custom">
                     Turnos en Espera y Atención
@@ -40,24 +31,38 @@ include "header.php";
         </div>
 
         <!-- COLUMNA DERECHA: VIDEO -->
-        <div class="col-lg-6">
-            <div class="video-container h-100">
+        <div class="col-lg-4">
+            <!-- ENCABEZADO -->
+            <div class="text-center mb-4">
+                <h1 class="fw-bold text-primary mb-2">
+                    <i class="fas fa-ticket-alt me-2"></i>
+                    SISTEMA DE TURNOS
+                </h1>
+                <div class="fecha-hora" id="fechaHora"></div>
+            </div>
+
+            <div class="video-container">
                 <video
                     id="videoPlayer"
                     autoplay
-                    muted
                     controls
                     playsinline></video>
             </div>
+
         </div>
+
+        <audio id="audioNotificacion" preload="auto">
+            <source src="<?= URL_AUDIO ?>notificacion.mp3" type="audio/mpeg">
+        </audio>
 
     </div>
 </div>
 
+
 <!-- 
 <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script> -->
 
-<!-- Socket.IO --> 
+<!-- Socket.IO -->
 <script src="<?= BASE_URL ?>public/js/socket_config.js"></script>
 <script src="<?= BASE_URL ?>assets/js/socket.io.min.js"></script>
 
@@ -67,7 +72,7 @@ include "header.php";
        LISTA DE VIDEOS
        ========================================================== */
     const videos = [
-        "<?= BASE_URL ?>public/videos/video-1.mp4"
+        "<?= URL_VIDEO ?>video-1.mp4"
     ];
 
     const player = document.getElementById("videoPlayer");
@@ -148,6 +153,20 @@ include "header.php";
         playCurrentVideo();
     });
 
+    /************************************************
+     * HABILITAR AUDIO TRAS EL PRIMER TOQUE/CLIC
+     ************************************************/
+    document.addEventListener('click', () => {
+        player.muted = false;
+
+        player.play().catch(error => {
+            console.error("Error al iniciar video:", error);
+        });
+
+    }, {
+        once: true
+    });
+
     /* ==========================================================
        INICIAR REPRODUCCIÓN
        ========================================================== */
@@ -216,6 +235,16 @@ include "header.php";
     socket.on("actualizar_pantalla", function(data) {
         console.log("Evento recibido:", data);
         actualizarTablaTurnos();
+
+        const audio = document.getElementById("audioNotificacion");
+
+        if (audio) {
+            audio.currentTime = 0;
+
+            audio.play().catch(error => {
+                console.error("Error reproduciendo audio:", error);
+            });
+        }
     });
 </script>
 

@@ -80,6 +80,52 @@ include "../header.php";
 
             </div>
 
+            <!-- AGREGADO RECIEN -->
+            <?php
+            $resumen = $conexion->query("
+                SELECT
+                    COUNT(*) AS total,
+                    SUM(CASE WHEN estado_serv = 1 THEN 1 ELSE 0 END) AS activos,
+                    SUM(CASE WHEN estado_serv = 0 THEN 1 ELSE 0 END) AS inactivos
+                FROM servicios
+            ")->fetch_object();
+
+            $totalServicios = $resumen->total;
+            $totalActivos = $resumen->activos;
+            $totalInactivos = $resumen->inactivos;
+            ?>
+
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-muted mb-1">Total Servicios</h6>
+                            <h3 class="mb-0"><?= $totalServicios ?></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-success mb-1">Activos</h6>
+                            <h3 class="mb-0"><?= $totalActivos ?></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-danger mb-1">Inactivos</h6>
+                            <h3 class="mb-0"><?= $totalInactivos ?></h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- Tabla -->
             <div class="table-responsive">
 
@@ -264,29 +310,47 @@ include "../header.php";
                     </div>
                 </div>
 
-                <nav class="mt-4">
-                    <ul class="pagination justify-content-center">
+                <?php
+                $desde = ($totalRegistros > 0) ? $inicio + 1 : 0;
+                $hasta = min($inicio + $registrosPorPagina, $totalRegistros);
+                ?>
 
-                        <!-- Botón anterior -->
-                        <li class="page-item <?= ($pagina <= 1) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">Anterior</a>
-                        </li>
+                <div class="d-flex justify-content-between align-items-center mt-4">
 
-                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                            <li class="page-item <?= ($i == $pagina) ? 'active' : '' ?>">
-                                <a class="page-link" href="?pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>">
-                                    <?= $i ?>
+                    <div class="text-muted small">
+                        Mostrando <?= $desde ?> al <?= $hasta ?> de <?= $totalRegistros ?> servicios
+                    </div>
+
+                    <nav>
+                        <ul class="pagination mb-0">
+
+                            <li class="page-item <?= ($pagina <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link"
+                                    href="?pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">
+                                    Anterior
                                 </a>
                             </li>
-                        <?php endfor; ?>
 
-                        <!-- Botón siguiente -->
-                        <li class="page-item <?= ($pagina >= $totalPaginas) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">Siguiente</a>
-                        </li>
+                            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                                <li class="page-item <?= ($i == $pagina) ? 'active' : '' ?>">
+                                    <a class="page-link"
+                                        href="?pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
 
-                    </ul>
-                </nav>
+                            <li class="page-item <?= ($pagina >= $totalPaginas) ? 'disabled' : '' ?>">
+                                <a class="page-link"
+                                    href="?pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">
+                                    Siguiente
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+
+                </div>
             </div>
 
         </div>

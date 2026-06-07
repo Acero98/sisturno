@@ -251,29 +251,46 @@ include "header.php";
 
                     </tbody>
                 </table>
-                <nav class="mt-4">
-                    <ul class="pagination justify-content-center">
+                <?php
+                $desde = ($totalRegistros > 0) ? $inicio + 1 : 0;
+                $hasta = min($inicio + $registrosPorPagina, $totalRegistros);
+                ?>
 
-                        <!-- Botón anterior -->
-                        <li class="page-item <?= ($pagina <= 1) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">Anterior</a>
-                        </li>
+                <div class="d-flex justify-content-between align-items-center mt-4">
 
-                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                            <li class="page-item <?= ($i == $pagina) ? 'active' : '' ?>">
-                                <a class="page-link" href="?pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>">
-                                    <?= $i ?>
+                    <div class="text-muted small">
+                        Mostrando <?= $desde ?> al <?= $hasta ?> de <?= $totalRegistros ?> registros
+                    </div>
+
+                    <nav>
+                        <ul class="pagination mb-0">
+
+                            <!-- Botón anterior -->
+                            <li class="page-item <?= ($pagina <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">
+                                    Anterior
                                 </a>
                             </li>
-                        <?php endfor; ?>
 
-                        <!-- Botón siguiente -->
-                        <li class="page-item <?= ($pagina >= $totalPaginas) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">Siguiente</a>
-                        </li>
+                            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                                <li class="page-item <?= ($i == $pagina) ? 'active' : '' ?>">
+                                    <a class="page-link" href="?pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
 
-                    </ul>
-                </nav>
+                            <!-- Botón siguiente -->
+                            <li class="page-item <?= ($pagina >= $totalPaginas) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">
+                                    Siguiente
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+
+                </div>
             </div>
 
         </div>

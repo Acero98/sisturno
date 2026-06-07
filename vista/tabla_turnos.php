@@ -11,10 +11,10 @@ permitirSolo(["Super Admin", "Admin", "Operador", "Monitor", "Turnos"]);
 <table class="table table-hover table-turnos align-middle">
     <thead class="table-light">
         <tr>
-            <th style="width: 70px;">N°</th>
-            <th style="width: 220px;">TICKET | SERVICIO</th>
-            <!-- <th>SERVICIO</th> -->
-            <th style="width: 170px;">ESTADO</th>
+            <th style="width: 5%;">N°</th>
+            <th style="width: 55%;">TICKET | SERVICIO</th>
+            <th style="width: 15%;">VENTANILLA</th>
+            <th style="width: 25%;">ESTADO</th>
         </tr>
     </thead>
     <tbody>
@@ -78,6 +78,7 @@ permitirSolo(["Super Admin", "Admin", "Operador", "Monitor", "Turnos"]);
     |   DUP-009 - IR A VENTANILLA 07
     ----------------------------------------------------------*/
             $textoTicket = $datos->numero_tk;
+            $numVentanillaIr = "--";
 
             if ($datos->estado_tk == 'PENDIENTE') {
 
@@ -88,8 +89,9 @@ permitirSolo(["Super Admin", "Admin", "Operador", "Monitor", "Turnos"]);
                 if ($datos->num_ventanilla !== null && $datos->num_ventanilla !== '') {
 
                     // Mostrar ventanilla asignada
-                    $textoTicket .= ' - IR A VENTANILLA ' .
-                        str_pad($datos->num_ventanilla, 2, '0', STR_PAD_LEFT);
+                    $numVentanillaIr = str_pad($datos->num_ventanilla, 2, '0', STR_PAD_LEFT);
+                    //$textoTicket .= ' / IR A VENTANILLA ' . $numVentanillaIr;
+                    $textoTicket;
                 } else {
 
                     // Mostrar cuando no hay ventanilla asignada
@@ -100,25 +102,27 @@ permitirSolo(["Super Admin", "Admin", "Operador", "Monitor", "Turnos"]);
             <tr class="<?= $claseFila ?>">
 
                 <!-- NÚMERO -->
-                <th class="text-center align-middle fw-bold"
-                    style="font-size: 2.5rem; width: 90px;">
+                <th class="text-center align-middle fw-bold numero-turno">
                     <?= $contador ?>
                 </th>
 
                 <!-- TICKET + MENSAJE -->
-                <td class="text-center align-middle fw-bold"
-                    style="font-size: 2.8rem; letter-spacing: 1px;">
+                <td class="text-center align-middle fw-bold ticket-turno">
                     <?= $textoTicket ?>
                 </td>
 
+                <!-- VENTANILLA -->
+                <td class="text-center align-middle fw-bold ventanilla-turno">
+                    <?= $numVentanillaIr ?>
+                </td>
+
                 <!-- ESTADO -->
-                <td class="text-center align-middle"
-                    style="width: 220px;">
+                <td class="text-center align-middle">
                     <span class="badge <?= $badge ?> rounded-pill px-4 py-3"
                         style="font-size: 2rem;">
                         <?= str_replace('_', ' ', $datos->estado_tk) ?>
                     </span>
-                </td>
+                </td>                
             </tr>
         <?php
             $contador++;

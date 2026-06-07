@@ -103,18 +103,23 @@ include "header.php";
 
                         //BUSCAR REGISTRO
                         $buscar = isset($_GET['buscar']) ? trim($_GET['buscar']) : "";
+
                         $filtro = "";
 
                         if (!empty($buscar)) {
                             $buscar = $conexion->real_escape_string($buscar);
-                            $filtro = " AND (u.nombre_user LIKE '%$buscar%' 
-                                                        OR u.usuario_user LIKE '%$buscar%')";
+                            $filtro = " AND (
+                                u.nombre_user LIKE '%$buscar%'
+                                OR u.usuario_user LIKE '%$buscar%'
+                            )";
                         }
 
-                        // Contar total registros con rol operador
-                        $totalRegistrosQuery = $conexion->query("SELECT COUNT(*) as total 
-                                                                FROM usuarios u
-                                                                WHERE id_rol_user = 3 $filtro");
+                        $totalRegistrosQuery = $conexion->query("
+                            SELECT COUNT(*) as total
+                            FROM usuarios u
+                            WHERE (u.id_rol_user = 3 OR u.id_rol_user = 2)
+                            $filtro
+                        ");
 
                         $totalRegistros = $totalRegistrosQuery->fetch_object()->total;
 
@@ -122,12 +127,15 @@ include "header.php";
                         $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 
 
-                        $sql = $conexion->query("SELECT u.*, r.nombre_rol 
-                                                FROM usuarios u 
-                                                INNER JOIN roles r ON u.id_rol_user = r.id_rol 
-                                                WHERE u.id_rol_user = 3 OR u.id_rol_user = 2 $filtro
-                                                ORDER BY u.nombre_user ASC
-                                                LIMIT $inicio, $registrosPorPagina");
+                        $sql = $conexion->query("
+                            SELECT u.*, r.nombre_rol
+                            FROM usuarios u
+                            INNER JOIN roles r ON u.id_rol_user = r.id_rol
+                            WHERE (u.id_rol_user = 3 OR u.id_rol_user = 2)
+                            $filtro
+                            ORDER BY u.nombre_user ASC
+                            LIMIT $inicio, $registrosPorPagina
+                        ");
 
                         // Antes del while, inicializamos el contador según la página actual
                         $contador = $inicio + 1;
@@ -263,17 +271,15 @@ include "header.php";
                                                     <div class="col-md-6 mb-3">
                                                         <label class="form-label">Rol</label>
 
-                                                        <input type="text"
-                                                            class="form-control"
-                                                            value="<?= $datos->nombre_rol ?>"
-                                                            readonly
-                                                            style="background-color: #e9ecef; cursor: not-allowed;">
+                                                        <select name="rol" class="form-select" required>
+                                                            <option value="2" <?= $datos->id_rol_user == 2 ? 'selected' : '' ?>>
+                                                                Admin
+                                                            </option>
 
-                                                        <small class="text-muted">
-                                                            El rol no puede ser modificado.
-                                                        </small>
-
-                                                        <input type="hidden" name="rol" value="3">
+                                                            <option value="3" <?= $datos->id_rol_user == 3 ? 'selected' : '' ?>>
+                                                                Operador
+                                                            </option>
+                                                        </select>
                                                     </div>
 
                                                     <div class="col-md-6 mb-3">
@@ -298,28 +304,44 @@ include "header.php";
 
                     </tbody>
                 </table>
-                <nav class="mt-4">
-                    <ul class="pagination justify-content-center">
+                <?php
+                $desde = ($totalRegistros > 0) ? $inicio + 1 : 0;
+                $hasta = min($inicio + $registrosPorPagina, $totalRegistros);
+                ?>
 
-                        <!-- Botón anterior -->
-                        <li class="page-item <?= ($pagina <= 1) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">Anterior</a>
-                        </li>
+                <div class="d-flex justify-content-between align-items-center mt-4">
 
-                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                            <li class="page-item <?= ($i == $pagina) ? 'active' : '' ?>">
-                                <a class="page-link" href="?pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>">
-                                    <?= $i ?>
+                    <div class="text-muted small">
+                        Mostrando <?= $desde ?> al <?= $hasta ?> de <?= $totalRegistros ?> registros
+                    </div>
+
+                    <nav>
+                        <ul class="pagination mb-0">
+
+                            <li class="page-item <?= ($pagina <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">
+                                    Anterior
                                 </a>
                             </li>
-                        <?php endfor; ?>
 
-                        <!-- Botón siguiente -->
-                        <li class="page-item <?= ($pagina >= $totalPaginas) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">Siguiente</a>
-                        </li>
-                    </ul>
-                </nav>
+                            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                                <li class="page-item <?= ($i == $pagina) ? 'active' : '' ?>">
+                                    <a class="page-link" href="?pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <li class="page-item <?= ($pagina >= $totalPaginas) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">
+                                    Siguiente
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+
+                </div>
             </div>
 
         </div>
@@ -408,8 +430,26 @@ include "header.php";
                         <!-- NUEVO CAMPO ROL -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Rol</label>
-                            <input type="text" class="form-control" value="Operador" readonly>
-                            <input type="hidden" name="rol" value="3">
+
+                            <select name="rol" class="form-select" required>
+                                <option value="">Seleccione un rol</option>
+
+                                <?php
+                                $roles = $conexion->query("
+                                    SELECT id_rol, nombre_rol
+                                    FROM roles
+                                    WHERE id_rol IN (2,3)
+                                    ORDER BY nombre_rol
+                                ");
+
+                                while ($rol = $roles->fetch_object()) {
+                                ?>
+                                    <option value="<?= $rol->id_rol ?>">
+                                        <?= $rol->nombre_rol ?>
+                                    </option>
+                                <?php } ?>
+
+                            </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
