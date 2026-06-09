@@ -110,21 +110,34 @@ include "header.php";
                         if (!empty($buscar)) {
                             $buscar = $conexion->real_escape_string($buscar);
                             $where = "WHERE u.nombre_user LIKE '%$buscar%' 
-                                            OR u.usuario_user LIKE '%$buscar%'";
+                                        OR u.usuario_user LIKE '%$buscar%'
+                                        OR r.nombre_rol LIKE '%$buscar%'
+                                        OR u.estado_user LIKE '%$buscar%'
+                                        ";
                         }
 
                         // Contar total registros
                         $totalRegistrosQuery = $conexion->query("
-                                    SELECT COUNT(*) as total 
-                                    FROM usuarios u
-                                    $where
-                                ");
+                            SELECT COUNT(*) as total
+                            FROM usuarios u
+                            INNER JOIN roles r ON r.id_rol = u.id_rol_user
+                            $where
+                        ");
 
                         $totalRegistros = $totalRegistrosQuery->fetch_object()->total;
 
                         // Total páginas
                         $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 
+                        // Obtener registros
+                        $sql = $conexion->query("
+                            SELECT u.*, r.nombre_rol
+                            FROM usuarios u
+                            INNER JOIN roles r ON u.id_rol_user = r.id_rol
+                            $where
+                            ORDER BY u.nombre_user ASC
+                            LIMIT $inicio, $registrosPorPagina
+                        ");
 
                         $sql = $conexion->query("SELECT u.*, r.nombre_rol 
                                                     FROM usuarios u

@@ -111,7 +111,7 @@
 
     .fila-llamado td,
     .fila-llamado th {
-        animation: parpadeoTurno 2s infinite;
+        animation: parpadeoTurno 5s infinite;
         transition: all 0.2s;
     }
 
