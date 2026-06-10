@@ -38,8 +38,88 @@ include "../header.php";
         </div>
     </div>
 
+    <!-- AGREGADO RECIEN -->
+    <?php
+    $resumen = $conexion->query("
+        SELECT
+            COUNT(*) AS total,
+            SUM(CASE WHEN estado_serv = 1 THEN 1 ELSE 0 END) AS activos,
+            SUM(CASE WHEN estado_serv = 0 THEN 1 ELSE 0 END) AS inactivos,
+            SUM(CASE WHEN prioridad_serv = 'EMERGENCIA' THEN 1 ELSE 0 END) AS emergencia,
+            SUM(CASE WHEN prioridad_serv = 'NORMAL' THEN 1 ELSE 0 END) AS normal,
+            SUM(CASE WHEN prioridad_serv = 'ALTA' THEN 1 ELSE 0 END) AS alta
+        FROM servicios
+    ")->fetch_object();
+
+    $totalServicios = $resumen->total;
+    $totalActivos = $resumen->activos;
+    $totalInactivos = $resumen->inactivos;
+    $totalEmergencia = $resumen->emergencia;
+    $totalNormal = $resumen->normal;
+    $totalAlta = $resumen->alta;
+    ?>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Total Servicios</h6>
+                    <h3 class="mb-0"><?= $totalServicios ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-success mb-1">Activos</h6>
+                    <h3 class="mb-0"><?= $totalActivos ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-danger mb-1">Inactivos</h6>
+                    <h3 class="mb-0"><?= $totalInactivos ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-primary mb-1">Prioridad Normal</h6>
+                    <h3 class="mb-0"><?= $totalNormal ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-warning mb-1">Prioridad Alta</h6>
+                    <h3 class="mb-0"><?= $totalAlta ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-info mb-1">Prioridad Emergencia</h6>
+                    <h3 class="mb-0"><?= $totalEmergencia ?></h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <!-- Tarjeta principal -->
     <div class="card content-card">
+
         <div class="card-body p-4">
 
             <!-- Barra superior -->
@@ -76,52 +156,6 @@ include "../header.php";
                             </button>
                         </div>
                     </form>
-                </div>
-
-            </div>
-
-            <!-- AGREGADO RECIEN -->
-            <?php
-            $resumen = $conexion->query("
-                SELECT
-                    COUNT(*) AS total,
-                    SUM(CASE WHEN estado_serv = 1 THEN 1 ELSE 0 END) AS activos,
-                    SUM(CASE WHEN estado_serv = 0 THEN 1 ELSE 0 END) AS inactivos
-                FROM servicios
-            ")->fetch_object();
-
-            $totalServicios = $resumen->total;
-            $totalActivos = $resumen->activos;
-            $totalInactivos = $resumen->inactivos;
-            ?>
-
-            <div class="row g-3 mb-4">
-
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            <h6 class="text-muted mb-1">Total Servicios</h6>
-                            <h3 class="mb-0"><?= $totalServicios ?></h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            <h6 class="text-success mb-1">Activos</h6>
-                            <h3 class="mb-0"><?= $totalActivos ?></h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            <h6 class="text-danger mb-1">Inactivos</h6>
-                            <h3 class="mb-0"><?= $totalInactivos ?></h3>
-                        </div>
-                    </div>
                 </div>
 
             </div>
