@@ -149,3 +149,11 @@
 .pagination .page-item.active .page-link:focus {
     color: #ffffff !important;
 }
+
+.iconCollapse {
+    transition: transform 0.3s ease;
+}
+
+.iconCollapse.rotado {
+    transform: rotate(180deg);
+}

@@ -161,8 +161,7 @@ $usuarioData = $consultaUser->fetch_object();
                                 <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin' || $_SESSION['rol'] == 'Operador'): ?>
                                     <li>
                                         <a class="dropdown-item"
-                                            href="<?= BASE_URL ?>vista/atencion/atencion_cliente.php"
-                                            target="_blank">
+                                            href="<?= BASE_URL ?>vista/atencion/atencion_cliente.php">
                                             <i class="fa-solid fa-headset me-2 text-primary"></i>Atención al Cliente
                                         </a>
                                     </li>
@@ -190,12 +189,12 @@ $usuarioData = $consultaUser->fetch_object();
                     <?php endif; ?>
 
                     <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin'): ?>
-                        <!-- Empresa -->
+                        <!-- Empresa 
                         <li class="nav-item">
                             <a class="nav-link nav-link-custom" href="#">
                                 <i class="fa-solid fa-building me-2"></i>Empresa
                             </a>
-                        </li>
+                        </li>-->
                     <?php endif; ?>
 
                 </ul>
