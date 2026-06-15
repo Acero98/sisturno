@@ -38,7 +38,10 @@ include "header.php";
                     <i class="fas fa-ticket-alt me-2"></i>
                     SISTEMA DE TURNOS
                 </h1>
-                <div class="fecha-hora" id="fechaHora"></div>
+                <div class="fecha-hora">
+                    <div id="horaActual" class="hora-grande"></div>
+                    <div id="fechaActual" class="fecha-pequena"></div>
+                </div>
             </div>
 
             <div class="video-container">
@@ -176,20 +179,24 @@ include "header.php";
        MOSTRAR FECHA Y HORA
        ========================================================== */
     function actualizarFechaHora() {
+
         const ahora = new Date();
 
-        const opciones = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
+        const hora = ahora.toLocaleTimeString('es-PE', {
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
-        };
+        });
 
-        document.getElementById('fechaHora').textContent =
-            ahora.toLocaleDateString('es-PE', opciones);
+        const fecha = ahora.toLocaleDateString('es-PE', {
+            weekday: 'long',
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        document.getElementById('horaActual').textContent = hora;
+        document.getElementById('fechaActual').textContent = fecha;
     }
 
     actualizarFechaHora();

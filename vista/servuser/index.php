@@ -83,24 +83,24 @@ include "../header.php";
 
 <div class="container-fluid py-4">
 
-    <!-- ENCABEZADO -->
-    <div class="page-header-card mb-4">
+    <!-- Encabezado -->
+    <div class="page-header-card mb-3 py-2">
         <div class="row align-items-center">
 
-            <div class="col-lg-8">
-                <h2>
+            <div class="col-lg-9">
+                <h4 class="mb-1">
                     <i class="fa-solid fa-list-check me-2"></i>
                     Asignación de Servicios
-                </h2>
+                </h4>
 
-                <p>
-                    Selecciona los servicios que estarán disponibles para el operador.
+                <p class="mb-0">
+                    Configura los servicios que estarán disponibles para el operador seleccionado.
                 </p>
             </div>
 
-            <div class="col-lg-4 text-end d-none d-lg-block">
+            <div class="col-lg-3 text-end d-none d-lg-block">
                 <i class="fa-solid fa-user-gear"
-                    style="font-size: 4.5rem; opacity: 0.15;"></i>
+                    style="font-size: 3.5rem; opacity: 0.12;"></i>
             </div>
 
         </div>
@@ -108,29 +108,46 @@ include "../header.php";
 
     <!-- CARD PRINCIPAL -->
     <div class="card content-card">
-        <div class="card-body p-4">
+        <div class="card-body p-3">
 
             <!-- DATOS USUARIO -->
-            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
 
                 <div>
-                    <h5 class="fw-bold mb-1">
+                    <h6 class="fw-bold mb-0">
                         <i class="fa-solid fa-user text-primary me-2"></i>
                         <?= htmlspecialchars($usuario->nombre_user) ?>
-                    </h5>
+                    </h6>
 
-                    <p class="text-muted mb-0">
-                        Configura los servicios asignados a este operador.
-                    </p>
+                    <small class="text-muted">
+                        Servicios habilitados para atención
+                    </small>
                 </div>
 
-                <div class="mt-3 mt-lg-0">
+                <div class="d-flex gap-2">
+                    <button type="button"
+                        class="btn btn-outline-success rounded-pill px-4"
+                        id="btnSeleccionarTodo">
+
+                        <i class="fa-solid fa-check-double me-2"></i>
+                        Seleccionar Todo
+                    </button>
+
+                    <button type="button"
+                        class="btn btn-outline-danger rounded-pill px-4"
+                        id="btnDeseleccionarTodo">
+
+                        <i class="fa-solid fa-xmark me-2"></i>
+                        Deseleccionar Todo
+                    </button>
+
                     <a href="../lista_operadores.php"
                         class="btn btn-outline-secondary rounded-pill px-4">
 
                         <i class="fa-solid fa-arrow-left me-2"></i>
                         Volver
                     </a>
+
                 </div>
 
             </div>
@@ -147,29 +164,8 @@ include "../header.php";
 
                 <?php if ($sqlServicios->num_rows > 0): ?>
 
-                    <!-- BOTONES -->
-                    <div class="d-flex flex-wrap gap-2 mb-4">
-
-                        <button type="button"
-                            class="btn btn-outline-success rounded-pill px-4"
-                            id="btnSeleccionarTodo">
-
-                            <i class="fa-solid fa-check-double me-2"></i>
-                            Seleccionar Todo
-                        </button>
-
-                        <button type="button"
-                            class="btn btn-outline-danger rounded-pill px-4"
-                            id="btnDeseleccionarTodo">
-
-                            <i class="fa-solid fa-xmark me-2"></i>
-                            Deseleccionar Todo
-                        </button>
-
-                    </div>
-
                     <!-- GRID SERVICIOS -->
-                    <div class="row g-4">
+                    <div class="row g-2">
 
                         <?php while ($servicio = $sqlServicios->fetch_object()): ?>
 
@@ -177,7 +173,7 @@ include "../header.php";
                             $checked = in_array($servicio->id_servicios, $asignados);
                             ?>
 
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col-md-6 col-lg-3">
 
                                 <label class="w-100 h-100">
 
@@ -192,9 +188,9 @@ include "../header.php";
                                             ? 'bg-primary text-white border-primary'
                                             : 'border-light-subtle' ?>">
 
-                                        <div class="card-body text-center py-4">
+                                        <div class="card-body text-center py-3">
 
-                                            <div class="mb-3">
+                                            <div class="mb-2">
                                                 <i class="fa-solid fa-concierge-bell fs-2"></i>
                                             </div>
 
@@ -223,25 +219,18 @@ include "../header.php";
                     </div>
 
                 <?php else: ?>
-
                     <div class="alert alert-warning border-0 shadow-sm">
-
                         <i class="fa-solid fa-triangle-exclamation me-2"></i>
                         No existen servicios activos para asignar.
-
                     </div>
-
                 <?php endif; ?>
 
                 <!-- BOTON GUARDAR -->
-                <div class="border-top mt-5 pt-4 text-center">
-
+                <div class="border-top mt-3 pt-3 text-end">
                     <button type="submit"
-                        class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm btnGuardarAsignaciones">
-
+                        class="btn btn-primary px-4 btnGuardarAsignaciones">
                         <i class="fa-solid fa-floppy-disk me-2"></i>
-                        Guardar Asignaciones
-
+                        Guardar
                     </button>
 
                 </div>
