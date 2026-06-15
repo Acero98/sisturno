@@ -86,10 +86,19 @@
     }
 
     /* Reloj opcional */
-    .fecha-hora {
+
+    .hora-grande {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #212529;
+    }
+
+    .fecha-pequena {
         font-size: 2rem;
-        font-weight: 600;
         color: #6c757d;
+        margin-top: 8px;
+        text-transform: capitalize;
     }
 
 

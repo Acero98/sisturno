@@ -26,7 +26,77 @@ if (!$result) {
 $ventanilla = $result->fetch_assoc();
 
 include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
+include_once __DIR__ . "/../../controlador/atencion/estadistica_operador.php";
+include_once __DIR__ . "/../../controlador/atencion/estadistica_servicio.php";
+
+//ESTADO DE LOS TICKETS Y BOTONES
+$estado_ticket = strtoupper(trim($ticket['estado_tk'] ?? 'PENDIENTE'));
+
+$titulo = '';
+$mensaje = '';
+$color = '';
+$claseTicket = '';
+$contador = 1;
+
+switch ($estado_ticket) {
+
+    case 'PENDIENTE':
+        $titulo = 'LLAMAR A';
+        $mensaje = 'En espera de atención';
+        $color = '#e2c002';
+        $claseTicket = 'ticket-parpadeo';
+        break;
+
+    case 'LLAMADO':
+        $titulo = 'TICKET LLAMADO';
+        $mensaje = 'Cliente en traslado a ventanilla';
+        $color = '#0d6efd';
+        $claseTicket = 'ticket-parpadeo';
+        break;
+
+    case 'EN_ATENCION':
+        $titulo = 'ATENDIENDO';
+        $mensaje = 'Atención en proceso';
+        $color = '#198754';
+        $claseTicket = 'ticket-atendiendo';
+        break;
+}
 ?>
+<style>
+    .ticket-card {
+        border-radius: 18px;
+        overflow: hidden;
+    }
+
+    .ticket-numero {
+        font-size: 5rem;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: 4px;
+    }
+
+    .ticket-parpadeo {
+        animation: ticketPulse 1.5s infinite;
+    }
+
+    .ticket-atendiendo {
+        text-shadow: 0 0 15px rgba(25, 135, 84, .35);
+    }
+
+    @keyframes ticketPulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.08);
+            opacity: .85;
+        }
+    }
+</style>
 
 <div class="container-fluid py-4">
 
@@ -55,135 +125,102 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
         <?php if ($estado_ticket === 'PENDIENTE'): ?>
 
             <!-- ==========================================================
-             TICKET AÚN NO HA SIDO LLAMADO
+            TICKET AÚN NO HA SIDO LLAMADO
         =========================================================== -->
             <div class="card border-0 shadow-sm ticket-card mb-4">
-                <div class="card-body text-center py-4">
-
-                    <div class="text-uppercase text-muted fw-bold mb-2"
-                        style="letter-spacing: 3px;">
-                        LLARMAR A
+                <div class="card-body py-3">
+                    <div class="row align-items-center">
+                        <!-- Ticket -->
+                        <div class="col-md-6 text-center border-end">
+                            <div class="ticket-numero <?= $claseTicket ?>"
+                                style="color: <?= $color ?>;">
+                                <?= htmlspecialchars($ticket['numero_tk']) ?>
+                            </div>
+                        </div>
+                        <!-- Información -->
+                        <div class="col-md-6 text-center">
+                            <div class="text-uppercase text-muted fw-bold mb-2"
+                                style="letter-spacing:3px;">
+                                <?= $titulo ?>
+                            </div>
+                            <div class="fw-bold fs-2 text-dark">
+                                <?= htmlspecialchars($ticket['servicio']) ?>
+                            </div>
+                            <div class="text-secondary mt-1">
+                                <?= $mensaje ?>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="ticket-llamado">
-                        <?= htmlspecialchars($ticket['numero_tk']) ?>
-                    </div>
-
-                    <div class="text-secondary">
-                        En espera de atención
-                    </div>
-
                 </div>
             </div>
 
-            <style>
-                .ticket-card {
-                    border-radius: 18px;
-                    overflow: hidden;
-                }
-
-                .ticket-llamado {
-                    font-size: 6rem;
-                    font-weight: 800;
-                    color: #e2c002;
-                    line-height: 1;
-                    letter-spacing: 4px;
-                    animation: ticketPulse 1.5s infinite;
-                }
-
-                @keyframes ticketPulse {
-
-                    0%,
-                    100% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-
-                    50% {
-                        transform: scale(1.08);
-                        opacity: .85;
-                    }
-                }
-            </style>
-
             <div class="text-center mb-4">
-                <button class="btn btn-primary btn-lg w-100 py-3 fw-bold"
+                <button
+                    class="btn btn-primary btn-lg w-100 py-3 fw-bold"
                     onclick="llamarTicket(this)"
                     data-ticket="<?= $ticket['numero_tk'] ?>">
+
                     LLAMAR A <?= $ticket['numero_tk'] ?>
+
                 </button>
             </div>
 
         <?php elseif ($estado_ticket === 'LLAMADO'): ?>
 
             <!-- ==========================================================
-             TICKET YA FUE LLAMADO
+            TICKET YA FUE LLAMADO
         =========================================================== -->
             <div class="card border-0 shadow-sm ticket-card mb-4">
-                <div class="card-body text-center py-4">
-
-                    <div class="text-uppercase text-muted fw-bold mb-2"
-                        style="letter-spacing: 3px;">
-                        Ticket llamado
+                <div class="card-body py-3">
+                    <div class="row align-items-center">
+                        <!-- Ticket -->
+                        <div class="col-md-6 text-center border-end">
+                            <div class="ticket-numero <?= $claseTicket ?>"
+                                style="color: <?= $color ?>;">
+                                <?= htmlspecialchars($ticket['numero_tk']) ?>
+                            </div>
+                        </div>
+                        <!-- Información -->
+                        <div class="col-md-6 text-center">
+                            <div class="text-uppercase text-muted fw-bold mb-2"
+                                style="letter-spacing:3px;">
+                                <?= $titulo ?>
+                            </div>
+                            <div class="fw-bold fs-2 text-dark">
+                                <?= htmlspecialchars($ticket['servicio']) ?>
+                            </div>
+                            <div class="text-secondary mt-1">
+                                <?= $mensaje ?>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="ticket-llamado">
-                        <?= htmlspecialchars($ticket['numero_tk']) ?>
-                    </div>
-
-                    <div class="text-secondary">
-                        En espera de atención
-                    </div>
-
                 </div>
             </div>
 
-            <style>
-                .ticket-card {
-                    border-radius: 18px;
-                    overflow: hidden;
-                }
+            <div class="row g-3">
 
-                .ticket-llamado {
-                    font-size: 6rem;
-                    font-weight: 800;
-                    color: #0d6efd;
-                    line-height: 1;
-                    letter-spacing: 4px;
-                    animation: ticketPulse 1.5s infinite;
-                }
-
-                @keyframes ticketPulse {
-
-                    0%,
-                    100% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-
-                    50% {
-                        transform: scale(1.08);
-                        opacity: .85;
-                    }
-                }
-            </style>
-
-            <div class="row g-3 mb-4">
-                <!-- BOTÓN COMENZAR ATENCIÓN -->
                 <div class="col-md-6">
-                    <button class="btn btn-success btn-lg w-100 py-3 fw-bold" onclick="comenzarAtencion(this)" data-ticket="<?= $ticket['numero_tk'] ?>">
+                    <button
+                        class="btn btn-success btn-lg w-100 py-3 fw-bold"
+                        onclick="comenzarAtencion(this)"
+                        data-ticket="<?= $ticket['numero_tk'] ?>">
+
                         COMENZAR ATENCIÓN
+
                     </button>
                 </div>
 
-                <!-- BOTÓN CANCELAR ATENCIÓN -->
                 <div class="col-md-6">
-                    <button class="btn btn-danger btn-lg w-100 py-3 fw-bold"
+                    <button
+                        class="btn btn-danger btn-lg w-100 py-3 fw-bold"
                         onclick="cancelarAtencion(this)"
                         data-ticket="<?= $ticket['numero_tk'] ?>">
-                        CANCELAR ATENCIÓN
+
+                        CANCELAR
+
                     </button>
                 </div>
+
             </div>
 
             <!-- Mensaje para el operador 
@@ -197,29 +234,58 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
             <!-- ==========================================================
          TICKET EN PROCESO DE ATENCIÓN
     =========================================================== -->
-            <div class="alert alert-light text-center fw-bold fs-1 text-success">
-                ATENDIENDO <?= $ticket['numero_tk'] ?>
+            <div class="card border-0 shadow-sm ticket-card mb-4">
+                <div class="card-body py-3">
+                    <div class="row align-items-center">
+                        <!-- Ticket -->
+                        <div class="col-md-6 text-center border-end">
+                            <div class="ticket-numero <?= $claseTicket ?>"
+                                style="color: <?= $color ?>;">
+                                <?= htmlspecialchars($ticket['numero_tk']) ?>
+                            </div>
+                        </div>
+                        <!-- Información -->
+                        <div class="col-md-6 text-center">
+                            <div class="text-uppercase text-muted fw-bold mb-2"
+                                style="letter-spacing:3px;">
+                                <?= $titulo ?>
+                            </div>
+                            <div class="fw-bold fs-2 text-dark">
+                                <?= htmlspecialchars($ticket['servicio']) ?>
+                            </div>
+                            <div class="text-secondary mt-1">
+                                <?= $mensaje ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- BOTONES DE ACCIÓN -->
-            <div class="row g-3 mb-4">
-                <!-- FINALIZAR ATENCIÓN -->
+            <div class="row g-3">
+
                 <div class="col-md-6">
-                    <button class="btn btn-primary btn-lg w-100 py-3 fw-bold"
+                    <button
+                        class="btn btn-primary btn-lg w-100 py-3 fw-bold"
                         onclick="finalizarAtencion(this)"
                         data-ticket="<?= $ticket['numero_tk'] ?>">
+
                         FINALIZAR ATENCIÓN
+
                     </button>
                 </div>
 
-                <!-- CANCELAR ATENCIÓN -->
                 <div class="col-md-6">
-                    <button class="btn btn-danger btn-lg w-100 py-3 fw-bold"
+                    <button
+                        class="btn btn-danger btn-lg w-100 py-3 fw-bold"
                         onclick="cancelarAtencion(this)"
                         data-ticket="<?= $ticket['numero_tk'] ?>">
-                        CANCELAR ATENCIÓN
+
+                        CANCELAR
+
                     </button>
                 </div>
+
             </div>
 
         <?php else: ?>
@@ -245,7 +311,7 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
     <div class="row g-4 mt-2">
 
         <!-- COLUMNA IZQUIERDA -->
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             <div class="card card-custom shadow-sm border-0 h-100">
 
                 <!-- ENCABEZADO -->
@@ -294,6 +360,7 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
                                         <th style="width: 60px;">#</th>
                                         <th style="width: 130px;">Estado</th>
                                         <th>Ticket</th>
+                                        <th>Servicio</th>
                                     </tr>
                                 </thead>
 
@@ -325,17 +392,15 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
                                                     <?= str_replace('_', ' ', $t['estado']) ?>
                                                 </span>
                                             </td>
-
                                             <!-- TICKET -->
                                             <td>
                                                 <div class="fw-bold text-primary fs-5">
                                                     <?= $t['ticket'] ?>
                                                 </div>
-
+                                            </td>
+                                            <td>
                                                 <?php if (!empty($t['servicio'])): ?>
-                                                    <small class="text-muted">
-                                                        <?= $t['servicio'] ?>
-                                                    </small>
+                                                    <?= $t['servicio'] ?>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -368,19 +433,150 @@ include_once __DIR__ . "/../../controlador/atencion/obtener_ticket.php";
         </div>
 
         <!-- COLUMNA DERECHA -->
-        <div class="col-lg-7">
-            <div class="card card-custom shadow-sm text-center">
-                <div class="card-body empty-state py-5">
+        <div class="col-lg-6">
+            <!-- Tarjetas -->
+            <div class="row g-3">
+                <!-- tarjetas aquí -->
+                <!-- Atendidos -->
+                <div class="col-md-2">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Atendidos Hoy</small>
+                                    <h2 class="fw-bold text-primary mb-0">
+                                        <?= $estadisticas['total_tickets'] ?? 0 ?>
+                                    </h2>
+                                </div>
+                                <i class="bi bi-check-circle-fill text-success fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    <!-- Puedes reemplazar por tu imagen -->
-                    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076505.png" class="mb-4"
-                        alt="Esperando atención">
+                <!-- En Espera -->
+                <div class="col-md-2">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">En Espera</small>
+                                    <h2 class="fw-bold text-warning mb-0">
+                                        <?= count($tickets) ?? 0 ?>
+                                    </h2>
+                                </div>
+                                <i class="bi bi-hourglass-split text-warning fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    <h5 class="fw-bold">ESPERANDO POR UNA ATENCIÓN</h5>
-                    <p class="text-muted">
-                        Llama a un usuario para iniciar con una operación
-                    </p>
+                <!-- Finalizados -->
+                <div class="col-md-2">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Finalizados</small>
+                                    <h2 class="fw-bold text-success mb-0">
+                                        <?= $estadisticas['finalizados'] ?? 0 ?>
+                                    </h2>
+                                </div>
+                                <i class="bi bi-clipboard-check-fill text-info fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Cancelados -->
+                <div class="col-md-2">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Cancelados</small>
+                                    <h2 class="fw-bold text-danger mb-0">
+                                        <?= $estadisticas['cancelados'] ?? 0 ?>
+                                    </h2>
+                                </div>
+                                <i class="bi bi-x-circle-fill text-secondary fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tiempo Atención -->
+                <div class="col-md-2">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Prom. Atención</small>
+                                    <h2 class="fw-bold text-info mb-0">
+                                        <?= round($promedio['promedio_atencion'] ?? 0) ?> min
+                                    </h2>
+                                </div>
+                                <i class="bi bi-stopwatch-fill text-primary fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tiempo Espera -->
+                <div class="col-md-2">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Prom. Espera</small>
+                                    <h2 class="fw-bold text-info mb-0">
+                                        <?= round($espera['promedio_espera'] ?? 0) ?> min
+                                    </h2>
+                                </div>
+                                <i class="bi bi-clock-history text-danger fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla servicios -->
+            <div class="card shadow-sm border-0 mt-3">
+                <div class="card-header bg-info text-dark fw-bold">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Atenciones por Servicio
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Servicio</th>
+                                    <th width="100" class="text-center">
+                                        Cantidad
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($fila = $servicios->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?=$contador?></td>
+                                        <td>
+                                            <?= htmlspecialchars($fila['nombre_serv']) ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?= $fila['cantidad'] ?>
+                                        </td>
+                                    </tr>
+
+                                    <?php
+                                    $contador = $contador + 1;
+                                    ?>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

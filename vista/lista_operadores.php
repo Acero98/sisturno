@@ -111,12 +111,20 @@ include "header.php";
                             $filtro = " AND (
                                 u.nombre_user LIKE '%$buscar%'
                                 OR u.usuario_user LIKE '%$buscar%'
+                                OR r.nombre_rol LIKE '%$buscar%'
+                                OR u.dni_user LIKE '%$buscar%'
+                                OR u.puesto_user LIKE '%$buscar%'
+                                OR u.oficina_user LIKE '%$buscar%'
+                                OR u.num_ventanilla LIKE '%$buscar%'
+                                OR ('$buscar' = 'activo' AND u.estado_user = 1)
+                                OR ('$buscar' = 'inactivo' AND u.estado_user = 0)
                             )";
                         }
 
                         $totalRegistrosQuery = $conexion->query("
                             SELECT COUNT(*) as total
                             FROM usuarios u
+                            INNER JOIN roles r ON u.id_rol_user = r.id_rol
                             WHERE (u.id_rol_user = 3 OR u.id_rol_user = 2)
                             $filtro
                         ");
@@ -125,7 +133,6 @@ include "header.php";
 
                         // Total páginas
                         $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
-
 
                         $sql = $conexion->query("
                             SELECT u.*, r.nombre_rol
@@ -159,11 +166,13 @@ include "header.php";
                                 <td>
                                     <div class="d-flex gap-2 justify-content-center action-buttons">
 
-                                        <button class="btn btn-warning btn-sm"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalEditar<?= $datos->id_usuario ?>"
-                                            title="Editar">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        <button
+                                            class="btn btn-sm btn-light btnCollapse"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#servicios<?= $datos->id_usuario ?>"
+                                            aria-expanded="false">
+
+                                            <i class="fa-solid fa-chevron-down iconCollapse"></i>
                                         </button>
 
                                         <a href="servuser/index.php?id_usuario=<?= $datos->id_usuario ?>"
@@ -171,6 +180,13 @@ include "header.php";
                                             title="Asignar servicios">
                                             <i class="fa-solid fa-list-check"></i>
                                         </a>
+
+                                        <button class="btn btn-warning btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalEditar<?= $datos->id_usuario ?>"
+                                            title="Editar">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
 
                                         <?php if ($datos->estado_user == 1): ?>
                                             <a href="#"
@@ -189,6 +205,55 @@ include "header.php";
                                         <?php endif; ?>
 
                                     </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11" class="p-0 border-0">
+
+                                    <div class="collapse"
+                                        id="servicios<?= $datos->id_usuario ?>">
+
+                                        <div class="p-3 bg-light border-top">
+
+                                            <h6 class="fw-bold mb-3">
+                                                <i class="fa-solid fa-list-check me-2"></i>
+                                                Servicios asignados
+                                            </h6>
+
+                                            <?php
+
+                                            $idUsuario = $datos->id_usuario;
+
+                                            $servicios = $conexion->query("
+                                                SELECT s.nombre_serv
+                                                FROM operador_servicios os
+                                                INNER JOIN servicios s
+                                                    ON os.id_servicio = s.id_servicios
+                                                WHERE os.id_usuario = $idUsuario
+                                            ");
+
+                                            if ($servicios && $servicios->num_rows > 0) {
+
+                                                while ($servicio = $servicios->fetch_object()) {
+                                                    echo '
+                                                    <span class="badge bg-primary me-2 mb-2">
+                                                        ' . $servicio->nombre_serv . '
+                                                    </span>';
+                                                }
+                                            } else {
+
+                                                echo '
+                                                <span class="text-muted">
+                                                    No tiene servicios asignados.
+                                                </span>';
+                                            }
+
+                                            ?>
+
+                                        </div>
+
+                                    </div>
+
                                 </td>
                             </tr>
 

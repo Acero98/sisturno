@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     document.querySelectorAll(".btnEliminar").forEach(btn => {
 
-        btn.addEventListener("click", function(e){
+        btn.addEventListener("click", function (e) {
             e.preventDefault();
 
             let id = this.dataset.id;
@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // DESACTIVAR
-    document.addEventListener("click", function(e){
+    document.addEventListener("click", function (e) {
 
-        if(e.target.closest(".btnDesactivarOpe")){
+        if (e.target.closest(".btnDesactivarOpe")) {
 
             const boton = e.target.closest(".btnDesactivarOpe");
             const id = boton.dataset.id;
@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ACTIVAR
-    document.addEventListener("click", function(e){
+    document.addEventListener("click", function (e) {
 
-        if(e.target.closest(".btnActivarOpe")){
+        if (e.target.closest(".btnActivarOpe")) {
 
             const boton = e.target.closest(".btnActivarOpe");
             const id = boton.dataset.id;
@@ -91,9 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // =========================
     // EDITAR USUARIO
-    document.addEventListener("submit", function(e){
+    document.addEventListener("submit", function (e) {
 
-        if(!e.target.classList.contains("formEditarUsuario")) return;
+        if (!e.target.classList.contains("formEditarUsuario")) return;
 
         e.preventDefault();
 
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
 
-            if(result.isConfirmed){
+            if (result.isConfirmed) {
                 form.submit();
             }
 
@@ -121,14 +121,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     // REGISTRAR USUARIO
     // =========================
-    document.addEventListener("click", function(e){
+    document.addEventListener("click", function (e) {
 
-        if(e.target.closest(".btnConfirmarRegistroOpe")){
+        if (e.target.closest(".btnConfirmarRegistroOpe")) {
 
             const boton = e.target.closest(".btnConfirmarRegistroOpe");
             const form = boton.closest("form");
 
-            if(!form){
+            if (!form) {
                 console.log("No se encontró el formulario");
                 return;
             }
@@ -151,12 +151,43 @@ document.addEventListener("DOMContentLoaded", function () {
             }).then((result) => {
 
                 if (result.isConfirmed) {
-                form.requestSubmit(); // AQUÍ ESTÁ LA CLAVE
+                    form.requestSubmit(); // AQUÍ ESTÁ LA CLAVE
                 }
 
             });
 
         }
+
+    });
+
+    //VOLTERAR ICONO DE SERVICIOS
+    document.querySelectorAll('.collapse').forEach(function (collapseElement) {
+
+        collapseElement.addEventListener('show.bs.collapse', function () {
+
+            const boton = document.querySelector(
+                `[data-bs-target="#${this.id}"]`
+            );
+
+            if (boton) {
+                boton.querySelector('.iconCollapse')
+                    .classList.add('rotado');
+            }
+
+        });
+
+        collapseElement.addEventListener('hide.bs.collapse', function () {
+
+            const boton = document.querySelector(
+                `[data-bs-target="#${this.id}"]`
+            );
+
+            if (boton) {
+                boton.querySelector('.iconCollapse')
+                    .classList.remove('rotado');
+            }
+
+        });
 
     });
 
@@ -180,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (mensaje === "desactivado") {
-    mostrarMensaje('Desactivado', 'El operador fue desactivado.', 'success', '#dc3545');
+        mostrarMensaje('Desactivado', 'El operador fue desactivado.', 'success', '#dc3545');
     }
 
     if (mensaje === "activado") {
@@ -188,14 +219,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (mensaje === "usuario_existe") {
-    mostrarMensaje('Duplicado', 'El usurio ya existe.', 'warning', '#ffc107');
+        mostrarMensaje('Duplicado', 'El usurio ya existe.', 'warning', '#ffc107');
     }
 
     if (mensaje === "dni_existe") {
-    mostrarMensaje('Duplicado', 'El dni ya existe.', 'warning', '#ffc107');
+        mostrarMensaje('Duplicado', 'El dni ya existe.', 'warning', '#ffc107');
     }
 
-    function mostrarMensaje(titulo, texto, icono, color){
+    function mostrarMensaje(titulo, texto, icono, color) {
         Swal.fire({
             title: titulo,
             text: texto,

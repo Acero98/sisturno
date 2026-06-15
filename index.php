@@ -221,7 +221,7 @@ include "vista/header.php";
             </div>
         </div>
 
-        <!-- Top Procesos -->
+        <!-- Top Procesos 
         <div class="col-lg-6">
             <div class="card dashboard-card shadow-sm h-100">
                 <div class="card-body p-4">
@@ -240,35 +240,35 @@ include "vista/header.php";
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if ($topServicios && $topServicios->num_rows > 0): ?>
-                                    <?php while ($row = $topServicios->fetch_assoc()): ?>
+                                <php if ($topServicios && $topServicios->num_rows > 0): ?>
+                                    <php while ($row = $topServicios->fetch_assoc()): ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($row['nombre_serv']) ?></td>
+                                            <td><= htmlspecialchars($row['nombre_serv']) ?></td>
                                             <td>
                                                 <span class="badge badge-custom">
-                                                    <?= htmlspecialchars($row['codigo_serv']) ?>
+                                                    <= htmlspecialchars($row['codigo_serv']) ?>
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <strong><?= number_format($row['total_atenciones']) ?></strong>
+                                                <strong><= number_format($row['total_atenciones']) ?></strong>
                                             </td>
                                         </tr>
-                                    <?php endwhile; ?>
-                                <?php else: ?>
+                                    <php endwhile; ?>
+                                <php else: ?>
                                     <tr>
                                         <td colspan="3" class="text-center text-muted py-4">
                                             No existen registros para hoy.
                                         </td>
                                     </tr>
-                                <?php endif; ?>
+                                <php endif; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
-        <!-- Top Empleados -->
+        <!-- Top Empleados 
         <div class="col-lg-6">
             <div class="card dashboard-card shadow-sm h-100">
                 <div class="card-body p-4">
@@ -287,33 +287,33 @@ include "vista/header.php";
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if ($topEmpleados && $topEmpleados->num_rows > 0): ?>
-                                    <?php while ($row = $topEmpleados->fetch_assoc()): ?>
+                                <php if ($topEmpleados && $topEmpleados->num_rows > 0): ?>
+                                    <php while ($row = $topEmpleados->fetch_assoc()): ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($row['nombre_empleado']) ?></td>
+                                            <td><= htmlspecialchars($row['nombre_empleado']) ?></td>
                                             <td>
                                                 <span class="badge badge-custom">
-                                                    <?= htmlspecialchars($row['dni_user'] ?? 'S/C') ?>
+                                                    <= htmlspecialchars($row['dni_user'] ?? 'S/C') ?>
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <strong><?= number_format($row['total_atenciones']) ?></strong>
+                                                <strong><= number_format($row['total_atenciones']) ?></strong>
                                             </td>
                                         </tr>
-                                    <?php endwhile; ?>
-                                <?php else: ?>
+                                    <php endwhile; ?>
+                                <php else: ?>
                                     <tr>
                                         <td colspan="3" class="text-center text-muted py-4">
                                             No existen atenciones finalizadas el día de hoy.
                                         </td>
                                     </tr>
-                                <?php endif; ?>
+                                <php endif; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
     </div>
 
