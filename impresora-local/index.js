@@ -4,8 +4,9 @@ const path = require("path");
 const PDFDocument = require("pdfkit");
 const { print } = require("pdf-to-printer");
 
-const SOCKET_URL = "http://192.168.0.6:3000";
-const PRINTER_NAME = "POS-80-Series";
+const SOCKET_URL = "http://192.168.100.120:3000";
+const PRINTER_NAME = "Microsoft Print to PDF";
+//const PRINTER_NAME = "POS-80-Series";
 
 const socket = io(SOCKET_URL);
 

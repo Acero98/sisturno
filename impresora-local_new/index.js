@@ -1,0 +1,248 @@
+const io = require("socket.io-client");
+const fs = require("fs");
+const path = require("path");
+const PDFDocument = require("pdfkit");
+const { print } = require("pdf-to-printer");
+
+const SOCKET_URL = "http://192.168.100.120:3000";
+const PRINTER_NAME = "Microsoft Print to PDF"; // o tu impresora real
+
+const socket = io(SOCKET_URL);
+
+socket.on("connect", () => {
+    console.log("Conectado al servidor:", socket.id);
+});
+
+socket.on("disconnect", () => {
+    console.log("Desconectado del servidor.");
+});
+
+socket.on("imprimir_ticket", async (data) => {
+    try {
+        if (!data?.ticket) {
+            console.log("No se recibió un ticket válido.");
+            return;
+        }
+
+        const fecha = new Date().toLocaleString("es-PE");
+
+        // ✔ Archivo único para evitar conflictos
+        const archivo = path.join(__dirname, `ticket_${Date.now()}.pdf`);
+
+        const doc = new PDFDocument({
+            size: [226.77, 1000],
+            margins: {
+                top: 8,
+                bottom: 8,
+                left: 8,
+                right: 8
+            }
+        });
+
+        const stream = fs.createWriteStream(archivo);
+        doc.pipe(stream);
+
+        // =========================
+        // CONTENIDO DEL TICKET
+        // =========================
+
+        doc.font("Helvetica-Bold")
+            .fontSize(14)
+            .text("EPS ILO S.A.", { align: "center" });
+
+        doc.moveDown(0.3);
+
+        doc.font("Helvetica")
+            .fontSize(10)
+            .text("--------------------------------", { align: "center" });
+
+        doc.moveDown(0.5);
+
+        doc.font("Helvetica-Bold")
+            .fontSize(34)
+            .text(data.ticket, { align: "center" });
+
+        if (data.servicio) {
+            doc.moveDown(0.2);
+
+            doc.font("Helvetica-Bold")
+                .fontSize(18)
+                .text(data.servicio.toUpperCase(), { align: "center" });
+        }
+
+        doc.moveDown(0.5);
+
+        doc.font("Helvetica")
+            .fontSize(11)
+            .text("Espere su turno, por favor", { align: "center" });
+
+        doc.moveDown(0.3);
+
+        doc.fontSize(9)
+            .text(fecha, { align: "center" });
+
+        doc.moveDown(0.3);
+
+        doc.fontSize(10)
+            .text("--------------------------------", { align: "center" });
+
+        // ✔ FINALIZAR PDF
+        doc.end();
+
+        // =========================
+        // ESPERAR PDF LISTO
+        // =========================
+        await new Promise((resolve, reject) => {
+            stream.on("finish", resolve);
+            stream.on("error", reject);
+        });
+
+        // ✔ Delay extra para Windows (MUY IMPORTANTE)
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // =========================
+        // IMPRIMIR
+        // =========================
+        await print(archivo, {
+            printer: PRINTER_NAME
+        });
+
+        console.log(`Ticket ${data.ticket} enviado a impresión.`);
+
+    } catch (error) {
+        console.error("Error al imprimir:", error);
+    }
+});
+
+/*const io = require("socket.io-client");
+const fs = require("fs");
+const path = require("path");
+const PDFDocument = require("pdfkit");
+const { print } = require("pdf-to-printer");
+
+const SOCKET_URL = "http://localhost:3000";
+const PRINTER_NAME = "Microsoft Print to PDF";
+
+const socket = io(SOCKET_URL);
+
+socket.on("connect", () => {
+    console.log("Conectado al servidor:", socket.id);
+});
+
+socket.on("disconnect", () => {
+    console.log("Desconectado del servidor.");
+});
+
+socket.on("imprimir_ticket", async (data) => {
+    try {
+        if (!data.ticket) {
+            console.log("No se recibió un ticket válido.");
+            return;
+        }
+
+        const fecha = new Date().toLocaleString("es-PE");
+
+        // Archivo PDF temporal
+        const archivo = path.join(__dirname, "ticket.pdf");
+
+        // Tamaño del ticket: 80 mm de ancho
+        // 80 mm ≈ 226.77 puntos PDF
+        const doc = new PDFDocument({
+            size: [226.77, 1000], // altura grande temporal
+            margins: {
+                top: 8,
+                bottom: 8,
+                left: 8,
+                right: 8
+            }
+        });
+
+        const stream = fs.createWriteStream(archivo);
+        doc.pipe(stream);
+
+        // Encabezado
+        doc
+            .font("Helvetica-Bold")
+            .fontSize(14)
+            .text("EPS ILO S.A.", {
+                align: "center"
+            });
+
+        doc.moveDown(0.3);
+
+        doc
+            .font("Helvetica")
+            .fontSize(10)
+            .text("--------------------------------", {
+                align: "center"
+            });
+
+        doc.moveDown(0.5);
+
+        // Ticket grande y centrado
+        doc
+            .font("Helvetica-Bold")
+            .fontSize(34)
+            .text(data.ticket, {
+                align: "center"
+            });
+
+        // Nombre del servicio
+        if (data.servicio) {
+            doc.moveDown(0.2);
+
+            doc
+                .font("Helvetica-Bold")
+                .fontSize(18)
+                .text(data.servicio.toUpperCase(), {
+                    align: "center"
+                });
+        }
+
+
+        doc.moveDown(0.5);
+
+        doc
+            .font("Helvetica")
+            .fontSize(11)
+            .text("Espere su turno, por favor", {
+                align: "center"
+            });
+
+        doc.moveDown(0.3);
+
+        doc
+            .fontSize(9)
+            .text(fecha, {
+                align: "center"
+            });
+
+        doc.moveDown(0.3);
+
+        doc
+            .fontSize(10)
+            .text("--------------------------------", {
+                align: "center"
+            });
+
+        doc.page.height = doc.y + 10;
+
+        doc.end();
+
+        // Esperar a que el PDF termine de generarse
+        await new Promise((resolve, reject) => {
+            stream.on("finish", resolve);
+            stream.on("error", reject);
+        });
+
+        // Imprimir
+        await print(archivo, {
+            printer: PRINTER_NAME
+        });
+
+        console.log(`Ticket ${data.ticket} enviado a impresión.`);
+    } catch (error) {
+        console.error("Error al imprimir:", error);
+    }
+});
+*/

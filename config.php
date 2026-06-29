@@ -1,13 +1,13 @@
 <?php
 
-define("BASE_URL", "http://localhost/sisturno/");
-define("SOCKETURL", "http://localhost:3000");
-define("BASE_FAVICON", "http://localhost/sisturno/assets/img/epsilo-favicon.png");
-define("BASE_LOGO_LOGIN", "http://localhost/sisturno/assets/img/epsilo-logo.png");
-define("BASE_LOGO_BLANCO", "http://localhost/sisturno/assets/img/epsilo40x47.png");
+define("BASE_URL", "http://192.168.100.120/sisturno/");
+define("SOCKETURL", "http://192.168.100.120:3000");
+define("BASE_FAVICON", "http://192.168.100.120/sisturno/assets/img/OlivaTech-Circulo.png");
+define("BASE_LOGO_LOGIN", "http://192.168.100.120/sisturno/assets/img/OlivaTech-Circulo.png");
+define("BASE_LOGO_BLANCO", "http://192.168.100.120/sisturno/assets/img/OlivaTech-Circulo.png");
 
-define("URL_VIDEO", "http://localhost/sisturnomedios/videos/");
-define("URL_AUDIO", "http://localhost/sisturnomedios/audios/");
+define("URL_VIDEO", "http://192.168.100.120/sisturnomedios/videos/");
+define("URL_AUDIO", "http://192.168.100.120/sisturnomedios/audios/");
 
 /*
 define("BASE_URL", "http://192.168.0.6/sisturno/");
