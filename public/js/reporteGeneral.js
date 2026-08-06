@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //TOTAL DE DE ACUERDO AL ESTADO
 
-    const chartEstados = new ApexCharts(
+    /*const chartEstados = new ApexCharts(
         document.querySelector("#chartEstados"),
         {
             chart: {
@@ -154,6 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-    chartEstados.render();
+    chartEstados.render();*/
 
 });

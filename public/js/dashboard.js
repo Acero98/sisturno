@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    console.log(window.dashboardData);
+    //console.log(window.dashboardData);
 
     // ==============================
     // HORAS PICO
