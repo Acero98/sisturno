@@ -35,8 +35,8 @@ class OperadorController
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redireccionar('error');
         }
-        $datos = $this->datosFormulario();
-        if (!$this->datosValidos($datos, true)) {
+        $datos = $this->datosFormulario(true);
+        if (!$this->datosValidos($datos, true, true)) {
             $this->redireccionar('obligatorio');
         }
         if ($this->model->existeUsuario($datos['usuario'])) {
@@ -59,9 +59,10 @@ class OperadorController
         if ($id <= 0 || !$this->datosValidos($datos)) {
             $this->redireccionar('obligatorio');
         }
+        /*
         if ($this->model->existeUsuario($datos['usuario'], $id)) {
             $this->redireccionar('usuario_existe');
-        }
+        }*/
         if ($this->model->existeDni($datos['dni'], $id)) {
             $this->redireccionar('dni_existe');
         }
@@ -83,10 +84,9 @@ class OperadorController
         $this->redireccionar($this->model->cambiarEstado($id, $estado) ? $mensaje : 'error');
     }
 
-    private function datosFormulario()
+    private function datosFormulario($incluirUsuario = false)
     {
-        return [
-            'usuario' => trim($_POST['usuario'] ?? ''),
+        $datos = [
             'password' => $_POST['password'] ?? '',
             'nombre' => trim($_POST['nombre'] ?? ''),
             'dni' => trim($_POST['dni'] ?? ''),
@@ -97,11 +97,15 @@ class OperadorController
             'rol' => (int) ($_POST['rol'] ?? 0),
             'ventanilla' => trim($_POST['ventanilla'] ?? '')
         ];
+        if ($incluirUsuario) {
+            $datos['usuario'] = trim($_POST['usuario'] ?? '');
+        }
+        return $datos;
     }
 
-    private function datosValidos($datos, $passwordObligatorio = false)
+    private function datosValidos($datos, $passwordObligatorio = false, $usuarioObligatorio = false)
     {
-        return $datos['usuario'] !== '' && $datos['nombre'] !== '' && $datos['dni'] !== '' &&
+        return (!$usuarioObligatorio || (!empty($datos['usuario']))) && $datos['nombre'] !== '' && $datos['dni'] !== '' &&
             in_array($datos['genero'], ['M', 'F'], true) && $datos['puesto'] !== '' &&
             $datos['oficina'] !== '' && $datos['ventanilla'] !== '' && in_array($datos['rol'], [2, 3], true) &&
             (!$passwordObligatorio || $datos['password'] !== '');

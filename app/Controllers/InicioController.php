@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Models/InicioModel.php';
+require_once __DIR__ . '/../../control/permisos.php';
 
 class InicioController
 {
@@ -15,6 +16,7 @@ class InicioController
 
     public function index()
     {
+        permitirSolo(['Super Admin', 'Admin']);
         // =================================================
         // MÉTRICAS
         // =================================================

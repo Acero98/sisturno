@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Models/UsuarioModel.php';
+require_once __DIR__ . '/../../control/permisos.php';
 
 class UsuarioController
 {
@@ -18,6 +19,7 @@ class UsuarioController
      */
     public function index()
     {
+        $this->autorizar();
         $usuarios = $this->usuarioModel->obtenerTodos();
         $totalRegistros = count($usuarios);
         $pagina = 1;
@@ -41,6 +43,7 @@ class UsuarioController
      */
     public function registrar()
     {
+        $this->autorizar();
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return;
         }
@@ -82,35 +85,26 @@ class UsuarioController
      */
     public function actualizar()
     {
+        $this->autorizar();
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return;
         }
 
         $id = (int) ($_POST['id'] ?? 0);
-        $usuario = trim($_POST['usuario'] ?? '');
         $nombre = trim($_POST['nombre'] ?? '');
         $password = $_POST['password'] ?? '';
         $rol = (int) ($_POST['rol'] ?? 0);
 
         if (
             $id <= 0 ||
-            empty($usuario) ||
             empty($nombre) ||
             $rol <= 0
         ) {
             $this->redireccionar('obligatorio');
         }
 
-        if (
-            $this->usuarioModel
-                ->existeUsuario($usuario, $id)
-        ) {
-            $this->redireccionar('existe');
-        }
-
         $resultado = $this->usuarioModel->actualizarUsuario(
             $id,
-            $usuario,
             $nombre,
             $rol,
             $password
@@ -128,6 +122,7 @@ class UsuarioController
      */
     public function cambiarEstado()
     {
+        $this->autorizar();
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
             $this->redireccionar('error');
@@ -169,5 +164,10 @@ class UsuarioController
         );
 
         exit();
+    }
+
+    private function autorizar()
+    {
+        permitirSolo(['Super Admin', 'Admin']);
     }
 }

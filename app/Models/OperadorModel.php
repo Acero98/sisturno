@@ -126,13 +126,63 @@ class OperadorModel
     {
         if ($datos['password'] !== '') {
             $passwordHash = password_hash($datos['password'], PASSWORD_DEFAULT);
-            $sql = 'UPDATE usuarios SET usuario_user = ?, password_user = ?, nombre_user = ?, dni_user = ?, genero_user = ?, puesto_user = ?, oficina_user = ?, observaciones_user = ?, id_rol_user = ?, num_ventanilla = ? WHERE id_usuario = ? AND id_rol_user IN (2, 3)';
+            $sql = 'UPDATE usuarios 
+                        SET /*usuario_user = ?, */
+                            password_user = ?, 
+                            nombre_user = ?, 
+                            dni_user = ?, 
+                            genero_user = ?, 
+                            puesto_user = ?, 
+                            oficina_user = ?, 
+                            observaciones_user = ?, 
+                            id_rol_user = ?, 
+                            num_ventanilla = ? 
+                        WHERE id_usuario = ? 
+                        AND id_rol_user 
+                        IN (2, 3)';
             $stmt = $this->conexion->prepare($sql);
-            $stmt->bind_param('ssssssssisi', $datos['usuario'], $passwordHash, $datos['nombre'], $datos['dni'], $datos['genero'], $datos['puesto'], $datos['oficina'], $datos['observaciones'], $datos['rol'], $datos['ventanilla'], $id);
+            $stmt->bind_param(
+                'sssssssisi',
+                //$datos['usuario'],
+                $passwordHash,
+                $datos['nombre'],
+                $datos['dni'],
+                $datos['genero'],
+                $datos['puesto'],
+                $datos['oficina'],
+                $datos['observaciones'],
+                $datos['rol'],
+                $datos['ventanilla'],
+                $id
+            );
         } else {
-            $sql = 'UPDATE usuarios SET usuario_user = ?, nombre_user = ?, dni_user = ?, genero_user = ?, puesto_user = ?, oficina_user = ?, observaciones_user = ?, id_rol_user = ?, num_ventanilla = ? WHERE id_usuario = ? AND id_rol_user IN (2, 3)';
+            $sql = 'UPDATE usuarios 
+                        SET /*usuario_user = ?, */
+                            nombre_user = ?, 
+                            dni_user = ?, 
+                            genero_user = ?, 
+                            puesto_user = ?, 
+                            oficina_user = ?, 
+                            observaciones_user = ?, 
+                            id_rol_user = ?, 
+                            num_ventanilla = ? 
+                        WHERE id_usuario = ? 
+                        AND id_rol_user 
+                        IN (2, 3)';
             $stmt = $this->conexion->prepare($sql);
-            $stmt->bind_param('sssssssisi', $datos['usuario'], $datos['nombre'], $datos['dni'], $datos['genero'], $datos['puesto'], $datos['oficina'], $datos['observaciones'], $datos['rol'], $datos['ventanilla'], $id);
+            $stmt->bind_param(
+                'ssssssisi',
+                //$datos['usuario'],
+                $datos['nombre'],
+                $datos['dni'],
+                $datos['genero'],
+                $datos['puesto'],
+                $datos['oficina'],
+                $datos['observaciones'],
+                $datos['rol'],
+                $datos['ventanilla'],
+                $id
+            );
         }
         return $stmt->execute();
     }

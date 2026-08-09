@@ -455,7 +455,6 @@ include __DIR__ . '/../../../vista/header.php';
 
 </div>
 <?php require __DIR__ . '/modal_crear.php'; ?>
-<script src="<?= BASE_URL ?>public/js/alertas.js"></script>
 <script src="<?= BASE_URL ?>public/js/usuarios-mvc.js"></script>
 
 <?php

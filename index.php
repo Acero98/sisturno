@@ -14,6 +14,30 @@ if (!isset($_SESSION['id_usuario'])) {
 
 $ruta = $_GET['ruta'] ?? '';
 $action = $_GET['action'] ?? 'index';
+$rolActual = $_SESSION['rol'] ?? '';
+$rutasPorRol = [
+    'Super Admin' => ['usuarios', 'operadores', 'operadores-servicios', 'servicios', 'reporte-general', 'consulta-general', 'atencion', 'seleccion', 'pantalla-turnos'],
+    'Admin' => ['usuarios', 'operadores', 'operadores-servicios', 'servicios', 'reporte-general', 'consulta-general', 'atencion', 'seleccion', 'pantalla-turnos'],
+    'Operador' => ['atencion', 'pantalla-turnos'],
+    'Monitor' => ['seleccion', 'pantalla-turnos'],
+    'Turnos' => ['seleccion', 'pantalla-turnos'],
+];
+$rutaInicialPorRol = [
+    'Operador' => 'atencion',
+    'Monitor' => 'seleccion',
+    'Turnos' => 'pantalla-turnos',
+];
+
+if ($ruta === '' && isset($rutaInicialPorRol[$rolActual])) {
+    header('Location: ' . BASE_URL . 'index.php?ruta=' . $rutaInicialPorRol[$rolActual]);
+    exit();
+}
+
+if ($ruta !== '' && !in_array($ruta, $rutasPorRol[$rolActual] ?? [], true)) {
+    $destino = $rutaInicialPorRol[$rolActual] ?? '';
+    header('Location: ' . BASE_URL . 'index.php' . ($destino !== '' ? '?ruta=' . $destino : ''));
+    exit();
+}
 
 switch ($ruta) {
 

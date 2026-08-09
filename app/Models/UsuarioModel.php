@@ -222,7 +222,6 @@ class UsuarioModel
      */
     public function actualizarUsuario(
         $id,
-        $usuario,
         $nombre,
         $rol,
         $password = ''
@@ -237,7 +236,6 @@ class UsuarioModel
             $sql = "
                 UPDATE usuarios
                 SET
-                    usuario_user = ?,
                     nombre_user = ?,
                     password_user = ?,
                     id_rol_user = ?
@@ -247,8 +245,7 @@ class UsuarioModel
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->bind_param(
-                "sssii",
-                $usuario,
+                "ssii",
                 $nombre,
                 $passwordHash,
                 $rol,
@@ -260,7 +257,6 @@ class UsuarioModel
             $sql = "
                 UPDATE usuarios
                 SET
-                    usuario_user = ?,
                     nombre_user = ?,
                     id_rol_user = ?
                 WHERE id_usuario = ?
@@ -269,8 +265,7 @@ class UsuarioModel
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->bind_param(
-                "ssii",
-                $usuario,
+                "sii",
                 $nombre,
                 $rol,
                 $id

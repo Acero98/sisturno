@@ -51,9 +51,9 @@
                             <i class="fa-solid fa-at"></i>
                             <input type="text"
                                 class="form-control"
-                                name="usuario"
                                 value="<?= htmlspecialchars($datos->usuario_user) ?>"
-                                required>
+                                readonly>
+                            <div class="form-text">El nombre de usuario no se puede modificar después del registro.</div>
                         </div>
                     </div>
                     <div class="mb-3">
