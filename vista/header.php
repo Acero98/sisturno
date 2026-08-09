@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . "/../config.php";
+/*
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,7 +16,7 @@ if (!isset($_SESSION["id_usuario"])) {
 
 $idSesion = $_SESSION["id_usuario"];
 $consultaUser = $conexion->query("SELECT * FROM usuarios WHERE id_usuario=$idSesion");
-$usuarioData = $consultaUser->fetch_object();
+$usuarioData = $consultaUser->fetch_object();*/
 ?>
 
 <!DOCTYPE html>
@@ -28,27 +31,35 @@ $usuarioData = $consultaUser->fetch_object();
     <!-- CSS only
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">-->
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/operadores.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/header.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/dashboard.css">
-
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"> -->
-
-    <!-- <script src="https://kit.fontawesome.com/c40e82f1b2.js" crossorigin="anonymous"></script> -->
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/fontawesome/css/all.min.css">
 
     <!-- DATATABLES -->
     <link rel="stylesheet"
         href="<?= BASE_URL ?>assets/plugins/css/dataTables.bootstrap5.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/header.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/operadores.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/dashboard.css">
+
+    <?php if (!empty($cssModulo)): ?>
+
+        <link rel="stylesheet"
+            href="<?= BASE_URL ?>public/css/<?= $cssModulo ?>.css">
+
+    <?php endif; ?>
+
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"> -->
+
+    <!-- <script src="https://kit.fontawesome.com/c40e82f1b2.js" crossorigin="anonymous"></script> -->
+
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm navbar-sistema">
+    <nav class="navbar navbar-expand-lg shadow-sm navbar-sistema">
         <div class="container-fluid px-4">
 
             <!-- Logo -->
@@ -56,9 +67,12 @@ $usuarioData = $consultaUser->fetch_object();
                 <div class="brand-logo me-2">
                     <img src="<?= BASE_LOGO_BLANCO ?>" alt="Logo" class="navbar-logo">
                 </div>
+
                 <div>
                     <span class="brand-title">SIS-TURNOS</span>
-                    <small class="d-block brand-subtitle">Sistema de Gestión de Turnos</small>
+                    <small class="d-block brand-subtitle">
+                        Sistema de Gestión de Turnos
+                    </small>
                 </div>
             </a>
 
@@ -67,13 +81,13 @@ $usuarioData = $consultaUser->fetch_object();
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarSistema">
+
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <!-- Menú -->
             <div class="collapse navbar-collapse" id="navbarSistema">
 
-                <!-- Menú principal -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 
                     <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == "Admin"): ?>
@@ -86,122 +100,169 @@ $usuarioData = $consultaUser->fetch_object();
                     <?php endif; ?>
 
                     <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == "Admin"): ?>
-                        <!-- Gestión -->
+
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-link-custom dropdown-toggle"
                                 href="#"
                                 data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-gears me-2"></i>Gestión
+
+                                <i class="fa-solid fa-gears me-2"></i>
+                                Gestión
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-custom shadow border-0">
+
                                 <?php if ($_SESSION['rol'] == 'Super Admin'): ?>
+
                                     <li>
                                         <a class="dropdown-item"
-                                            href="<?= BASE_URL ?>vista/registrar_usuario.php">
-                                            <i class="fa-solid fa-user me-2 text-primary"></i>Usuarios
+                                            href="<?= BASE_URL ?>index.php?ruta=usuarios">
+
+                                            <i class="fa-solid fa-user me-2 text-primary"></i>
+                                            Usuarios
+
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item"
-                                            href="<?= BASE_URL ?>vista/servicios/">
-                                            <i class="fa-solid fa-list me-2 text-primary"></i>Servicios
+                                        <a class="dropdown-item" href="<?= BASE_URL ?>vista/servicios/">
+                                            <i class="fa-solid fa-list me-2 text-primary"></i>
+                                            Servicios
                                         </a>
                                     </li>
+
                                 <?php endif; ?>
+
+                                <li>
+                                    <a class="dropdown-item" href="<?= BASE_URL ?>vista/lista_operadores.php">
+                                        <i class="fa-solid fa-id-badge me-2 text-primary"></i>
+                                        Operadores
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    <?php endif; ?>
+
+
+                    <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin'): ?>
+
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link nav-link-custom dropdown-toggle"
+                                href="#"
+                                data-bs-toggle="dropdown">
+
+                                <i class="fa-solid fa-clipboard-list me-2"></i>
+                                Reportes
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-custom shadow border-0">
 
                                 <li>
                                     <a class="dropdown-item"
-                                        href="<?= BASE_URL ?>vista/lista_operadores.php">
-                                        <i class="fa-solid fa-id-badge me-2 text-primary"></i>Operadores
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    <?php endif; ?>
+                                        href="<?= BASE_URL ?>vista/reportes/reporte_general.php">
 
-                    <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin'): ?>
-                        <!-- Atenciones -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-link-custom dropdown-toggle"
-                                href="#"
-                                data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-clipboard-list me-2"></i>Reportes
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-menu-custom shadow border-0">
-
-                                <li>
-                                    <a class="dropdown-item" href="<?= BASE_URL ?>vista/reportes/reporte_general.php">
-                                        <i class="fa-solid fa-chart-column me-2 text-primary"></i>Reporte General
+                                        <i class="fa-solid fa-chart-column me-2 text-primary"></i>
+                                        Reporte General
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="dropdown-item" href="<?= BASE_URL ?>vista/reportes/consulta_general.php">
-                                        <i class="fa-solid fa-magnifying-glass me-2 text-primary"></i>Consultas
+                                    <a class="dropdown-item"
+                                        href="<?= BASE_URL ?>vista/reportes/consulta_general.php">
+
+                                        <i class="fa-solid fa-magnifying-glass me-2 text-primary"></i>
+                                        Consultas
                                     </a>
                                 </li>
+
                             </ul>
                         </li>
+
                     <?php endif; ?>
 
-                    <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin' || $_SESSION['rol'] == 'Monitor' || $_SESSION['rol'] == 'Operador'): ?>
-                        <!-- Pantallas -->
+
+                    <?php if (
+                        $_SESSION['rol'] == 'Super Admin' ||
+                        $_SESSION['rol'] == 'Admin' ||
+                        $_SESSION['rol'] == 'Monitor' ||
+                        $_SESSION['rol'] == 'Operador'
+                    ): ?>
+
                         <li class="nav-item dropdown">
+
                             <a class="nav-link nav-link-custom dropdown-toggle"
                                 href="#"
                                 data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-desktop me-2"></i>Pantallas
+
+                                <i class="fa-solid fa-desktop me-2"></i>
+                                Pantallas
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-custom shadow border-0">
 
-                                <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin' || $_SESSION['rol'] == 'Operador'): ?>
+                                <?php if (
+                                    $_SESSION['rol'] == 'Super Admin' ||
+                                    $_SESSION['rol'] == 'Admin' ||
+                                    $_SESSION['rol'] == 'Operador'
+                                ): ?>
+
                                     <li>
                                         <a class="dropdown-item"
                                             href="<?= BASE_URL ?>vista/atencion/atencion_cliente.php">
-                                            <i class="fa-solid fa-headset me-2 text-primary"></i>Atención al Cliente
+
+                                            <i class="fa-solid fa-headset me-2 text-primary"></i>
+                                            Atención al Cliente
                                         </a>
                                     </li>
+
                                 <?php endif; ?>
 
-                                <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin' || $_SESSION['rol'] == 'Monitor'): ?>
+
+                                <?php if (
+                                    $_SESSION['rol'] == 'Super Admin' ||
+                                    $_SESSION['rol'] == 'Admin' ||
+                                    $_SESSION['rol'] == 'Monitor'
+                                ): ?>
+
                                     <li>
                                         <a class="dropdown-item"
                                             href="<?= BASE_URL ?>vista/pantalla_seleccion.php"
                                             target="_blank">
-                                            <i class="fa-solid fa-check-to-slot me-2 text-primary"></i>Sacar Ticket
+
+                                            <i class="fa-solid fa-check-to-slot me-2 text-primary"></i>
+                                            Sacar Ticket
                                         </a>
                                     </li>
+
                                 <?php endif; ?>
+
 
                                 <li>
                                     <a class="dropdown-item"
                                         href="<?= BASE_URL ?>vista/pantalla_turnos.php"
                                         target="_blank">
-                                        <i class="fa-solid fa-ticket me-2 text-primary"></i>Ver Turnos
+
+                                        <i class="fa-solid fa-ticket me-2 text-primary"></i>
+                                        Ver Turnos
                                     </a>
                                 </li>
+
                             </ul>
                         </li>
-                    <?php endif; ?>
 
-                    <?php if ($_SESSION['rol'] == 'Super Admin' || $_SESSION['rol'] == 'Admin'): ?>
-                        <!-- Empresa 
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">
-                                <i class="fa-solid fa-building me-2"></i>Empresa
-                            </a>
-                        </li>-->
                     <?php endif; ?>
 
                 </ul>
 
-                <!-- Usuario logueado -->
+
+                <!-- Usuario -->
                 <ul class="navbar-nav">
+
                     <li class="nav-item dropdown">
+
                         <a class="nav-link nav-user dropdown-toggle d-flex align-items-center"
                             href="#"
                             data-bs-toggle="dropdown">
@@ -211,19 +272,26 @@ $usuarioData = $consultaUser->fetch_object();
                             </div>
 
                             <div class="d-none d-lg-block">
+
                                 <div class="user-name">
                                     <?= htmlspecialchars($usuarioData->nombre_user) ?>
                                 </div>
+
                                 <small class="user-role">
                                     <?= htmlspecialchars($_SESSION['rol']) ?>
                                 </small>
+
                             </div>
+
                         </a>
 
+
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-custom shadow border-0">
+
                             <li>
                                 <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-user-gear me-2 text-primary"></i>Mi Perfil
+                                    <i class="fa-solid fa-user-gear me-2 text-primary"></i>
+                                    Mi Perfil
                                 </a>
                             </li>
 
@@ -234,11 +302,17 @@ $usuarioData = $consultaUser->fetch_object();
                             <li>
                                 <a class="dropdown-item text-danger"
                                     href="<?= BASE_URL ?>logout.php">
-                                    <i class="fa-solid fa-right-from-bracket me-2"></i>Cerrar Sesión
+
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                    Cerrar Sesión
+
                                 </a>
                             </li>
+
                         </ul>
+
                     </li>
+
                 </ul>
 
             </div>

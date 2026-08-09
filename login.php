@@ -2,30 +2,22 @@
 session_start();
 require_once __DIR__ . "/config.php";
 require_once __DIR__ . "/modelo/conexion.php";
-
 if (isset($_POST['login'])) {
-
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
-
     $sql = $conexion->query("SELECT u.*, r.nombre_rol 
                             FROM usuarios u
                             INNER JOIN roles r ON u.id_rol_user = r.id_rol
                             WHERE usuario_user='$usuario'");
-
     if ($datos = $sql->fetch_object()) {
-
         if ($datos->estado_user == 0) {
             header("Location: login.php?error=desactivado");
             exit();
         }
-
         if (password_verify($password, $datos->password_user)) {
-
             $_SESSION['usuario'] = $datos->usuario_user;
             $_SESSION['id_usuario'] = $datos->id_usuario;
             $_SESSION['rol'] = $datos->nombre_rol;
-
             header("Location: index.php");
             exit();
         } else {
@@ -38,284 +30,308 @@ if (isset($_POST['login'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión | Sistema de Turnos</title>
-    
     <link rel="icon" type="image/png" sizes="32x32" href="<?= BASE_FAVICON ?>">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
-
     <style>
+        /* ==========================================================
+       BASE
+        ========================================================== */
         body {
             min-height: 100vh;
             margin: 0;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0d6efd 0%, #2563eb 50%, #1d4ed8 100%);
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            justify-content: center;
+            background:
+                linear-gradient(135deg,
+                    #1d4ed8 0%,
+                    #2563eb 50%,
+                    #1e40af 100%);
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
         }
-
+        /* ==========================================================
+       LOGIN
+        ========================================================== */
         .login-card {
             width: 100%;
-            max-width: 430px;
-            border: none;
-            border-radius: 28px;
+            max-width: 420px;
+            border: 0;
+            border-radius: 24px;
             background: #ffffff;
             box-shadow:
-                0 25px 50px rgba(15, 23, 42, 0.20),
-                0 10px 20px rgba(15, 23, 42, 0.08);
+                0 20px 25px -5px rgba(15, 23, 42, .10),
+                0 8px 10px -6px rgba(15, 23, 42, .10);
             overflow: hidden;
-            animation: fadeInUp 0.7s ease;
         }
-
-        .login-header {
-            text-align: center;
-            padding: 2.5rem 2rem 1.5rem;
-        }
-
-        .login-icon {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
+        /* ==========================================================
+       LOGO
+    ========================================================== */
         .login-logo {
-            max-width: 180px;
-            max-height: 180px;
+            max-width: 160px;
+            max-height: 150px;
             width: auto;
             height: auto;
+            object-fit: contain;
         }
-
+        /* ==========================================================
+       TÍTULOS
+    ========================================================== */
         .login-title {
-            font-size: 2rem;
+            font-size: 1.875rem;
             font-weight: 800;
+            letter-spacing: -0.025em;
             color: #0f172a;
-            margin-bottom: 0.5rem;
         }
-
         .login-subtitle {
             color: #64748b;
-            font-size: 1rem;
-            margin-bottom: 0;
+            font-size: .95rem;
         }
-
-        .login-body {
-            padding: 0 2.5rem 2.5rem;
-        }
-
+        /* ==========================================================
+       LABELS
+    ========================================================== */
         .form-label {
-            font-weight: 700;
+            margin-bottom: .5rem;
             color: #334155;
-            margin-bottom: 0.5rem;
+            font-size: .875rem;
+            font-weight: 600;
         }
-
-        .input-group-text {
-            background: #f8fafc;
-            border: 1px solid #dbe2ea;
-            color: #0d6efd;
-            font-size: 1.1rem;
-        }
-
-        .form-control {
-            border: 1px solid #dbe2ea;
-            padding: 0.85rem 1rem;
-            font-size: 1rem;
-            border-radius: 0 12px 12px 0;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
-        }
-
+        /* ==========================================================
+       INPUTS
+    ========================================================== */
         .input-group {
             border-radius: 12px;
             overflow: hidden;
         }
-
+        .input-group-text {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .form-control {
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            padding: .8rem 1rem;
+            color: #0f172a;
+            font-size: .95rem;
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease,
+                background-color .2s ease;
+        }
+        .form-control:focus {
+            background: #ffffff;
+            border-color: #3b82f6;
+            box-shadow:
+                0 0 0 3px rgba(59, 130, 246, .12);
+        }
+        /* Evita doble borde extraño */
+        .input-group .form-control {
+            border-left: 0;
+        }
+        .input-group .form-control:focus {
+            border-left: 0;
+        }
+        /* ==========================================================
+       BOTÓN LOGIN
+    ========================================================== */
         .btn-login {
             width: 100%;
-            padding: 0.9rem;
-            font-size: 1.05rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #0d6efd, #2563eb);
+            padding: .85rem 1rem;
+            border: 0;
+            border-radius: 12px;
+            background: #2563eb;
             color: #ffffff;
-            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.25);
-            transition: all 0.3s ease;
+            font-size: .95rem;
+            font-weight: 700;
+            box-shadow:
+                0 4px 6px -1px rgba(37, 99, 235, .20);
+            transition:
+                all .2s ease;
         }
-
         .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(13, 110, 253, 0.35);
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow:
+                0 8px 12px -4px rgba(37, 99, 235, .25);
+            color: #ffffff;
         }
-
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        .btn-login:focus {
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, .20);
+        }
+        /* ==========================================================
+       FOOTER
+    ========================================================== */
         .footer-text {
-            margin-top: 1.5rem;
-            text-align: center;
-            font-size: 0.9rem;
+            margin-top: 1.25rem;
             color: #94a3b8;
+            font-size: .75rem;
+            line-height: 1.5;
+            text-align: center;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* ==========================================================
+       RESPONSIVE
+    ========================================================== */
         @media (max-width: 576px) {
+            body {
+                padding: 1rem;
+            }
             .login-card {
-                margin: 1rem;
-                border-radius: 24px;
+                border-radius: 20px;
             }
-
-            .login-header {
-                padding: 2rem 1.5rem 1rem;
+            .login-logo {
+                max-width: 130px;
+                max-height: 120px;
             }
-
-            .login-body {
-                padding: 0 1.5rem 2rem;
-            }
-
             .login-title {
                 font-size: 1.6rem;
-            }
-
-            .login-logo {
-                max-width: 140px;
-                max-height: 140px;
             }
         }
     </style>
 </head>
-
 <body>
-
     <div class="login-card">
-
-        <!-- Encabezado -->
-        <div class="login-header">
-            <div class="login-icon">
-                <img src="<?= BASE_LOGO_LOGIN ?>" alt="Logo" class="login-logo">
+        <!-- =====================================================
+             ENCABEZADO
+        ====================================================== -->
+        <div class="text-center px-4 px-md-5 pt-5 pb-4">
+            <div class="mb-4">
+                <img
+                    src="<?= BASE_LOGO_LOGIN ?>"
+                    alt="Logo"
+                    class="login-logo">
             </div>
-
-            <h1 class="login-title">Bienvenido</h1>
-            <p class="login-subtitle">Sistema de Gestión de Turnos</p>
+            <h1 class="login-title mb-2">
+                Bienvenido
+            </h1>
+            <p class="login-subtitle mb-0">
+                Sistema de Gestión de Turnos
+            </p>
         </div>
-
-        <!-- Formulario -->
-        <div class="login-body">
+        <!-- =====================================================
+             FORMULARIO
+        ====================================================== -->
+        <div class="px-4 px-md-5 pb-5">
             <form method="POST">
-
                 <!-- Usuario -->
                 <div class="mb-4">
-                    <label class="form-label">Usuario</label>
+                    <label
+                        for="usuario"
+                        class="form-label">
+                        Usuario
+                    </label>
                     <div class="input-group">
                         <span class="input-group-text">
                             <i class="fa-solid fa-user"></i>
                         </span>
-                        <input type="text"
+                        <input
+                            type="text"
                             name="usuario"
+                            id="usuario"
                             class="form-control"
                             placeholder="Ingrese su usuario"
                             required
                             autofocus>
                     </div>
                 </div>
-
                 <!-- Contraseña -->
                 <div class="mb-4">
-                    <label class="form-label">Contraseña</label>
-
+                    <label
+                        for="password"
+                        class="form-label">
+                        Contraseña
+                    </label>
                     <div class="input-group">
-                        <!-- Icono izquierdo -->
                         <span class="input-group-text">
                             <i class="fa-solid fa-lock"></i>
                         </span>
-
-                        <!-- Campo password -->
-                        <input type="password"
+                        <input
+                            type="password"
                             name="password"
                             id="password"
                             class="form-control"
                             placeholder="Ingrese su contraseña"
                             required>
-
-                        <!-- Botón mostrar/ocultar -->
-                        <button type="button"
-                            class="input-group-text bg-white"
+                        <button
+                            type="button"
+                            class="input-group-text"
                             id="togglePassword"
                             style="cursor: pointer;">
-                            <i class="fa-solid fa-eye" id="iconPassword"></i>
+                            <i
+                                class="fa-solid fa-eye"
+                                id="iconPassword"></i>
                         </button>
                     </div>
                 </div>
-
                 <!-- Botón -->
-                <button type="submit" name="login" class="btn btn-login">
+                <button
+                    type="submit"
+                    name="login"
+                    class="btn btn-login">
                     <i class="fa-solid fa-right-to-bracket me-2"></i>
                     Ingresar al Sistema
                 </button>
-
+                <!-- Footer -->
                 <div class="footer-text">
-                    © <?= date('Y') ?> Sistema de Turnos | Derechos reservados por Roman Acero
+                    © <?= date('Y') ?>
+                    Sistema de Turnos
+                    <span class="mx-1">·</span>
+                    Derechos reservados por Roman Acero
                 </div>
-
             </form>
         </div>
     </div>
-
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-
-    <!-- SweetAlert2 -->
+    <!-- SweetAlert -->
     <script src="assets/js/sweetalert2.all.min.js"></script>
-
-    <!-- Tus alertas -->
+    <!-- Alertas -->
     <script src="public/js/login.js"></script>
-
+    <!-- Mostrar / ocultar contraseña -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const passwordInput = document.getElementById("password");
-            const toggleButton = document.getElementById("togglePassword");
-            const icon = document.getElementById("iconPassword");
-
+            const passwordInput =
+                document.getElementById("password");
+            const toggleButton =
+                document.getElementById("togglePassword");
+            const icon =
+                document.getElementById("iconPassword");
             toggleButton.addEventListener("click", function() {
-                const isPassword = passwordInput.type === "password";
-
-                // Cambiar tipo de input
-                passwordInput.type = isPassword ? "text" : "password";
-
-                // Cambiar ícono
-                if (isPassword) {
-                    icon.classList.remove("fa-eye");
-                    icon.classList.add("fa-eye-slash");
-                } else {
-                    icon.classList.remove("fa-eye-slash");
-                    icon.classList.add("fa-eye");
-                }
+                const isPassword =
+                    passwordInput.type === "password";
+                passwordInput.type =
+                    isPassword ?
+                    "text" :
+                    "password";
+                icon.classList.toggle(
+                    "fa-eye",
+                    !isPassword
+                );
+                icon.classList.toggle(
+                    "fa-eye-slash",
+                    isPassword
+                );
             });
         });
     </script>
-
 </body>
-
 </html>
