@@ -13,6 +13,7 @@ if (!isset($_SESSION['id_usuario'])) {
 }
 
 $ruta = $_GET['ruta'] ?? '';
+$action = $_GET['action'] ?? 'index';
 
 switch ($ruta) {
 
@@ -98,6 +99,75 @@ switch ($ruta) {
         require_once __DIR__ . '/app/Controllers/ReporteGeneralController.php';
         $controller = new ReporteGeneralController($conexion);
         $controller->index();
+
+        break;
+
+    case 'consulta-general':
+
+        require_once __DIR__ . '/app/Controllers/ConsultaGeneralController.php';
+        $controller = new ConsultaGeneralController($conexion);
+
+        if ($action === 'datos') {
+            $controller->datos();
+        } else {
+            $controller->index();
+        }
+
+        break;
+
+    case 'atencion':
+
+        require_once __DIR__ . '/app/Controllers/AtencionController.php';
+        $controller = new AtencionController($conexion);
+
+        switch ($action) {
+            case 'contenido':
+                $controller->contenido();
+                break;
+            case 'llamar':
+                $controller->llamar();
+                break;
+            case 'comenzar':
+                $controller->comenzar();
+                break;
+            case 'finalizar':
+                $controller->finalizar();
+                break;
+            case 'cancelar':
+                $controller->cancelar();
+                break;
+            default:
+                $controller->index();
+                break;
+        }
+
+        break;
+
+    case 'seleccion':
+
+        require_once __DIR__ . '/app/Controllers/SeleccionController.php';
+        $controller = new SeleccionController($conexion);
+
+        if ($action === 'contenido') {
+            $controller->contenido();
+        } elseif ($action === 'generar-ticket') {
+            $controller->generarTicket();
+        } else {
+            $controller->index();
+        }
+
+        break;
+
+    case 'pantalla-turnos':
+
+        require_once __DIR__ . '/app/Controllers/PantallaTurnosController.php';
+        $controller = new PantallaTurnosController($conexion);
+
+        if ($action === 'contenido') {
+            $controller->contenido();
+        } else {
+            $controller->index();
+        }
 
         break;
 

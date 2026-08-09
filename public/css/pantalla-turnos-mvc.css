@@ -1,0 +1,220 @@
+.pantalla-turnos {
+    --azul: #0d6efd;
+    --sombra: 0 10px 28px rgba(20, 35, 55, .12);
+    background: #f4f6f9;
+}
+
+.pantalla-turnos .turnos-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(360px, 1fr);
+    gap: clamp(1rem, 2vw, 1.75rem);
+    align-items: start;
+}
+
+.pantalla-turnos .card-custom {
+    height: auto;
+    border: 0;
+    border-radius: clamp(14px, 1.5vw, 22px);
+    box-shadow: var(--sombra);
+    overflow: hidden;
+}
+
+.pantalla-turnos .card-header-custom {
+    padding: clamp(.75rem, 1.1vw, 1.15rem) clamp(1rem, 1.5vw, 1.6rem);
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+    font-size: clamp(1rem, 1.5vw, 1.55rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.pantalla-turnos .card-body-scroll {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+}
+
+.pantalla-turnos .table-turnos-wrap {
+    height: 100%;
+}
+
+.pantalla-turnos .table-turnos {
+    margin: 0;
+    min-width: 680px;
+    table-layout: fixed;
+}
+
+.pantalla-turnos .table-turnos th:nth-child(1) {
+    width: 7%;
+}
+
+.pantalla-turnos .table-turnos th:nth-child(2) {
+    width: 53%;
+}
+
+.pantalla-turnos .table-turnos th:nth-child(3) {
+    width: 16%;
+}
+
+.pantalla-turnos .table-turnos th:nth-child(4) {
+    width: 24%;
+}
+
+.pantalla-turnos .table-turnos thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: clamp(.6rem, .8vw, 1rem) .45rem;
+    font-size: clamp(.75rem, 1.05vw, 1.25rem);
+    font-weight: 800;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.pantalla-turnos .table-turnos tbody td,
+.pantalla-turnos .table-turnos tbody th {
+    padding: clamp(.5rem, .75vw, .9rem) .45rem;
+    vertical-align: middle;
+}
+
+.pantalla-turnos .numero-turno {
+    font-size: clamp(.95rem, 1.35vw, 1.65rem);
+}
+
+.pantalla-turnos .ticket-turno,
+.pantalla-turnos .ventanilla-turno {
+    font-size: clamp(1.05rem, 1.8vw, 2.2rem);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+}
+
+.pantalla-turnos .estado-turno {
+    padding: clamp(.38rem, .55vw, .6rem) clamp(.5rem, .8vw, .9rem);
+    font-size: clamp(.72rem, 1.05vw, 1.2rem);
+    white-space: normal;
+}
+
+.pantalla-turnos .fila-llamado td,
+.pantalla-turnos .fila-llamado th {
+    animation: parpadeoTurno 1.7s infinite;
+}
+
+.pantalla-turnos .fila-llamado .numero-turno {
+    font-size: clamp(1.35rem, 2.6vw, 3.2rem);
+}
+
+.pantalla-turnos .fila-llamado .ticket-turno,
+.pantalla-turnos .fila-llamado .ventanilla-turno {
+    font-size: clamp(1.7rem, 3.1vw, 4rem);
+}
+
+.pantalla-turnos .fila-llamado .estado-turno {
+    background: transparent !important;
+    color: inherit !important;
+    border: 2px solid currentColor;
+    font-size: clamp(1.05rem, 1.7vw, 2.1rem);
+}
+
+.pantalla-turnos .table-success .ticket-turno,
+.pantalla-turnos .table-success .ventanilla-turno,
+.pantalla-turnos .table-warning .ticket-turno,
+.pantalla-turnos .table-warning .ventanilla-turno {
+    font-size: clamp(1.3rem, 2.2vw, 3rem);
+}
+
+.pantalla-turnos .sin-turnos {
+    font-size: clamp(1.4rem, 3vw, 3rem);
+}
+
+.pantalla-turnos .media-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.pantalla-turnos .media-column h1 {
+    font-size: clamp(1.35rem, 2.3vw, 2.7rem);
+}
+
+.pantalla-turnos .hora-grande {
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1;
+    color: #212529;
+}
+
+.pantalla-turnos .fecha-pequena {
+    margin-top: .35rem;
+    font-size: clamp(.9rem, 1.5vw, 1.75rem);
+    color: #6c757d;
+    text-transform: capitalize;
+}
+
+.pantalla-turnos .video-container {
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: clamp(14px, 1.5vw, 22px);
+    background: #000;
+    box-shadow: var(--sombra);
+}
+
+.pantalla-turnos #videoPlayer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@keyframes parpadeoTurno {
+
+    0%,
+    100% {
+        background-color: #0d6efd;
+        color: #fff;
+    }
+
+    50% {
+        background-color: #fff;
+        color: #0d6efd;
+    }
+}
+
+@media (max-width: 1199px) {
+    .pantalla-turnos .turnos-layout {
+        grid-template-columns: minmax(0, 1.3fr) minmax(320px, .9fr);
+    }
+
+}
+
+@media (max-width: 991px) {
+    .pantalla-turnos .turnos-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pantalla-turnos .media-column {
+        max-width: 900px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+
+    .pantalla-turnos .table-turnos {
+        min-width: 620px;
+    }
+}
+
+@media (max-width: 575px) {
+    .pantalla-turnos .container-fluid {
+        padding-inline: .65rem;
+    }
+
+    .pantalla-turnos .table-turnos {
+        min-width: 560px;
+    }
+
+    .pantalla-turnos .media-column h1 {
+        font-size: 1.25rem;
+    }
+}

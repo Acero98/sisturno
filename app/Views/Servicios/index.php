@@ -91,8 +91,15 @@
                             <td><span class="badge badge-prioridad <?= strtolower($servicio['prioridad_serv']) ?>"><?= htmlspecialchars($servicio['prioridad_serv']) ?></span></td>
                             <td><span class="badge <?= (int) $servicio['estado_serv'] === 1 ? 'bg-success' : 'bg-danger' ?>"><?= (int) $servicio['estado_serv'] === 1 ? 'Activo' : 'Inactivo' ?></span></td>
                             <td>
-                                <div class="d-flex gap-2 justify-content-center action-buttons"><button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarServicio<?= $servicio['id_servicios'] ?>" title="Editar Servicio"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <form method="POST" action="<?= BASE_URL ?>index.php?ruta=servicios&action=estado" class="formCambiarEstadoServicio d-inline"><input type="hidden" name="id" value="<?= $servicio['id_servicios'] ?>"><input type="hidden" name="estado" value="<?= (int) $servicio['estado_serv'] === 1 ? 0 : 1 ?>"><button class="btn <?= (int) $servicio['estado_serv'] === 1 ? 'btn-danger' : 'btn-success' ?> btn-sm" type="submit" title="<?= (int) $servicio['estado_serv'] === 1 ? 'Desactivar' : 'Activar' ?>"><i class="fa-solid <?= (int) $servicio['estado_serv'] === 1 ? 'fa-circle-xmark' : 'fa-circle-check' ?>"></i></button></form>
+                                <div class="d-flex gap-2 justify-content-center action-buttons"><button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarServicio<?= $servicio['id_servicios'] ?>" title="Editar Servicio">
+                                        <i class="fa-solid fa-pen-to-square"></i></button>
+                                    <form method="POST" action="<?= BASE_URL ?>index.php?ruta=servicios&action=estado" class="formCambiarEstadoServicio d-inline">
+                                        <input type="hidden" name="id" value="<?= $servicio['id_servicios'] ?>">
+                                        <input type="hidden" name="estado" value="<?= (int) $servicio['estado_serv'] === 1 ? 0 : 1 ?>">
+                                        <button class="btn <?= (int) $servicio['estado_serv'] === 1 ? 'btn-danger' : 'btn-success' ?> btn-sm" type="submit" title="<?= (int) $servicio['estado_serv'] === 1 ? 'Desactivar' : 'Activar' ?>">
+                                            <i class="fa-solid <?= (int) $servicio['estado_serv'] === 1 ? 'fa-circle-xmark' : 'fa-circle-check' ?>"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr><?php endforeach; ?><?php else: ?><tr>
@@ -104,7 +111,14 @@
                 <div class="text-muted small">Mostrando <?= $desde ?> al <?= $hasta ?> de <?= $totalRegistros ?> servicios</div>
                 <nav>
                     <ul class="pagination mb-0">
-                        <li class="page-item <?= $pagina <= 1 ? 'disabled' : '' ?>"><a class="page-link" href="<?= BASE_URL ?>index.php?ruta=servicios&pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">Anterior</a></li><?php for ($i = 1; $i <= $totalPaginas; $i++): ?><li class="page-item <?= $i === $pagina ? 'active' : '' ?>"><a class="page-link" href="<?= BASE_URL ?>index.php?ruta=servicios&pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>"><?= $i ?></a></li><?php endfor; ?><li class="page-item <?= $pagina >= $totalPaginas ? 'disabled' : '' ?>"><a class="page-link" href="<?= BASE_URL ?>index.php?ruta=servicios&pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">Siguiente</a></li>
+                        <li class="page-item <?= $pagina <= 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="<?= BASE_URL ?>index.php?ruta=servicios&pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">Anterior</a>
+                        </li><?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                            <li class="page-item <?= $i === $pagina ? 'active' : '' ?>">
+                                <a class="page-link" href="<?= BASE_URL ?>index.php?ruta=servicios&pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>"><?= $i ?></a>
+                            </li><?php endfor; ?><li class="page-item <?= $pagina >= $totalPaginas ? 'disabled' : '' ?>">
+                            <a class="page-link" href="<?= BASE_URL ?>index.php?ruta=servicios&pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">Siguiente</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

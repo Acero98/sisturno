@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . "/../../modelo/conexion.php";
+require_once __DIR__ . "/../../control/auth.php";
+require_once __DIR__ . "/../../control/permisos.php";
 require_once __DIR__ . "/../../dompdf/autoload.inc.php";
 
 use Dompdf\Dompdf;
@@ -10,8 +12,29 @@ use Dompdf\Options;
    FILTROS
 ========================= */
 
-$fechaInicio = $_GET['inicio'] ?? '';
-$fechaFin = $_GET['fin'] ?? '';
+permitirSolo(["Super Admin", "Admin"]);
+
+$tipo = $_GET['tipo'] ?? 'hoy';
+$hoy = date('Y-m-d');
+$rangos = [
+    'hoy' => [$hoy, $hoy],
+    'semana' => [date('Y-m-d', strtotime('-6 days')), $hoy],
+    'mes' => [date('Y-m-01'), $hoy],
+    'anio' => [date('Y-01-01'), $hoy],
+];
+
+if ($tipo === 'personalizado') {
+    $fechaInicio = $_GET['inicio'] ?? '';
+    $fechaFin = $_GET['fin'] ?? '';
+    $fechasValidas = preg_match('/^\d{4}-\d{2}-\d{2}$/', $fechaInicio)
+        && preg_match('/^\d{4}-\d{2}-\d{2}$/', $fechaFin)
+        && $fechaInicio <= $fechaFin;
+    if (!$fechasValidas) {
+        [$fechaInicio, $fechaFin] = $rangos['hoy'];
+    }
+} else {
+    [$fechaInicio, $fechaFin] = $rangos[$tipo] ?? $rangos['hoy'];
+}
 
 //PARA NOMBRE DE PDF
 $inicio = date('d/m/Y', strtotime($fechaInicio));

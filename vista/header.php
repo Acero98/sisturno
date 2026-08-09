@@ -172,7 +172,7 @@ $usuarioData = $consultaUser->fetch_object();*/
 
                                 <li>
                                     <a class="dropdown-item"
-                                        href="<?= BASE_URL ?>vista/reportes/reporte_general.php">
+                                        href="<?= BASE_URL ?>index.php?ruta=reporte-general">
 
                                         <i class="fa-solid fa-chart-column me-2 text-primary"></i>
                                         Reporte General
@@ -181,7 +181,7 @@ $usuarioData = $consultaUser->fetch_object();*/
 
                                 <li>
                                     <a class="dropdown-item"
-                                        href="<?= BASE_URL ?>vista/reportes/consulta_general.php">
+                                        href="<?= BASE_URL ?>index.php?ruta=consulta-general">
 
                                         <i class="fa-solid fa-magnifying-glass me-2 text-primary"></i>
                                         Consultas
@@ -221,7 +221,7 @@ $usuarioData = $consultaUser->fetch_object();*/
 
                                     <li>
                                         <a class="dropdown-item"
-                                            href="<?= BASE_URL ?>vista/atencion/atencion_cliente.php">
+                                            href="<?= BASE_URL ?>index.php?ruta=atencion">
 
                                             <i class="fa-solid fa-headset me-2 text-primary"></i>
                                             Atención al Cliente
@@ -239,7 +239,7 @@ $usuarioData = $consultaUser->fetch_object();*/
 
                                     <li>
                                         <a class="dropdown-item"
-                                            href="<?= BASE_URL ?>vista/pantalla_seleccion.php"
+                                            href="<?= BASE_URL ?>index.php?ruta=seleccion"
                                             target="_blank">
 
                                             <i class="fa-solid fa-check-to-slot me-2 text-primary"></i>
@@ -252,7 +252,7 @@ $usuarioData = $consultaUser->fetch_object();*/
 
                                 <li>
                                     <a class="dropdown-item"
-                                        href="<?= BASE_URL ?>vista/pantalla_turnos.php"
+                                        href="<?= BASE_URL ?>index.php?ruta=pantalla-turnos"
                                         target="_blank">
 
                                         <i class="fa-solid fa-ticket me-2 text-primary"></i>
