@@ -80,8 +80,7 @@ include __DIR__ . '/../../../vista/header.php';
 
                 <!-- Buscador -->
                 <form
-                    method="GET"
-                    action="<?= BASE_URL ?>index.php"
+                    id="formBuscarUsuarios"
                     class="users-search">
 
                     <div class="input-group">
@@ -90,14 +89,12 @@ include __DIR__ . '/../../../vista/header.php';
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </span>
 
-                        <input type="hidden" name="ruta" value="usuarios">
-
                         <input
-                            type="text"
-                            name="buscar"
+                            id="buscarUsuarios"
+                            type="search"
                             class="form-control"
                             placeholder="Buscar usuario..."
-                            value="<?= htmlspecialchars($buscar) ?>">
+                            value="">
 
                         <button
                             class="btn btn-search"
@@ -120,7 +117,7 @@ include __DIR__ . '/../../../vista/header.php';
 
             <div class="table-responsive">
 
-                <table class="table table-hover table-modern align-middle">
+                <table id="tablaUsuariosMvc" class="table table-hover table-modern align-middle">
 
                     <thead>
 
@@ -361,7 +358,7 @@ include __DIR__ . '/../../../vista/header.php';
              PAGINACIÓN
         =========================================== -->
 
-            <div class="users-pagination mt-4">
+            <div class="users-pagination mt-4 d-none">
 
                 <!-- Información -->
                 <div class="text-muted small">
@@ -457,123 +454,9 @@ include __DIR__ . '/../../../vista/header.php';
     </div>
 
 </div>
-<!-- MODAL REGISTRAR USUARIO -->
-<div class="modal fade" id="modalRegistro" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content user-modal">
-            <!-- Encabezado -->
-            <div class="modal-header">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="modal-icon modal-icon-create">
-                        <i class="fa-solid fa-user-plus"></i>
-                    </div>
-                    <div>
-                        <h5 class="modal-title mb-0">
-                            Registrar Usuario
-                        </h5>
-                        <small>
-                            Crea un nuevo usuario para el sistema
-                        </small>
-                    </div>
-                </div>
-                <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal">
-                </button>
-            </div>
-            <!-- Cuerpo -->
-            <div class="modal-body">
-                <form method="POST"
-                    action="<?= BASE_URL ?>index.php?ruta=usuarios&action=registrar"
-                    class="formRegistrarUsuario">
-                    <input type="hidden"
-                        name="btnregistrarUsuario"
-                        value="ok">
-                    <!-- Nombre -->
-                    <div class="mb-3">
-                        <label class="form-label">
-                            Nombre
-                        </label>
-                        <div class="input-icon-wrapper">
-                            <i class="fa-solid fa-user"></i>
-                            <input type="text"
-                                class="form-control"
-                                name="nombre"
-                                placeholder="Nombre completo"
-                                autocomplete="name"
-                                required>
-                        </div>
-                    </div>
-                    <!-- Usuario -->
-                    <div class="mb-3">
-                        <label class="form-label">
-                            Usuario
-                        </label>
-                        <div class="input-icon-wrapper">
-                            <i class="fa-solid fa-at"></i>
-                            <input type="text"
-                                class="form-control"
-                                name="usuario"
-                                placeholder="Nombre de usuario"
-                                autocomplete="username"
-                                required>
-                        </div>
-                    </div>
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <label class="form-label">
-                            Contraseña
-                        </label>
-                        <div class="input-icon-wrapper">
-                            <i class="fa-solid fa-lock"></i>
-                            <input type="password"
-                                class="form-control"
-                                name="password"
-                                placeholder="Contraseña"
-                                autocomplete="new-password"
-                                required>
-                        </div>
-                    </div>
-                    <!-- Rol -->
-                    <div class="mb-4">
-                        <label class="form-label">
-                            Rol
-                        </label>
-                        <div class="input-icon-wrapper">
-                            <i class="fa-solid fa-shield-halved"></i>
-                            <select name="rol"
-                                class="form-select"
-                                required>
-                                <option value="">
-                                    Seleccionar rol
-                                </option>
-                                <?php foreach ($roles as $rol): ?>
-                                    <option value="<?= $rol['id_rol'] ?>">
-                                        <?= htmlspecialchars($rol['nombre_rol']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- Botones -->
-                    <div class="modal-footer-custom">
-                        <button type="button"
-                            class="btn btn-modal-cancel"
-                            data-bs-dismiss="modal">
-                            Cancelar
-                        </button>
-                        <button type="button"
-                            class="btn btn-modal-create btnConfirmarRegistro">
-                            <i class="fa-solid fa-user-plus me-2"></i>
-                            Registrar Usuario
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<?php require __DIR__ . '/modal_crear.php'; ?>
 <script src="<?= BASE_URL ?>public/js/alertas.js"></script>
+<script src="<?= BASE_URL ?>public/js/usuarios-mvc.js"></script>
 
 <?php
 

@@ -18,52 +18,20 @@ class UsuarioController
      */
     public function index()
     {
-        $registrosPorPagina = 10;
-
-        $pagina = isset($_GET['pagina'])
-            ? (int) $_GET['pagina']
-            : 1;
-
-        if ($pagina < 1) {
-            $pagina = 1;
-        }
-
-        $buscar = isset($_GET['buscar'])
-            ? trim($_GET['buscar'])
-            : '';
-
-        $inicio = ($pagina - 1) * $registrosPorPagina;
-
-        // Total
-        $totalRegistros = $this->usuarioModel
-            ->contarUsuarios($buscar);
-
-        $totalPaginas = $totalRegistros > 0
-            ? ceil($totalRegistros / $registrosPorPagina)
-            : 1;
-
-        // Usuarios
-        $resultadoUsuarios = $this->usuarioModel
-            ->obtenerUsuarios(
-                $buscar,
-                $inicio,
-                $registrosPorPagina
-            );
-        $usuarios = $resultadoUsuarios->fetch_all(MYSQLI_ASSOC);
+        $usuarios = $this->usuarioModel->obtenerTodos();
+        $totalRegistros = count($usuarios);
+        $pagina = 1;
+        $totalPaginas = 1;
+        $inicio = 0;
+        $buscar = '';
 
         // Roles
         $resultadoRoles = $this->usuarioModel->obtenerRoles();
         $roles = $resultadoRoles->fetch_all(MYSQLI_ASSOC);
 
         // Información para paginación
-        $desde = $totalRegistros > 0
-            ? $inicio + 1
-            : 0;
-
-        $hasta = min(
-            $inicio + $registrosPorPagina,
-            $totalRegistros
-        );
+        $desde = $totalRegistros > 0 ? 1 : 0;
+        $hasta = $totalRegistros;
 
         require __DIR__ . '/../Views/Usuarios/index.php';
     }

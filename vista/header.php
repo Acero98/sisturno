@@ -1,6 +1,16 @@
 <?php
 
 require_once __DIR__ . "/../config.php";
+
+$nombreUsuarioHeader = (
+    isset($usuarioData) &&
+    is_object($usuarioData) &&
+    !empty($usuarioData->nombre_user)
+)
+    ? $usuarioData->nombre_user
+    : ($_SESSION['usuario'] ?? 'Usuario');
+
+$rolUsuarioHeader = $_SESSION['rol'] ?? '';
 /*
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -125,7 +135,7 @@ $usuarioData = $consultaUser->fetch_object();*/
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" href="<?= BASE_URL ?>vista/servicios/">
+                                    <a class="dropdown-item" href="<?= BASE_URL ?>index.php?ruta=servicios">
                                             <i class="fa-solid fa-list me-2 text-primary"></i>
                                             Servicios
                                         </a>
@@ -134,7 +144,7 @@ $usuarioData = $consultaUser->fetch_object();*/
                                 <?php endif; ?>
 
                                 <li>
-                                    <a class="dropdown-item" href="<?= BASE_URL ?>vista/lista_operadores.php">
+                                    <a class="dropdown-item" href="<?= BASE_URL ?>index.php?ruta=operadores">
                                         <i class="fa-solid fa-id-badge me-2 text-primary"></i>
                                         Operadores
                                     </a>
@@ -274,11 +284,11 @@ $usuarioData = $consultaUser->fetch_object();*/
                             <div class="d-none d-lg-block">
 
                                 <div class="user-name">
-                                    <?= htmlspecialchars($usuarioData->nombre_user) ?>
+                                    <?= htmlspecialchars($nombreUsuarioHeader) ?>
                                 </div>
 
                                 <small class="user-role">
-                                    <?= htmlspecialchars($_SESSION['rol']) ?>
+                                    <?= htmlspecialchars($rolUsuarioHeader) ?>
                                 </small>
 
                             </div>

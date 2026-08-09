@@ -68,6 +68,12 @@ class UsuarioModel
         return $stmt->get_result();
     }
 
+    public function obtenerTodos()
+    {
+        $sql = 'SELECT u.*, r.nombre_rol FROM usuarios u INNER JOIN roles r ON u.id_rol_user = r.id_rol ORDER BY u.nombre_user ASC';
+        return $this->conexion->query($sql)->fetch_all(MYSQLI_ASSOC);
+    }
+
     /**
      * Contar usuarios
      */
