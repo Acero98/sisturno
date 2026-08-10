@@ -103,17 +103,6 @@ include __DIR__ . '/../Layouts/header.php';
                     </tbody>
                 </table>
             </div>
-
-            <div class="operators-pagination mt-4 d-none">
-                <div class="text-muted small">Mostrando <strong><?= $desde ?></strong> al <strong><?= $hasta ?></strong> de <strong><?= $totalRegistros ?></strong> registros</div>
-                <nav>
-                    <ul class="pagination mb-0">
-                        <li class="page-item <?= $pagina <= 1 ? 'disabled' : '' ?>"><a class="page-link" href="<?= BASE_URL ?>index.php?ruta=operadores&pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">Anterior</a></li>
-                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?><li class="page-item <?= $i === $pagina ? 'active' : '' ?>"><a class="page-link" href="<?= BASE_URL ?>index.php?ruta=operadores&pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>"><?= $i ?></a></li><?php endfor; ?>
-                        <li class="page-item <?= $pagina >= $totalPaginas ? 'disabled' : '' ?>"><a class="page-link" href="<?= BASE_URL ?>index.php?ruta=operadores&pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">Siguiente</a></li>
-                    </ul>
-                </nav>
-            </div>
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
     id="modalEditar<?= $datos->id_usuario ?>"
     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content user-modal">
+        <div class="modal-content user-modal user-modal-edit">
             <div class="modal-header">
                 <div class="d-flex align-items-center gap-3">
                     <div class="modal-icon">

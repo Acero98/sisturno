@@ -1,6 +1,6 @@
 <div class="modal fade" id="modalRegistroOperador" tabindex="-1" aria-labelledby="modalRegistroOperadorTitulo" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content operator-modal">
+        <div class="modal-content operator-modal operator-modal-create">
             <div class="modal-header">
                 <div class="d-flex align-items-center gap-3">
                     <div class="modal-icon"><i class="fa-solid fa-user-plus"></i></div>

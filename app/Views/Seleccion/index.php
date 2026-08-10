@@ -1,4 +1,7 @@
-<?php include __DIR__ . '/../Layouts/header.php'; ?>
+<?php
+$cssModulo = 'seleccion-mvc';
+include __DIR__ . '/../Layouts/header.php';
+?>
 
 <div id="contenedorSeleccion">
     <?php require __DIR__ . '/components/contenido.php'; ?>

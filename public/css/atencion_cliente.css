@@ -19,12 +19,13 @@ body {
     }
     .estadistica-etiqueta {
         display: block;
-        min-height: 2.1em;
-        font-size: .78rem;
+        min-height: 2.25em;
+        font-size: .9rem;
         line-height: 1.15;
+        font-weight: 600;
     }
     .estadistica-valor {
-        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        font-size: clamp(1.5rem, 2.6vw, 2rem);
         line-height: 1.1;
     }
     @media (max-width: 575.98px) {
@@ -33,5 +34,121 @@ body {
         }
         .estadistica-etiqueta {
             font-size: .72rem;
+        }
+    }
+
+    /* Paleta pastel de alto contraste para la atención. */
+    .atencion-mvc {
+        color: #1e293b;
+    }
+    .atencion-mvc > h4 {
+        color: #0f3d75;
+    }
+    .atencion-mvc .ticket-card {
+        background: #fff;
+        border: 1px solid #dbeafe !important;
+        box-shadow: 0 .75rem 1.5rem rgba(30, 58, 138, .10) !important;
+    }
+    .atencion-mvc.estado-pendiente .ticket-numero { color: #1e3a8a !important; }
+    .atencion-mvc.estado-llamado .ticket-numero { color: #065f46 !important; }
+    .atencion-mvc.estado-en_atencion .ticket-numero { color: #1e3a8a !important; }
+    .atencion-mvc .btn-primary {
+        color: #1e3a8a;
+        background: #dbeafe;
+        border-color: #93c5fd;
+    }
+    .atencion-mvc .btn-primary:hover,
+    .atencion-mvc .btn-primary:focus {
+        color: #172554;
+        background: #bfdbfe;
+        border-color: #60a5fa;
+    }
+    .atencion-mvc .btn-success {
+        color: #065f46;
+        background: #d1fae5;
+        border-color: #86efac;
+    }
+    .atencion-mvc .btn-success:hover,
+    .atencion-mvc .btn-success:focus {
+        color: #064e3b;
+        background: #bbf7d0;
+        border-color: #4ade80;
+    }
+    .atencion-mvc .btn-danger {
+        color: #991b1b;
+        background: #fee2e2;
+        border-color: #fecaca;
+    }
+    .atencion-mvc .btn-danger:hover,
+    .atencion-mvc .btn-danger:focus {
+        color: #7f1d1d;
+        background: #fecaca;
+        border-color: #f87171;
+    }
+    .atencion-mvc .btn.btn-lg {
+        font-size: 1.7rem !important;
+        letter-spacing: .02em;
+    }
+    .atencion-mvc .btn.btn-lg i {
+        font-size: 1.05em;
+    }
+    .atencion-mvc button[onclick^="llamarTicket"] {
+        min-height: 5.5rem;
+        font-size: 1.9rem !important;
+    }
+    .atencion-mvc .card-custom,
+    .atencion-mvc .estadistica-card,
+    .atencion-mvc .card.shadow-sm {
+        border: 1px solid #dbe7f5 !important;
+        box-shadow: 0 .45rem 1rem rgba(30, 58, 138, .07) !important;
+    }
+    .atencion-mvc .card-header-custom {
+        color: #1e3a8a;
+        background: #dbeafe;
+        border-bottom: 1px solid #bfdbfe;
+    }
+    .atencion-mvc .card-header.bg-info {
+        color: #0c4a6e !important;
+        background: #e0f2fe !important;
+        border-bottom: 1px solid #bae6fd;
+    }
+    .atencion-mvc .table-light > * > th {
+        color: #334155;
+        background: #eff6ff;
+    }
+    .atencion-mvc .badge.bg-warning {
+        color: #5f4300 !important;
+        background: #fef3c7 !important;
+        border: 1px solid #fde68a;
+    }
+    .atencion-mvc .badge.bg-light {
+        color: #1e3a8a !important;
+        background: #eff6ff !important;
+        border: 1px solid #bfdbfe;
+    }
+    .atencion-mvc .row.g-3 > :nth-child(1) .estadistica-card { background: #dbeafe; }
+    .atencion-mvc .row.g-3 > :nth-child(2) .estadistica-card { background: #fef3c7; }
+    .atencion-mvc .row.g-3 > :nth-child(3) .estadistica-card { background: #dcfce7; }
+    .atencion-mvc .row.g-3 > :nth-child(4) .estadistica-card { background: #fee2e2; }
+    .atencion-mvc .row.g-3 > :nth-child(5) .estadistica-card { background: #f3e8ff; }
+    .atencion-mvc .row.g-3 > :nth-child(6) .estadistica-card { background: #e0f2fe; }
+    .atencion-mvc .row.g-3 > :nth-child(1) .estadistica-valor { color: #1e3a8a !important; }
+    .atencion-mvc .row.g-3 > :nth-child(2) .estadistica-valor { color: #9a6700 !important; }
+    .atencion-mvc .row.g-3 > :nth-child(3) .estadistica-valor { color: #047857 !important; }
+    .atencion-mvc .row.g-3 > :nth-child(4) .estadistica-valor { color: #b91c1c !important; }
+    .atencion-mvc .row.g-3 > :nth-child(5) .estadistica-valor { color: #6b21a8 !important; }
+    .atencion-mvc .row.g-3 > :nth-child(6) .estadistica-valor { color: #0c4a6e !important; }
+    .atencion-mvc .alert-secondary {
+        color: #475569;
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+    }
+    @media (max-width: 575.98px) {
+        .atencion-mvc .btn.btn-lg {
+            font-size: 1.35rem !important;
+        }
+        .atencion-mvc button[onclick^="llamarTicket"] {
+            min-height: 4.75rem;
+            font-size: 1.5rem !important;
         }
     }

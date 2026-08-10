@@ -23,10 +23,10 @@ $rolUsuarioHeader = $_SESSION['rol'] ?? '';
     <!-- DATATABLES -->
     <link rel="stylesheet"
         href="<?= BASE_URL ?>assets/plugins/css/dataTables.bootstrap5.min.css">
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS 
+    <link rel="stylesheet" href="<= BASE_URL ?>public/css/operadores.css">-->
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/header.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/operadores.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/dashboard.css">
     <?php if (!empty($cssModulo)): ?>
         <link rel="stylesheet"

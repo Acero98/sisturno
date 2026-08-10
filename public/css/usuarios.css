@@ -739,38 +739,38 @@
     border-color: #1d4ed8;
 }
 
-
 /* =====================================================
-   PAGINACIÓN
+   DATATABLES - PAGINACIÓN
    ===================================================== */
 
-.users-pagination {
+.dataTables_wrapper .dataTables_paginate {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* Contenedor Bootstrap generado por DataTables */
+
+.dataTables_wrapper .pagination {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 6px;
 
-    gap: 15px;
+    margin: 0;
 }
 
-.users-pagination .text-muted {
-    color: #94a3b8 !important;
-}
 
-.users-pagination .text-muted strong {
-    color: #475569;
-}
+/* Botón base */
 
-.users-pagination .pagination {
-    gap: 4px;
-}
-
-.users-pagination .page-link {
-    min-width: 34px;
-    height: 34px;
+.dataTables_wrapper .page-link {
+    min-width: 36px;
+    height: 36px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
+    padding: 0 11px;
 
     color: #64748b;
 
@@ -778,56 +778,129 @@
 
     border: 1px solid #e2e8f0;
 
-    border-radius: 9px !important;
+    border-radius: 10px !important;
 
     font-size: 12px;
     font-weight: 600;
 
     box-shadow: none;
 
-    transition: all .2s ease;
+    transition:
+        color .2s ease,
+        background-color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
 }
 
-.users-pagination .page-link:hover {
+
+/* Hover */
+
+.dataTables_wrapper .page-link:hover {
     color: #2563eb;
 
     background: #eff6ff;
 
     border-color: #bfdbfe;
+
+    transform: translateY(-1px);
 }
 
-.users-pagination .page-item.active .page-link {
-    color: #1d4ed8;
+
+/* Página activa */
+
+/* Página activa */
+.dataTables_wrapper .page-item.active .page-link {
+    color: #e0edff !important;
+    background: #2563eb !important;
+    border-color: #93c5fd !important;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 2px 6px rgba(59, 130, 246, 0.10) !important;
+}
+
+
+/* Deshabilitado */
+
+.dataTables_wrapper .page-item.disabled .page-link {
+    color: #cbd5e1;
+
+    background: #f8fafc;
+
+    border-color: #f1f5f9;
+
+    pointer-events: none;
+}
+
+
+/* Texto "Mostrando..." */
+
+.dataTables_wrapper .dataTables_info {
+    color: #94a3b8 !important;
+
+    font-size: 12px;
+
+    padding-top: 0 !important;
+}
+
+
+/* Selector de cantidad */
+
+.dataTables_wrapper .dataTables_length {
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+.dataTables_wrapper .dataTables_length select {
+    min-width: 72px;
+
+    padding: 7px 28px 7px 10px;
+
+    color: #475569;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    box-shadow: none;
+}
+
+
+.dataTables_wrapper .dataTables_length select:focus {
+    border-color: #93c5fd;
+
+    box-shadow:
+        0 0 0 3px rgba(59, 130, 246, .10);
+
+    outline: none;
+}
+
+/* =====================================================
+   MODAL REGISTRAR USUARIO - CELESTE PASTEL
+   ===================================================== */
+
+.modal-icon-create {
+    color: #2563eb;
 
     background: #dbeafe;
 
     border-color: #bfdbfe;
 }
 
-.users-pagination .page-item.disabled .page-link {
-    color: #cbd5e1;
-
-    background: #f8fafc;
-
-    border-color: #f1f5f9;
-}
-
-/* =====================================================
-   MODAL REGISTRAR USUARIO
-   ===================================================== */
-
-.modal-icon-create {
-    color: #047857;
-    background: #d1fae5;
-    border-color: #a7f3d0;
-}
 
 .btn-modal-create {
-    color: #047857;
+    color: #2563eb;
 
-    background: #d1fae5;
+    background: #dbeafe;
 
-    border: 1px solid #a7f3d0;
+    border: 1px solid #bfdbfe;
 
     border-radius: 10px;
 
@@ -839,12 +912,13 @@
     transition: all .2s ease;
 }
 
+
 .btn-modal-create:hover {
-    color: #065f46;
+    color: #1d4ed8;
 
-    background: #a7f3d0;
+    background: #bfdbfe;
 
-    border-color: #6ee7b7;
+    border-color: #93c5fd;
 
     transform: translateY(-1px);
 }
@@ -852,6 +926,51 @@
 /* =====================================================
    RESPONSIVE
    ===================================================== */
+
+/* Escala tipográfica alineada con Servicios y Operadores. */
+.page-header-card h4 {
+    font-size: 1.5rem;
+}
+
+.page-header-card p {
+    font-size: 1rem;
+}
+
+.btn-new-user,
+.users-search .form-control,
+.btn-search,
+.table-modern tbody td,
+.btn-modal-cancel,
+.btn-modal-save,
+.btn-modal-create {
+    font-size: .9rem;
+}
+
+.table-modern thead th {
+    font-size: .75rem;
+}
+
+.users-title h5,
+.user-modal .modal-title {
+    font-size: 1.25rem;
+}
+
+.users-title small,
+.table-user small,
+.user-modal .modal-header small,
+.user-modal .form-text {
+    font-size: .875rem;
+}
+
+.username-text,
+.role-badge,
+.status-badge,
+.user-modal .form-label,
+.input-icon-wrapper .form-control,
+.input-icon-wrapper .form-select,
+.users-pagination .page-link {
+    font-size: .9rem;
+}
 
 @media (max-width: 991.98px) {
 
@@ -897,3 +1016,85 @@
         min-width: 850px;
     }
 }
+
+/* =====================================================
+   MODAL EDITAR USUARIO - AMARILLO PASTEL
+   ===================================================== */
+
+/* Encabezado */
+.user-modal-edit .modal-header {
+    background: #fffbeb;
+    border-bottom: 1px solid #fde68a;
+}
+
+
+/* Icono principal */
+.user-modal-edit .modal-icon {
+    color: #d97706;
+
+    background: #fef3c7;
+
+    border: 1px solid #fde68a;
+}
+
+
+/* Focus de inputs */
+.user-modal-edit .input-icon-wrapper .form-control:focus,
+.user-modal-edit .input-icon-wrapper .form-select:focus {
+    background: #ffffff;
+
+    border-color: #fcd34d;
+
+    box-shadow:
+        0 0 0 3px rgba(245, 158, 11, .10);
+}
+
+
+/* Icono del input al hacer focus */
+.user-modal-edit .input-icon-wrapper:focus-within>i {
+    color: #d97706;
+}
+
+
+/* Botón Guardar Cambios */
+.user-modal-edit .btn-modal-save {
+    color: #b45309;
+
+    background: #fef3c7;
+
+    border: 1px solid #fde68a;
+
+    border-radius: 10px;
+
+    padding: 9px 15px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all .2s ease;
+}
+
+
+/* Hover */
+.user-modal-edit .btn-modal-save:hover {
+    color: #92400e;
+
+    background: #fde68a;
+
+    border-color: #fcd34d;
+
+    transform: translateY(-1px);
+}
+
+
+/* Campo readonly */
+.user-modal-edit .form-control[readonly] {
+    color: #64748b;
+
+    background: #f8fafc;
+
+    border-color: #e2e8f0;
+
+    cursor: not-allowed;
+}
+

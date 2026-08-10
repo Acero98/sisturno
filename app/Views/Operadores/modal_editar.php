@@ -2,7 +2,7 @@
     tabindex="-1" aria-labelledby="modalEditarOperadorTitulo<?= $operador['id_usuario'] ?>"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content operator-modal">
+        <div class="modal-content operator-modal operator-modal-edit">
             <div class="modal-header">
                 <div class="d-flex align-items-center gap-3">
                     <div class="modal-icon"><i class="fa-solid fa-user-pen"></i></div>

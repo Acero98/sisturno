@@ -42,14 +42,14 @@ $configuracion = [
         }
     }
 </style>
-<div class="container-fluid py-4">
+<div class="container-fluid py-4 atencion-mvc estado-<?= strtolower($estadoTicket) ?>">
     <h4 class="fw-bold text-center fw-semibold">ATENCIÓN AL CLIENTE - VENTANILLA <?= htmlspecialchars($ventanilla['num_ventanilla'] ?? 'SIN ASIGNAR', ENT_QUOTES, 'UTF-8') ?></h4>
     <?php if ($ticket): ?>
         <div class="card border-0 shadow-sm ticket-card mb-4">
             <div class="card-body py-3">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center border-end">
-                        <div class="ticket-numero <?= $claseTicket ?>" style="color:<?= $color ?>"><?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?></div>
+                        <div class="ticket-numero <?= $claseTicket ?>"><?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?></div>
                     </div>
                     <div class="col-md-6 text-center">
                         <div class="text-uppercase text-muted fw-bold mb-2" style="letter-spacing:3px"><?= $titulo ?></div>
@@ -62,6 +62,7 @@ $configuracion = [
         <?php if ($estadoTicket === 'PENDIENTE'): ?>
             <div class="text-center mb-4">
                 <button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="llamarTicket(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                    <i class="fa-solid fa-bullhorn me-2" aria-hidden="true"></i>
                     LLAMAR A
                     <?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>
                 </button>
@@ -69,11 +70,13 @@ $configuracion = [
         <?php elseif ($estadoTicket === 'LLAMADO'): ?><div class="row g-3">
                 <div class="col-md-6">
                     <button class="btn btn-success btn-lg w-100 py-3 fw-bold" onclick="comenzarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        <i class="fa-solid fa-play me-2" aria-hidden="true"></i>
                         COMENZAR ATENCIÓN
                     </button>
                 </div>
                 <div class="col-md-6">
                     <button class="btn btn-danger btn-lg w-100 py-3 fw-bold" onclick="cancelarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        <i class="fa-solid fa-ban me-2" aria-hidden="true"></i>
                         CANCELAR
                     </button>
                 </div>
@@ -81,11 +84,13 @@ $configuracion = [
         <?php elseif ($estadoTicket === 'EN_ATENCION'): ?><div class="row g-3">
                 <div class="col-md-6">
                     <button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="finalizarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        <i class="fa-solid fa-circle-check me-2" aria-hidden="true"></i>
                         FINALIZAR ATENCIÓN
                     </button>
                 </div>
                 <div class="col-md-6">
                     <button class="btn btn-danger btn-lg w-100 py-3 fw-bold" onclick="cancelarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        <i class="fa-solid fa-ban me-2" aria-hidden="true"></i>
                         CANCELAR
                     </button>
                 </div>

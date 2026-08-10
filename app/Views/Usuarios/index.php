@@ -222,63 +222,7 @@ include __DIR__ . '/../Layouts/header.php';
                 }
                 ?>
             <?php endif; ?>
-            <!-- ==========================================
-             PAGINACIÓN
-        =========================================== -->
-            <div class="users-pagination mt-4 d-none">
-                <!-- Información -->
-                <div class="text-muted small">
-                    Mostrando
-                    <strong>
-                        <?= $desde ?>
-                    </strong>
-                    al
-                    <strong>
-                        <?= $hasta ?>
-                    </strong>
-                    de
-                    <strong>
-                        <?= $totalRegistros ?>
-                    </strong>
-                    registros
-                </div>
-                <!-- Navegación -->
-                <nav>
-                    <ul class="pagination mb-0">
-                        <!-- Anterior -->
-                        <li
-                            class="page-item <?= ($pagina <= 1) ? 'disabled' : '' ?>">
-                            <a
-                                class="page-link"
-                                href="<?= BASE_URL ?>index.php?ruta=usuarios&pagina=<?= $pagina - 1 ?>&buscar=<?= urlencode($buscar) ?>">
-                                <i class="fa-solid fa-chevron-left"></i>
-                                Anterior
-                            </a>
-                        </li>
-                        <!-- Páginas -->
-                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                            <li
-                                class="page-item <?= ($i == $pagina) ? 'active' : '' ?>">
-                                <a
-                                    class="page-link"
-                                    href="<?= BASE_URL ?>index.php?ruta=usuarios&pagina=<?= $i ?>&buscar=<?= urlencode($buscar) ?>">
-                                    <?= $i ?>
-                                </a>
-                            </li>
-                        <?php endfor; ?>
-                        <!-- Siguiente -->
-                        <li
-                            class="page-item <?= ($pagina >= $totalPaginas) ? 'disabled' : '' ?>">
-                            <a
-                                class="page-link"
-                                href="<?= BASE_URL ?>index.php?ruta=usuarios&pagina=<?= $pagina + 1 ?>&buscar=<?= urlencode($buscar) ?>">
-                                Siguiente
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            
         </div>
     </div>
 </div>
