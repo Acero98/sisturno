@@ -59,20 +59,50 @@ $configuracion = [
                 </div>
             </div>
         </div>
-        <?php if ($estadoTicket === 'PENDIENTE'): ?><div class="text-center mb-4"><button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="llamarTicket(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">LLAMAR A <?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?></button></div>
+        <?php if ($estadoTicket === 'PENDIENTE'): ?>
+            <div class="text-center mb-4">
+                <button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="llamarTicket(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                    LLAMAR A
+                    <?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>
+                </button>
+            </div>
         <?php elseif ($estadoTicket === 'LLAMADO'): ?><div class="row g-3">
-                <div class="col-md-6"><button class="btn btn-success btn-lg w-100 py-3 fw-bold" onclick="comenzarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">COMENZAR ATENCIÓN</button></div>
-                <div class="col-md-6"><button class="btn btn-danger btn-lg w-100 py-3 fw-bold" onclick="cancelarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">CANCELAR</button></div>
+                <div class="col-md-6">
+                    <button class="btn btn-success btn-lg w-100 py-3 fw-bold" onclick="comenzarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        COMENZAR ATENCIÓN
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger btn-lg w-100 py-3 fw-bold" onclick="cancelarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        CANCELAR
+                    </button>
+                </div>
             </div>
         <?php elseif ($estadoTicket === 'EN_ATENCION'): ?><div class="row g-3">
-                <div class="col-md-6"><button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="finalizarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">FINALIZAR ATENCIÓN</button></div>
-                <div class="col-md-6"><button class="btn btn-danger btn-lg w-100 py-3 fw-bold" onclick="cancelarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">CANCELAR</button></div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="finalizarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        FINALIZAR ATENCIÓN
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-danger btn-lg w-100 py-3 fw-bold" onclick="cancelarAtencion(this)" data-ticket="<?= htmlspecialchars($ticket['numero_tk'], ENT_QUOTES, 'UTF-8') ?>">
+                        CANCELAR
+                    </button>
+                </div>
             </div><?php endif; ?>
     <?php else: ?><div class="alert alert-secondary text-center fw-semibold">NO HAY ATENCIONES PENDIENTES</div><?php endif; ?>
     <div class="row g-4 mt-2">
         <div class="col-lg-6">
             <div class="card card-custom shadow-sm border-0 h-100">
-                <div class="card-header card-header-custom d-flex justify-content-between align-items-center"><span><i class="fas fa-list-ol me-2"></i>Próximos 5 Tickets</span><?php if ($tickets): ?><span class="badge bg-light text-primary fw-bold px-3 py-2"><?= count($tickets) ?></span><?php endif; ?></div>
+                <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-list-ol me-2">
+                        </i>Próximos 5 Tickets</span>
+                    <?php if ($tickets): ?>
+                        <span class="badge bg-light text-primary fw-bold px-3 py-2">
+                            <?= count($tickets) ?>
+                        </span>
+                    <?php endif; ?>
+                </div>
                 <div class="card-body p-0"><?php if (!$tickets): ?><div class="text-center py-5 px-4"><i class="fas fa-inbox fa-4x text-muted mb-4"></i>
                             <h5 class="fw-bold text-secondary">No hay tickets pendientes</h5>
                             <p class="text-muted mb-0">Cuando existan nuevos turnos, aparecerán en esta lista.</p>
@@ -88,7 +118,11 @@ $configuracion = [
                                 </thead>
                                 <tbody><?php foreach (array_slice($tickets, 0, 5) as $ticketPendiente): ?><tr>
                                             <td class="fw-bold text-muted"><?= $ticketPendiente['numero'] ?></td>
-                                            <td><span class="badge bg-warning text-dark rounded-pill px-3 py-2 fw-semibold"><?= htmlspecialchars(str_replace('_', ' ', $ticketPendiente['estado']), ENT_QUOTES, 'UTF-8') ?></span></td>
+                                            <td>
+                                                <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fw-semibold">
+                                                    <?= htmlspecialchars(str_replace('_', ' ', $ticketPendiente['estado']), ENT_QUOTES, 'UTF-8') ?>
+                                                </span>
+                                            </td>
                                             <td>
                                                 <div class="fw-bold text-primary fs-5"><?= htmlspecialchars($ticketPendiente['ticket'], ENT_QUOTES, 'UTF-8') ?></div>
                                             </td>
@@ -99,14 +133,25 @@ $configuracion = [
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="row g-3"><?php $tarjetas = [['Atendidos Hoy', $estadisticas['total_tickets'] ?? 0, 'text-primary'], ['En Espera', count($tickets), 'text-warning'], ['Finalizados', $estadisticas['finalizados'] ?? 0, 'text-success'], ['Cancelados', $estadisticas['cancelados'] ?? 0, 'text-danger'], ['Prom. Atención', round($estadisticas['promedio_atencion'] ?? 0) . ' min', 'text-info'], ['Prom. Espera', round($estadisticas['promedio_espera'] ?? 0) . ' min', 'text-info']];
-                                    foreach ($tarjetas as [$etiqueta, $valor, $clase]): ?><div class="col-md-2">
-                        <div class="card shadow-sm border-0 h-100">
-                            <div class="card-body"><small class="text-muted"><?= $etiqueta ?></small>
-                                <h2 class="fw-bold <?= $clase ?> mb-0"><?= $valor ?></h2>
+            <div class="row g-3">
+                <?php
+                $tarjetas = [
+                    ['Atendidos Hoy', $estadisticas['total_tickets'] ?? 0, 'text-primary'],
+                    ['En Espera', count($tickets), 'text-warning'],
+                    ['Finalizados', $estadisticas['finalizados'] ?? 0, 'text-success'],
+                    ['Cancelados', $estadisticas['cancelados'] ?? 0, 'text-danger'],
+                    ['Prom. Atención', round($estadisticas['promedio_atencion'] ?? 0) . ' min', 'text-info'],
+                    ['Prom. Espera', round($estadisticas['promedio_espera'] ?? 0) . ' min', 'text-info']
+                ];
+                foreach ($tarjetas as [$etiqueta, $valor, $clase]): ?><div class="col-6 col-md-4">
+                        <div class="card estadistica-card shadow-sm border-0 h-100">
+                            <div class="card-body"><small class="estadistica-etiqueta text-muted"><?= $etiqueta ?></small>
+                                <h4 class="estadistica-valor fw-bold <?= $clase ?> mb-0 text-nowrap"><?= $valor ?></h4>
                             </div>
                         </div>
-                    </div><?php endforeach; ?></div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
             <div class="card shadow-sm border-0 mt-3">
                 <div class="card-header bg-info text-dark fw-bold"><i class="fas fa-chart-bar me-2"></i>Atenciones por Servicio</div>
                 <div class="card-body p-0">

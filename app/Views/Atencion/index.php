@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/../../../vista/header.php'; ?>
+<?php include __DIR__ . '/../Layouts/header.php'; ?>
 <link rel="stylesheet" href="<?= BASE_URL ?>public/css/atencion_cliente.css">
 <style>
     body {
@@ -16,4 +16,4 @@
 <script src="<?= BASE_URL ?>public/js/socket_config.js"></script>
 <script src="<?= BASE_URL ?>assets/js/socket.io.min.js"></script>
 <script src="<?= BASE_URL ?>public/js/atencion-cliente-mvc.js"></script>
-<?php require __DIR__ . '/../../../vista/footer.php'; ?>
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>

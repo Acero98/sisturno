@@ -1,15 +1,18 @@
 <?php
 
 require_once __DIR__ . '/../Models/OperadorServicioModel.php';
+require_once __DIR__ . '/../Services/NotificadorSocket.php';
 require_once __DIR__ . '/../../control/permisos.php';
 
 class OperadorServicioController
 {
     private $model;
+    private $notificadorSocket;
 
     public function __construct($conexion)
     {
         $this->model = new OperadorServicioModel($conexion);
+        $this->notificadorSocket = new NotificadorSocket();
     }
 
     public function index()
@@ -37,7 +40,7 @@ class OperadorServicioController
         $guardado = $this->model->guardarAsignaciones($idUsuario, $servicios);
         $mensaje = $guardado ? 'asignaciones_guardadas' : 'error';
         if ($guardado) {
-            require_once __DIR__ . '/../../controlador/atencion/notificar_socket.php';
+            $this->notificadorSocket->notificar();
         }
         header('Location: ' . BASE_URL . 'index.php?ruta=operadores-servicios&id_usuario=' . $idUsuario . '&mensaje=' . $mensaje);
         exit();

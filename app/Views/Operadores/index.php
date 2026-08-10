@@ -1,6 +1,6 @@
 <?php
 $cssModulo = 'operadores-mvc';
-include __DIR__ . '/../../../vista/header.php';
+include __DIR__ . '/../Layouts/header.php';
 ?>
 
 <div class="container-fluid py-4">
@@ -125,4 +125,4 @@ include __DIR__ . '/../../../vista/header.php';
 <?php endforeach; ?>
 
 <script src="<?= BASE_URL ?>public/js/operadores-mvc.js"></script>
-<?php include __DIR__ . '/../../../vista/footer.php'; ?>
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>

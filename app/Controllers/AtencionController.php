@@ -1,15 +1,18 @@
 <?php
 
 require_once __DIR__ . '/../Models/AtencionModel.php';
+require_once __DIR__ . '/../Services/NotificadorSocket.php';
 require_once __DIR__ . '/../../control/permisos.php';
 
 class AtencionController
 {
     private $model;
+    private $notificadorSocket;
 
     public function __construct($conexion)
     {
         $this->model = new AtencionModel($conexion);
+        $this->notificadorSocket = new NotificadorSocket();
     }
 
     public function obtenerContextoActual()
@@ -66,24 +69,10 @@ class AtencionController
     private function responderAccion($resultado, $notificacion = null)
     {
         if ($resultado === 'OK') {
-            $this->notificarSocket($notificacion ?? ['accion' => 'ticket_actualizado']);
+            $this->notificadorSocket->notificar($notificacion ?? ['accion' => 'ticket_actualizado']);
         }
         header('Content-Type: text/plain; charset=utf-8');
         echo $resultado;
     }
 
-    private function notificarSocket($datos)
-    {
-        $datos['fecha'] = date('Y-m-d H:i:s');
-        $payload = json_encode($datos);
-        $curl = curl_init(SOCKETURL . '/notificar');
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 3);
-        curl_exec($curl);
-        curl_close($curl);
-    }
 }

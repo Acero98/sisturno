@@ -3,7 +3,7 @@ $total = (int) ($metricas['total'] ?? 0);
 $atendidos = (int) ($metricas['atendidos'] ?? 0);
 $pendientes = (int) ($metricas['pendientes'] ?? 0);
 $promedioEspera = (int) round($metricas['promedio_espera'] ?? 0);
-require __DIR__ . '/../../../vista/header.php';
+include __DIR__ . '/../Layouts/header.php';
 ?>
 
 <link rel="stylesheet" href="<?= BASE_URL ?>public/css/consultaGeneral.css">
@@ -27,13 +27,35 @@ require __DIR__ . '/../../../vista/header.php';
             <form method="GET" action="<?= BASE_URL ?>index.php">
                 <input type="hidden" name="ruta" value="consulta-general">
                 <div class="row g-2 align-items-center">
-                    <div class="col-md-3"><input type="date" name="inicio" class="form-control form-control-sm" value="<?= htmlspecialchars($fechaInicio, ENT_QUOTES, 'UTF-8') ?>"></div>
-                    <div class="col-md-3"><input type="date" name="fin" class="form-control form-control-sm" value="<?= htmlspecialchars($fechaFin, ENT_QUOTES, 'UTF-8') ?>"></div>
-                    <div class="col-md-2 d-flex gap-1"><button type="submit" name="tipo" value="personalizado" class="btn btn-sm btn-success w-100">Filtrar</button><a href="<?= BASE_URL ?>index.php?ruta=consulta-general&amp;tipo=hoy" class="btn btn-sm btn-outline-secondary" title="Restablecer"><i class="fa-solid fa-rotate-left"></i></a></div>
-                    <div class="col-md-3 d-flex gap-1 justify-content-end"><a id="btnExcel" class="btn btn-sm btn-success" title="Exportar Excel"><i class="fa-solid fa-file-excel"></i></a><a id="btnPDF" class="btn btn-sm btn-danger" title="Exportar PDF"><i class="fa-solid fa-file-pdf"></i></a><button type="button" onclick="window.print()" class="btn btn-sm btn-dark" title="Imprimir"><i class="fa-solid fa-print"></i></button></div>
+                    <div class="col-md-3">
+                        <input type="date" name="inicio" class="form-control form-control-sm" value="<?= htmlspecialchars($fechaInicio, ENT_QUOTES, 'UTF-8') ?>">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="fin" class="form-control form-control-sm" value="<?= htmlspecialchars($fechaFin, ENT_QUOTES, 'UTF-8') ?>">
+                    </div>
+                    <div class="col-md-2 d-flex gap-1">
+                        <button type="submit" name="tipo" value="personalizado" class="btn btn-sm btn-success w-100">Filtrar</button>
+                        <a href="<?= BASE_URL ?>index.php?ruta=consulta-general&amp;tipo=hoy" class="btn btn-sm btn-outline-secondary" title="Restablecer">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-3 d-flex gap-1 justify-content-end">
+                        <a id="btnExcel" class="btn btn-sm btn-success" title="Exportar Excel">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </a>
+                        <a id="btnPDF" class="btn btn-sm btn-danger" title="Exportar PDF">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                        <button type="button" onclick="window.print()" class="btn btn-sm btn-dark" title="Imprimir">
+                            <i class="fa-solid fa-print"></i>
+                        </button>
+                    </div>
                 </div>
             </form>
-            <div class="mt-2 small text-muted"><i class="fa-solid fa-circle-info me-1"></i><?= htmlspecialchars(ucfirst($tipo), ENT_QUOTES, 'UTF-8') ?>: <?= date('d/m/Y', strtotime($fechaInicio)) ?> - <?= date('d/m/Y', strtotime($fechaFin)) ?></div>
+            <div class="mt-2 small text-muted">
+                <i class="fa-solid fa-circle-info me-1"></i>
+                <?= htmlspecialchars(ucfirst($tipo), ENT_QUOTES, 'UTF-8') ?>: <?= date('d/m/Y', strtotime($fechaInicio)) ?> - <?= date('d/m/Y', strtotime($fechaFin)) ?>
+            </div>
             <input type="hidden" id="tipoFiltro" value="<?= htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8') ?>">
         </div>
     </div>
@@ -113,4 +135,4 @@ require __DIR__ . '/../../../vista/header.php';
     window.BASE_URL = <?= json_encode(BASE_URL) ?>;
 </script>
 <script src="<?= BASE_URL ?>public/js/consulta-general-mvc.js"></script>
-<?php require __DIR__ . '/../../../vista/footer.php'; ?>
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>

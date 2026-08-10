@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/../../../vista/header.php'; ?>
+<?php include __DIR__ . '/../Layouts/header.php'; ?>
 
 <div id="contenedorSeleccion">
     <?php require __DIR__ . '/components/contenido.php'; ?>
@@ -8,4 +8,4 @@
 <script src="<?= BASE_URL ?>public/js/socket_config.js"></script>
 <script src="<?= BASE_URL ?>assets/js/socket.io.min.js"></script>
 <script src="<?= BASE_URL ?>public/js/seleccion-mvc.js"></script>
-<?php require __DIR__ . '/../../../vista/footer.php'; ?>
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>

@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/../../../vista/header.php'; ?>
+<?php include __DIR__ . '/../Layouts/header.php'; ?>
 <div class="container-fluid py-4">
     <div class="page-header-card mb-3 py-2">
         <div class="row align-items-center">
@@ -129,4 +129,4 @@
 require __DIR__ . '/modal_crear.php';
 foreach ($servicios as $servicio) require __DIR__ . '/modal_editar.php'; ?>
 <script src="<?= BASE_URL ?>public/js/servicios-mvc.js"></script>
-<?php include __DIR__ . '/../../../vista/footer.php'; ?>
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>

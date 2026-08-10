@@ -1,15 +1,18 @@
 <?php
 
 require_once __DIR__ . '/../Models/SeleccionModel.php';
+require_once __DIR__ . '/../Services/NotificadorSocket.php';
 require_once __DIR__ . '/../../control/permisos.php';
 
 class SeleccionController
 {
     private $model;
+    private $notificadorSocket;
 
     public function __construct($conexion)
     {
         $this->model = new SeleccionModel($conexion);
+        $this->notificadorSocket = new NotificadorSocket();
     }
 
     public function obtenerServiciosActivos()
@@ -47,20 +50,8 @@ class SeleccionController
             $notificacion['servicio'] = $resultado['servicio'];
             $notificacion['tipo'] = 'nuevo_ticket';
         }
-        $this->notificarSocket($notificacion);
+        $this->notificadorSocket->notificar($notificacion);
         echo $resultado['ticket'];
     }
 
-    private function notificarSocket($datos)
-    {
-        $curl = curl_init(SOCKETURL . '/notificar');
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($datos));
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 3);
-        curl_exec($curl);
-        curl_close($curl);
-    }
 }

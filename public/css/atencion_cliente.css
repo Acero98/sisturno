@@ -11,3 +11,27 @@ body {
     .empty-state img {
         max-width: 250px;
     }
+    .estadistica-card {
+        border-radius: 10px;
+    }
+    .estadistica-card .card-body {
+        padding: .8rem;
+    }
+    .estadistica-etiqueta {
+        display: block;
+        min-height: 2.1em;
+        font-size: .78rem;
+        line-height: 1.15;
+    }
+    .estadistica-valor {
+        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        line-height: 1.1;
+    }
+    @media (max-width: 575.98px) {
+        .estadistica-card .card-body {
+            padding: .7rem;
+        }
+        .estadistica-etiqueta {
+            font-size: .72rem;
+        }
+    }

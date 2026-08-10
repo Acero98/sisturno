@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/../../../vista/header.php';
+include __DIR__ . '/../Layouts/header.php';
 ?>
 <br>
 <div class="container-fluid">
@@ -40,5 +40,5 @@ include __DIR__ . '/../../../vista/header.php';
 </script>
 
 <?php
-include __DIR__ . '/../../../vista/footer.php';
+include __DIR__ . '/../Layouts/footer.php';
 ?>

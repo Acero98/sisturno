@@ -29,8 +29,8 @@ $(function () {
             operador: $('#filtroOperador').val(),
             search: $('#tablaTickets_filter input').val() || ''
         });
-        $('#btnExcel').attr('href', window.BASE_URL + 'controlador/reportes/generar_excel.php?' + parametros.toString());
-        $('#btnPDF').attr('href', window.BASE_URL + 'controlador/reportes/generar_pdf.php?' + parametros.toString());
+        $('#btnExcel').attr('href', window.BASE_URL + 'app/Models/generar_excel.php?' + parametros.toString());
+        $('#btnPDF').attr('href', window.BASE_URL + 'app/Models/generar_pdf.php?' + parametros.toString());
     }
 
     $('#filtroEstado, #filtroServicio, #filtroOperador').on('change', function () {

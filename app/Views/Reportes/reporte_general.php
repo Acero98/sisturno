@@ -4,7 +4,7 @@
  * mientras los componentes del reporte se trasladan gradualmente a app/Views.
  */
 ?>
-<?php include __DIR__ . '/../../../vista/header.php'; ?>
+<?php include __DIR__ . '/../Layouts/header.php'; ?>
 <div class="container-fluid py-4">
     <div class="page-header-card mb-2 py-2">
         <div class="row align-items-center">
@@ -34,18 +34,18 @@
         </div>
     </div>
     <div class="d-flex justify-content-end gap-1 mb-3 flex-wrap">
-        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>controlador/reportes/exp_estadosExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
-            <i class="fa-solid fa-file-excel me-1"></i>Estados</a>
-        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>controlador/reportes/exp_serviciosExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
-            <i class="fa-solid fa-file-excel me-1"></i>Servicios</a>
-        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>controlador/reportes/exp_topoperadoresExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
+        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>app/Models/exp_tiempoServiciosExcel.php?inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
+            <i class="fa-solid fa-file-excel me-1"></i>Tiempo x servicio</a>
+        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>app/Models/exp_topoperadoresExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
             <i class="fa-solid fa-file-excel me-1"></i>Operadores</a>
-        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>controlador/reportes/exp_horaspicoExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
-            <i class="fa-solid fa-file-excel me-1"></i>Horas pico</a>
-        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>controlador/reportes/exp_tendenciaExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
+        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>app/Models/exp_estadosExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
+            <i class="fa-solid fa-file-excel me-1"></i>Estados</a>
+        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>app/Models/exp_serviciosExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
+            <i class="fa-solid fa-file-excel me-1"></i>Servicios</a>
+        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>app/Models/exp_tendenciaExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
             <i class="fa-solid fa-file-excel me-1"></i>Tendencia</a>
-        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>controlador/reportes/exp_tiempoServiciosExcel.php?inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
-            <i class="fa-solid fa-file-excel me-1"></i>Exportar tiempo por servicio</a>
+        <a class="btn btn-sm btn-success" href="<?= BASE_URL ?>app/Models/exp_horaspicoExcel.php?tipo=<?= urlencode($tipo) ?>&inicio=<?= urlencode($fechaInicio) ?>&fin=<?= urlencode($fechaFin) ?>">
+            <i class="fa-solid fa-file-excel me-1"></i>Horas pico</a>
     </div>
     <div class="row g-3 mb-4">
         <?php foreach (
@@ -170,4 +170,4 @@
     window.reporteGeneralData = <?= json_encode($graficas, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
 </script>
 <script src="<?= BASE_URL ?>public/js/reporte-general-mvc.js"></script>
-<?php include __DIR__ . '/../../../vista/footer.php'; ?>
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>
