@@ -25,11 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmar = (selector, titulo, texto, color) => document.addEventListener('submit', event => {
         if (!event.target.matches(selector) || event.target.dataset.confirmado === '1') return;
         event.preventDefault();
-        Swal.fire({ title: titulo, text: texto, icon: 'question', showCancelButton: true, confirmButtonColor: color, cancelButtonColor: '#6c757d', confirmButtonText: 'Sí, continuar', cancelButtonText: 'Cancelar' }).then(r => { if (r.isConfirmed) { event.target.dataset.confirmado = '1'; event.target.requestSubmit(); } });
+        Swal.fire({
+            title: titulo,
+            text: texto,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: color,
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, continuar',
+            cancelButtonText: 'Cancelar'
+        }).then(r => { if (r.isConfirmed) { event.target.dataset.confirmado = '1'; event.target.requestSubmit(); } });
     });
     confirmar('.formRegistrarServicioMvc', '¿Registrar servicio?', 'Se creará un nuevo servicio.', '#0d6efd');
     confirmar('.formEditarServicioMvc', '¿Guardar cambios?', 'Se actualizará la información del servicio.', '#d97706');
     confirmar('.formCambiarEstadoServicio', '¿Cambiar estado?', 'La disponibilidad del servicio se actualizará.', '#0d6efd');
-    const mensajes = { registrado:['¡Registrado!','El servicio fue creado correctamente.','success'], actualizado:['¡Actualizado!','Los cambios se guardaron correctamente.','success'], activado:['Activado','El servicio volverá a mostrarse en la selección.','success'], desactivado:['Desactivado','El servicio dejó de mostrarse en la selección.','success'], existe:['Código duplicado','El código ya está registrado.','warning'], obligatorio:['Datos incompletos','Completa todos los campos obligatorios.','warning'], error:['No se pudo completar','Ocurrió un error al procesar la operación.','error'] };
-    const mensaje = new URLSearchParams(window.location.search).get('mensaje'); if (mensajes[mensaje]) { const [titulo,texto,icono] = mensajes[mensaje]; Swal.fire({title:titulo,text:texto,icon:icono,confirmButtonColor:'#0d6efd'}).then(()=>window.history.replaceState({},document.title,window.location.pathname+'?ruta=servicios')); }
+    const mensajes = { registrado: ['¡Registrado!', 'El servicio fue creado correctamente.', 'success'], actualizado: ['¡Actualizado!', 'Los cambios se guardaron correctamente.', 'success'], activado: ['Activado', 'El servicio volverá a mostrarse en la selección.', 'success'], desactivado: ['Desactivado', 'El servicio dejó de mostrarse en la selección.', 'success'], existe: ['Código duplicado', 'El código ya está registrado.', 'warning'], obligatorio: ['Datos incompletos', 'Completa todos los campos obligatorios.', 'warning'], error: ['No se pudo completar', 'Ocurrió un error al procesar la operación.', 'error'] };
+    const mensaje = new URLSearchParams(window.location.search).get('mensaje'); if (mensajes[mensaje]) { const [titulo, texto, icono] = mensajes[mensaje]; Swal.fire({ title: titulo, text: texto, icon: icono, confirmButtonColor: '#0d6efd' }).then(() => window.history.replaceState({}, document.title, window.location.pathname + '?ruta=servicios')); }
 });

@@ -23,7 +23,11 @@
                     <th class="text-center align-middle fw-bold numero-turno"><?= $indice + 1 ?></th>
                     <td class="text-center align-middle fw-bold ticket-turno"><?= htmlspecialchars($texto, ENT_QUOTES, 'UTF-8') ?></td>
                     <td class="text-center align-middle fw-bold ventanilla-turno"><?= htmlspecialchars($ventanilla, ENT_QUOTES, 'UTF-8') ?></td>
-                    <td class="text-center align-middle"><span class="badge <?= $badge ?> rounded-pill estado-turno"><?= htmlspecialchars(str_replace('_', ' ', $estado), ENT_QUOTES, 'UTF-8') ?></span></td>
+                    <td class="text-center align-middle">
+                        <span class="badge <?= $badge ?> rounded-pill estado-turno">
+                            <?= htmlspecialchars(str_replace('_', ' ', $estado), ENT_QUOTES, 'UTF-8') ?>
+                        </span>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             <?php if (!$turnos): ?><tr>

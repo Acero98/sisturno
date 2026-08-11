@@ -53,7 +53,7 @@
 .seleccion-servicio {
     display: flex;
     width: 100%;
-    min-height: var(--altura-servicio);
+    height: var(--altura-servicio);
     align-items: center;
     justify-content: center;
     gap: clamp(.5rem, 1vw, .85rem);
@@ -93,10 +93,16 @@
 }
 
 .seleccion-servicio-nombre {
-    overflow-wrap: anywhere;
+    display: block;
+    width: 100%;
+
+    overflow-wrap: normal;
+    word-break: normal;
+
     font-size: clamp(1.1rem, 2.2vw, 1.8rem);
     font-weight: 800;
     line-height: 1.18;
+    text-align: center;
 }
 
 .seleccion-servicios-grid form:nth-child(4n + 2) .seleccion-servicio {
@@ -170,7 +176,9 @@
 
 @media (min-width: 900px) {
     .seleccion-servicios-grid form {
-        flex-basis: calc((100% - var(--separacion-servicios) - var(--separacion-servicios) - var(--separacion-servicios)) / 4);
+        flex-basis: calc(
+            (100% - (var(--separacion-servicios) * 2)) / 3
+        );
     }
 }
 

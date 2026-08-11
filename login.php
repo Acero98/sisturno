@@ -32,6 +32,7 @@ if (isset($_POST['login'])) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,173 +42,11 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
-    <style>
-        /* ==========================================================
-       BASE
-        ========================================================== */
-        body {
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background:
-                linear-gradient(135deg,
-                    #1d4ed8 0%,
-                    #2563eb 50%,
-                    #1e40af 100%);
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-        }
-        /* ==========================================================
-       LOGIN
-        ========================================================== */
-        .login-card {
-            width: 100%;
-            max-width: 420px;
-            border: 0;
-            border-radius: 24px;
-            background: #ffffff;
-            box-shadow:
-                0 20px 25px -5px rgba(15, 23, 42, .10),
-                0 8px 10px -6px rgba(15, 23, 42, .10);
-            overflow: hidden;
-        }
-        /* ==========================================================
-       LOGO
-    ========================================================== */
-        .login-logo {
-            max-width: 160px;
-            max-height: 150px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-        }
-        /* ==========================================================
-       TÍTULOS
-    ========================================================== */
-        .login-title {
-            font-size: 1.875rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            color: #0f172a;
-        }
-        .login-subtitle {
-            color: #64748b;
-            font-size: .95rem;
-        }
-        /* ==========================================================
-       LABELS
-    ========================================================== */
-        .form-label {
-            margin-bottom: .5rem;
-            color: #334155;
-            font-size: .875rem;
-            font-weight: 600;
-        }
-        /* ==========================================================
-       INPUTS
-    ========================================================== */
-        .input-group {
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .input-group-text {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            color: #64748b;
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-        .form-control {
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            padding: .8rem 1rem;
-            color: #0f172a;
-            font-size: .95rem;
-            transition:
-                border-color .2s ease,
-                box-shadow .2s ease,
-                background-color .2s ease;
-        }
-        .form-control:focus {
-            background: #ffffff;
-            border-color: #3b82f6;
-            box-shadow:
-                0 0 0 3px rgba(59, 130, 246, .12);
-        }
-        /* Evita doble borde extraño */
-        .input-group .form-control {
-            border-left: 0;
-        }
-        .input-group .form-control:focus {
-            border-left: 0;
-        }
-        /* ==========================================================
-       BOTÓN LOGIN
-    ========================================================== */
-        .btn-login {
-            width: 100%;
-            padding: .85rem 1rem;
-            border: 0;
-            border-radius: 12px;
-            background: #2563eb;
-            color: #ffffff;
-            font-size: .95rem;
-            font-weight: 700;
-            box-shadow:
-                0 4px 6px -1px rgba(37, 99, 235, .20);
-            transition:
-                all .2s ease;
-        }
-        .btn-login:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow:
-                0 8px 12px -4px rgba(37, 99, 235, .25);
-            color: #ffffff;
-        }
-        .btn-login:active {
-            transform: translateY(0);
-        }
-        .btn-login:focus {
-            box-shadow:
-                0 0 0 4px rgba(59, 130, 246, .20);
-        }
-        /* ==========================================================
-       FOOTER
-    ========================================================== */
-        .footer-text {
-            margin-top: 1.25rem;
-            color: #94a3b8;
-            font-size: .75rem;
-            line-height: 1.5;
-            text-align: center;
-        }
-        /* ==========================================================
-       RESPONSIVE
-    ========================================================== */
-        @media (max-width: 576px) {
-            body {
-                padding: 1rem;
-            }
-            .login-card {
-                border-radius: 20px;
-            }
-            .login-logo {
-                max-width: 130px;
-                max-height: 120px;
-            }
-            .login-title {
-                font-size: 1.6rem;
-            }
-        }
-    </style>
+
+    <link rel="stylesheet" href="public/css/login.css">
+    
 </head>
+
 <body>
     <div class="login-card">
         <!-- =====================================================
@@ -334,4 +173,5 @@ if (isset($_POST['login'])) {
         });
     </script>
 </body>
+
 </html>
