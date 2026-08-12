@@ -4,6 +4,7 @@ include __DIR__ . '/../Layouts/header.php';
 ?>
 
 <div class="container-fluid py-4">
+    <!--
     <div class="page-header-card operator-header mb-4">
         <div class="row align-items-center">
             <div class="col-lg-9">
@@ -18,7 +19,7 @@ include __DIR__ . '/../Layouts/header.php';
             <div class="col-lg-3 text-end d-none d-lg-block"><i class="fa-solid fa-users-gear page-header-decoration"></i></div>
         </div>
     </div>
-
+-->
     <div class="card content-card border-0">
         <div class="card-body p-4">
             <div class="operators-toolbar mb-4">
@@ -76,7 +77,7 @@ include __DIR__ . '/../Layouts/header.php';
                                     <td><span class="role-badge"><i class="fa-solid fa-shield-halved"></i><?= htmlspecialchars($operador['nombre_rol']) ?></span></td>
                                     <td><?= htmlspecialchars($operador['dni_user'] ?: '—') ?></td>
                                     <td>
-                                        <div><?= htmlspecialchars($operador['oficina_user'] ?: 'Sin oficina') ?></div><small class="text-muted"><?= htmlspecialchars($operador['puesto_user'] ?: '') ?></small>
+                                        <div><?= htmlspecialchars($operador['oficina_user'] ?: 'Sin oficina') ?></div>
                                     </td>
                                     <td><span class="window-badge"><i class="fa-solid fa-window-maximize"></i><?= htmlspecialchars($operador['num_ventanilla'] ?: '—') ?></span></td>
                                     <td><span class="status-badge <?= (int) $operador['estado_user'] === 1 ? 'status-active' : 'status-inactive' ?>"><span class="status-dot"></span><?= (int) $operador['estado_user'] === 1 ? 'Activo' : 'Inactivo' ?></span></td>

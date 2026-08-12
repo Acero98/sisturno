@@ -164,7 +164,7 @@ $rolUsuarioHeader = $_SESSION['rol'] ?? '';
                                             href="<?= BASE_URL ?>index.php?ruta=seleccion"
                                             target="_blank">
                                             <i class="fa-solid fa-check-to-slot me-2 text-primary"></i>
-                                            Sacar Ticket
+                                            Generar Ticket
                                         </a>
                                     </li>
                                 <?php endif; ?>

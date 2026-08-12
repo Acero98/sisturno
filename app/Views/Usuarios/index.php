@@ -3,7 +3,7 @@ $cssModulo = 'usuarios';
 include __DIR__ . '/../Layouts/header.php';
 ?>
 <div class="container-fluid py-4">
-    <!-- Encabezado -->
+    <!-- Encabezado 
     <div class="page-header-card mb-4">
         <div class="row align-items-center">
             <div class="col-lg-9">
@@ -25,7 +25,7 @@ include __DIR__ . '/../Layouts/header.php';
                 <i class="fa-solid fa-user-shield page-header-decoration"></i>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="card content-card border-0">
         <div class="card-body p-4">
             <!-- ==========================================
@@ -120,9 +120,6 @@ include __DIR__ . '/../Layouts/header.php';
                                                 <div class="table-user-name">
                                                     <?= htmlspecialchars($datos->nombre_user) ?>
                                                 </div>
-                                                <small>
-                                                    Usuario del sistema
-                                                </small>
                                             </div>
                                         </div>
                                     </td>

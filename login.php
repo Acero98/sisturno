@@ -52,19 +52,20 @@ if (isset($_POST['login'])) {
         <!-- =====================================================
              ENCABEZADO
         ====================================================== -->
-        <div class="text-center px-4 px-md-5 pt-5 pb-4">
+        <div class="text-center px-4 px-md-5 pt-5">
             <div class="mb-4">
                 <img
                     src="<?= BASE_LOGO_LOGIN ?>"
                     alt="Logo"
                     class="login-logo">
             </div>
+            <!--
             <h1 class="login-title mb-2">
                 Bienvenido
-            </h1>
+            </h1> 
             <p class="login-subtitle mb-0">
-                Sistema de Gestión de Turnos
-            </p>
+                EMPRESA PRESTADORA DE SERVICIOS DE SANEAMIENTO DE AGUA POTABLE Y ALCANTARILLADO DE ILO S.A.
+            </p>-->
         </div>
         <!-- =====================================================
              FORMULARIO

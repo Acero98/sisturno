@@ -105,40 +105,70 @@
     text-align: center;
 }
 
+/*
 .seleccion-servicios-grid form:nth-child(4n + 2) .seleccion-servicio {
     color: #166534;
     background: #dcfce7;
     border-color: #bbf7d0;
 }
+    */
 
+.seleccion-servicios-grid form:nth-child(4n + 2) .seleccion-servicio {
+    color: #1e3a8a;
+    background: #dbeafe;
+    border: 1px solid #bfdbfe;
+}
+
+/*
 .seleccion-servicios-grid form:nth-child(4n + 2) .seleccion-servicio:hover,
 .seleccion-servicios-grid form:nth-child(4n + 2) .seleccion-servicio:focus-visible {
     color: #166534;
     background: #bbf7d0;
 }
+*/
+.seleccion-servicios-grid form:nth-child(4n + 2) .seleccion-servicio:hover,
+.seleccion-servicios-grid form:nth-child(4n + 2) .seleccion-servicio:focus-visible {
+    color: #1e3a8a;
+    background: #bfdbfe;
+}
 
+/*
 .seleccion-servicios-grid form:nth-child(4n + 3) .seleccion-servicio {
     color: #6b21a8;
     background: #f3e8ff;
     border-color: #e9d5ff;
 }
+*/
+
+.seleccion-servicios-grid form:nth-child(4n + 3) .seleccion-servicio {
+    color: #1e3a8a;
+    background: #dbeafe;
+    border: 1px solid #bfdbfe;
+}
 
 .seleccion-servicios-grid form:nth-child(4n + 3) .seleccion-servicio:hover,
 .seleccion-servicios-grid form:nth-child(4n + 3) .seleccion-servicio:focus-visible {
-    color: #6b21a8;
-    background: #e9d5ff;
+    color: #1e3a8a;
+    background: #bfdbfe;
+    /*color: #6b21a8;
+    background: #e9d5ff;*/
 }
 
 .seleccion-servicios-grid form:nth-child(4n) .seleccion-servicio {
-    color: #92400e;
+    color: #1e3a8a;
+    background: #dbeafe;
+    border: 1px solid #bfdbfe;
+    /*color: #92400e;
     background: #fef3c7;
-    border-color: #fde68a;
+    border-color: #fde68a;*/
 }
 
 .seleccion-servicios-grid form:nth-child(4n) .seleccion-servicio:hover,
 .seleccion-servicios-grid form:nth-child(4n) .seleccion-servicio:focus-visible {
-    color: #92400e;
-    background: #fde68a;
+    color: #1e3a8a;
+    background: #bfdbfe;
+    /*color: #92400e;
+    background: #fde68a;*/
 }
 
 .densidad-media {
@@ -176,9 +206,7 @@
 
 @media (min-width: 900px) {
     .seleccion-servicios-grid form {
-        flex-basis: calc(
-            (100% - (var(--separacion-servicios) * 2)) / 3
-        );
+        flex-basis: calc((100% - (var(--separacion-servicios) * 2)) / 3);
     }
 }
 
