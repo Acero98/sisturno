@@ -101,7 +101,7 @@ $configuracion = [
             <div class="card card-custom shadow-sm border-0 h-100">
                 <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
                     <span><i class="fas fa-list-ol me-2">
-                        </i>Próximos 5 Tickets</span>
+                        </i>Próximos 8 Tickets</span>
                     <?php if ($tickets): ?>
                         <span class="badge bg-light text-primary fw-bold px-3 py-2">
                             <?= count($tickets) ?>
@@ -121,7 +121,7 @@ $configuracion = [
                                         <th>Servicio</th>
                                     </tr>
                                 </thead>
-                                <tbody><?php foreach (array_slice($tickets, 0, 5) as $ticketPendiente): ?><tr>
+                                <tbody><?php foreach (array_slice($tickets, 0, 8) as $ticketPendiente): ?><tr>
                                             <td class="fw-bold text-muted"><?= $ticketPendiente['numero'] ?></td>
                                             <td>
                                                 <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fw-semibold">

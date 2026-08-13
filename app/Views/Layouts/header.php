@@ -29,8 +29,18 @@ $rolUsuarioHeader = $_SESSION['rol'] ?? '';
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/dashboard.css">
     <?php if (!empty($cssModulo)): ?>
+        <?php
+        /*
+         * Versionado de caché para los estilos de cada módulo.
+         * filemtime cambia el parámetro `v` cuando se modifica el CSS, por lo
+         * que los navegadores clientes descargan el archivo actualizado sin
+         * que sea necesario borrar manualmente su caché.
+         */
+        $rutaCssModulo = __DIR__ . '/../../../public/css/' . $cssModulo . '.css';
+        $versionCssModulo = file_exists($rutaCssModulo) ? filemtime($rutaCssModulo) : '1';
+        ?>
         <link rel="stylesheet"
-            href="<?= BASE_URL ?>public/css/<?= $cssModulo ?>.css">
+            href="<?= BASE_URL ?>public/css/<?= rawurlencode($cssModulo) ?>.css?v=<?= $versionCssModulo ?>">
     <?php endif; ?>
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"> -->
     <!-- <script src="https://kit.fontawesome.com/c40e82f1b2.js" crossorigin="anonymous"></script> -->

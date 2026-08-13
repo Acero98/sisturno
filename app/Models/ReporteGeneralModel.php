@@ -44,12 +44,86 @@ class ReporteGeneralModel
 
     public function obtenerTiempoPorServicio($inicio, $fin)
     {
-        return $this->consulta('SELECT s.nombre_serv, s.codigo_serv, COUNT(t.id_tickets) finalizados, AVG(TIMESTAMPDIFF(MINUTE, t.hora_atencion, t.hora_finalizado)) promedio_atencion FROM tickets t INNER JOIN servicios s ON t.id_servicios = s.id_servicios WHERE t.estado_tk = "FINALIZADO" AND t.fecha_tk BETWEEN ? AND ? AND t.hora_atencion IS NOT NULL AND t.hora_finalizado IS NOT NULL GROUP BY s.id_servicios, s.nombre_serv, s.codigo_serv ORDER BY promedio_atencion ASC', $inicio, $fin);
+        return $this->consulta('SELECT s.nombre_serv, s.codigo_serv, COUNT(t.id_tickets) finalizados, AVG(TIMESTAMPDIFF(MINUTE, t.hora_atencion, t.hora_finalizado)) promedio_atencion FROM tickets t INNER JOIN servicios s ON t.id_servicios = s.id_servicios WHERE t.estado_tk = "FINALIZADO" AND t.fecha_tk BETWEEN ? AND ? AND t.hora_atencion IS NOT NULL AND t.hora_finalizado IS NOT NULL GROUP BY s.id_servicios, s.nombre_serv, s.codigo_serv ORDER BY promedio_atencion DESC', $inicio, $fin);
     }
 
     public function obtenerTendencia($inicio, $fin)
     {
-        return $this->consulta('SELECT DATE(fecha_tk) etiqueta, COUNT(*) total FROM tickets WHERE fecha_tk BETWEEN ? AND ? GROUP BY DATE(fecha_tk) ORDER BY etiqueta', $inicio, $fin);
+        $fechaInicio = new DateTimeImmutable($inicio);
+        $fechaFin = new DateTimeImmutable($fin);
+        $dias = $fechaInicio->diff($fechaFin)->days + 1;
+
+        if ($dias <= 30) {
+            $agrupacion = 'diaria';
+            $sql = 'SELECT DATE(fecha_tk) clave, COUNT(*) total
+                    FROM tickets
+                    WHERE fecha_tk BETWEEN ? AND ?
+                    GROUP BY DATE(fecha_tk)
+                    ORDER BY clave';
+        } elseif ($dias <= 180) {
+            $agrupacion = 'semanal';
+            $sql = 'SELECT DATE_SUB(DATE(fecha_tk), INTERVAL WEEKDAY(fecha_tk) DAY) clave, COUNT(*) total
+                    FROM tickets
+                    WHERE fecha_tk BETWEEN ? AND ?
+                    GROUP BY DATE_SUB(DATE(fecha_tk), INTERVAL WEEKDAY(fecha_tk) DAY)
+                    ORDER BY clave';
+        } elseif ($dias <= 730) {
+            $agrupacion = 'mensual';
+            $sql = "SELECT DATE_FORMAT(fecha_tk, '%Y-%m-01') clave, COUNT(*) total
+                    FROM tickets
+                    WHERE fecha_tk BETWEEN ? AND ?
+                    GROUP BY DATE_FORMAT(fecha_tk, '%Y-%m-01')
+                    ORDER BY clave";
+        } else {
+            $agrupacion = 'anual';
+            $sql = "SELECT DATE_FORMAT(fecha_tk, '%Y-01-01') clave, COUNT(*) total
+                    FROM tickets
+                    WHERE fecha_tk BETWEEN ? AND ?
+                    GROUP BY DATE_FORMAT(fecha_tk, '%Y-01-01')
+                    ORDER BY clave";
+        }
+
+        $datos = $this->consulta($sql, $inicio, $fin);
+        foreach ($datos as &$dato) {
+            $dato['etiqueta'] = $this->formatearPeriodo(
+                $dato['clave'],
+                $agrupacion,
+                $fechaInicio,
+                $fechaFin
+            );
+            unset($dato['clave']);
+        }
+        unset($dato);
+
+        return [
+            'agrupacion' => $agrupacion,
+            'datos' => $datos,
+        ];
+    }
+
+    private function formatearPeriodo($clave, $agrupacion, DateTimeImmutable $inicio, DateTimeImmutable $fin)
+    {
+        $fecha = new DateTimeImmutable($clave);
+        $meses = [1 => 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+        if ($agrupacion === 'anual') {
+            return $fecha->format('Y');
+        }
+
+        if ($agrupacion === 'mensual') {
+            return $meses[(int) $fecha->format('n')] . ' ' . $fecha->format('Y');
+        }
+
+        if ($agrupacion === 'semanal') {
+            $inicioSemana = $fecha < $inicio ? $inicio : $fecha;
+            $finSemanaCalculado = $fecha->modify('+6 days');
+            $finSemana = $finSemanaCalculado > $fin ? $fin : $finSemanaCalculado;
+
+            return $inicioSemana->format('d') . ' ' . $meses[(int) $inicioSemana->format('n')]
+                . ' – ' . $finSemana->format('d') . ' ' . $meses[(int) $finSemana->format('n')];
+        }
+
+        return $fecha->format('d') . ' ' . $meses[(int) $fecha->format('n')];
     }
 
     public function obtenerHorasPico($inicio, $fin)

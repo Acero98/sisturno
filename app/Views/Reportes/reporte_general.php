@@ -55,7 +55,13 @@ $tarjetasMetricas = [
 
     <section class="metrics-grid mb-4" aria-label="Resumen de tickets">
         <?php foreach ($tarjetasMetricas as [$titulo, $valor, $icono, $clase]): ?>
-            <article class="metric-card <?= $clase ?>"><span class="metric-icon"><i class="fa-solid <?= $icono ?>"></i></span><span class="metric-content"><small><?= $titulo ?></small><strong><?= number_format($valor) ?></strong></span></article>
+            <article class="metric-card <?= $clase ?>">
+                <span class="metric-icon"><i class="fa-solid <?= $icono ?>"></i></span>
+                <span class="metric-content">
+                    <small><?= $titulo ?></small>
+                    <strong><?= number_format($valor) ?></strong>
+                </span>
+            </article>
         <?php endforeach; ?>
     </section>
 
@@ -150,11 +156,11 @@ $tarjetasMetricas = [
 
     <div class="row g-4">
         <?php foreach (
-            [                
+            [
                 ['Horas pico', 'Demanda por franja horaria', 'fa-clock', 'icon-amber', 'graficoHorasPico'],
                 ['Servicios más solicitados', 'Atenciones por servicio', 'fa-chart-bar', 'icon-blue', 'graficoServicios'],
                 ['Estados de tickets', 'Distribución por estado', 'fa-chart-pie', 'icon-violet', 'graficoEstados'],
-                ['Tendencia de tickets', 'Evolución en el periodo', 'fa-chart-line', 'icon-green', 'graficoTendencia']
+                ['Tendencia ' . ($agrupacionTendencia ?? 'diaria') . ' de tickets', 'Agrupación automática según el rango', 'fa-chart-line', 'icon-green', 'graficoTendencia']
             ] as
             [$tituloGrafica, $subtituloGrafica, $iconoGrafica, $claseGrafica, $idGrafica]
         ): ?>

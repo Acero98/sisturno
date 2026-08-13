@@ -24,12 +24,15 @@ class ReporteGeneralController
         $servicios = $this->model->obtenerServicios($fechaInicio, $fechaFin);
         $rankingOperadores = $this->model->obtenerRankingOperadores($fechaInicio, $fechaFin);
         $tiempoPorServicio = $this->model->obtenerTiempoPorServicio($fechaInicio, $fechaFin);
-        $tendencia = $this->model->obtenerTendencia($fechaInicio, $fechaFin);
+        $tendenciaResultado = $this->model->obtenerTendencia($fechaInicio, $fechaFin);
+        $tendencia = $tendenciaResultado['datos'];
+        $agrupacionTendencia = $tendenciaResultado['agrupacion'];
         $horasPico = $this->model->obtenerHorasPico($fechaInicio, $fechaFin);
         $graficas = [
             'estados' => $estados,
             'servicios' => $servicios,
             'tendencia' => $tendencia,
+            'agrupacionTendencia' => $agrupacionTendencia,
             'horasPico' => $horasPico,
         ];
         require __DIR__ . '/../Views/Reportes/reporte_general.php';
